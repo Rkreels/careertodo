@@ -1,0 +1,195 @@
+You are an expert full-stack product engineer + UI/UX designer + accessibility & security lead. Build CareerToDo — a world-class career-simulation edtech web platform. Use the stack: Next.js (React), Tailwind CSS, Framer Motion for animations, Supabase for auth/database/storage, and host on Vercel. Integrate bKash as the primary payment gateway. Design should be modern, outstanding, bold, and optimized for both mobile and desktop. Provide Figma-like wireframes, component specs, and production-ready code. Deliver tests, deployment config, and documentation.
+
+Below are absolute requirements — reproduce these exactly in the output artifacts (pages, components, API endpoints, DB schema, docs).
+
+1) Brand + Basic behavior
+
+Product name: CareerToDo
+
+Primary language: English; secondary language: Bengali (বাংলা). Implement i18n (e.g., next-intl or i18next) with language files. Auto-detect navigator.language and offer EN/BN toggle. Also gracefully support Chrome Translate fallback.
+
+Hosting: Vercel. Use serverless / Edge functions for secure proxies/webhooks where needed.
+
+Backend: Supabase (Auth, Postgres, Storage, Edge Functions). Keep all sensitive operations server-side (payment verification, session revocation).
+
+signup: name, email, pass then next button to payment, if payment is verified redirect to dashboard. if payment is not verified stuck them for unsuccess and and give a button to go home.
+
+2) Overall UX & Design Guidelines (non-negotiable)
+
+Visual language: modern, high-contrast, minimal clutter. Big typography, generous whitespace, 2xl rounded corners, soft shadows, micro-interactions, subtle neumorphism where appropriate.
+
+Color palette suggestion: Primary deep indigo (#0f172a) or charcoal; Accent cyan (#06b6d4) or electric blue; Accent warm for CTAs (#f97316). Provide light + dark mode.
+
+Typography: variable/modern font pairing — big headings (xl/2xl/3xl), readable body. Provide scalable sizes for mobile-first.
+
+Spacing & layout: Grid-first layout, 12-column on desktop, single column on mobile. Padding at least p-2 across small components, larger on hero cards.
+
+Motion & behavior: use Framer Motion for entry animations, hover states, parallax hero background video, smooth horizontal auto-scroll carousels.
+
+Accessibility: WCAG AA contrast, alt text for all images, keyboard navigation, ARIA labels for interactive components, captions for videos, semantic HTML.
+
+Performance: Use next/image, lazy-load images/videos, stream long videos with HLS/Cloudflare Stream, preload above-the-fold assets. Keep Core Web Vitals budget: LCP < 2.5s on 3G simulated mid-tier devices.
+
+Responsive: Mobile-first. Desktop layouts should be polished and make long-scroll feel premium and readable.
+
+3) Homepage — very long scrolling, >20 sections (exact spec)
+
+Create a single long-scroll homepage with sections in this order and detail. Each section must be implemented as a reusable React component with props for content.
+
+Top (Above the fold)
+
+Hero — bold headline, subheadline, 2 CTAs: “Get Started” (registert) and “Request University Demo”, Lottie/looped muted background video (loop, low bitrate), large visual of dashboard mockups. Small language toggle top-right.
+
+Core feature & trust
+2. Full Video Section — one large explainer video (autoplay muted preview, click to open full player with captions). Placed immediately after core features.
+3. Main Feature Highlights — 3-4 large cards (20/40/40 model, role-specific learning, real workflows, progress tracking).
+4. Feature Grid / Tool Icons — animated reveal grid for 20+ generic tools (ERP, HRMS, ATS, Accounting, Payroll, Tax Filing, POS, E-commerce, CRM, Project Management, Roadmap, Document Management, Inventory, Procurement, Logistics, Student CRM, Product Analytics, Marketing Analytics, Campaign Mgmt, Social Media Mgmt, Excel, Typing Practice, Automation, Treasury & Banking suite, Payment Simulator).
+5. Interactive Simulation GIFs — 3 short looped GIFs (in-place demo), lazy loaded.
+
+Social proof & media
+6. Reels Testimonial Carousel — two rows (2 cells), each row contains 10 vertical-reel videos:
+
+Each reel: 9:16 aspect, autoplay muted in viewport, tap-to-unmute, progressive load.
+
+The carousel: horizontal auto-scroll with smooth animation and snap points, pause on hover, manual swipe on touch devices. Implement with virtualization for performance.
+
+User Feedback Slider — sliding two-column layout, each column cycles through written feedback cards (profile + rating + quote), smooth in/out motion.
+
+Full Video Showcase — a dedicated section with a long-form user success story video (with transcript & chapters).
+
+Media & coverage
+9. News/Media Collage — 10 media logo/images layered in a styled collage:
+
+CSS transforms rotate (-15° to +15°) on stack, z-index ordering, central prominent aligned tile.
+
+Swipeable (touch) and keyboard accessible. Clicking opens article modal.
+
+Problem → Solution
+10. Problem Agitation — stats for Bangladesh and global (use provided copy), visual charts.
+11. Solution Walkthrough — how CareerToDo works in 4 steps (choose path → practice → progress → outcomes).
+
+Career paths & pricing
+12. Career Path Cards — clickable cards for Finance, HR, Sales, Product, Ops, Marketing, Student CRM, Treasury & Banking, Healthcare, Compliance, etc. Click leads to registration→payment.
+13. Pricing + Offer — present pricing, with Offer Anchor: “Pay for 3 months → get 6 months access” (don’t promise learning time). Payment CTA goes to payment page. Show secure payments, refund policy (7-day refund).
+14. Referral Program — (post-payment) explanation of invite/referral token generation.
+15. Case Studies / Success Stories — short, structured case studies (text, image, outcome).
+16. University & Corporate Partnerships — logos, CTA for partnership enquiries.
+17. FAQ Accordion — include top 20 FAQs (copy from our prior list), SEO-friendly markup.
+18. Community / Support — Discord/Slack/Forum invites.
+19. CTA Repeat — strong final CTA section with large button.
+20. Footer — thin footerbar: links (Privacy Policy, Terms, Contact, Careers, Press). Minimal, accessible.
+
+UX details: sticky top nav with Home | About | Contact | Login | Register, progress indicator on scroll, breadcrumbs for deep sections.
+
+4) Video & media behavior specifics
+
+Reels: vertical 9:16, 720p→1080p, H.264/AV1 fallback. Autoplay when ≥50% visible, loop muted. On desktop, hover preview; on mobile, user taps to unmute. Preload first 2 reels; lazy load rest.
+
+Full-length video: HLS stream with captions and skip-to-chapter UI.
+
+Collage: images are layered with CSS, optimized next/image, lazy load; clicking opens lightbox with article/quote.
+
+All videos must include aria labels and captions for accessibility.
+
+Requirements:
+
+payment placeholder: collect name+email so we can create an “abandoned checkout” record. But DO NOT create an active auth account until payment confirmed.
+
+Payment should be processed via bKash integration:
+
+Use server-side verification: bKash returns a transaction ID → backend verifies with bKash API → create payments record in Supabase and set users.paid=true and if fail users.paid=false
+
+If bKash flows require redirect, implement safe token signature to avoid forging.
+
+
+7) Admin Dashboard feature set (must include)
+
+Overview (dashboard): DAU/MAU, new paid signups, conversion funnel (landing → checkout → payment success), revenue MTD, churn, LTV estimate.
+
+User management: search, filter (paid/unpaid/abandoned), view profile, impersonate (admin-only limited feature), force logout, reset password.
+
+Device & anti-sharing controls:
+
+View active devices per user (device fingerprint, IP, user agent, geo).
+
+Option: block device, revoke sessions, require re-login, force password reset.
+
+Set company-wide policy: concurrent device limit (e.g., 2 active devices max) — when exceeded, either block new session or notify admin.
+
+Flagging: auto-flag accounts with suspicious patterns (same credential use across distant geolocations within unrealistic time window, too many concurrent streams).
+
+Payment & refunds: list payments, re-run verification, issue refunds (manual).
+
+Abandoned checkouts: list & re-target (email sequence).
+
+Pain users categorization: algorithm or rule-engine to mark users as “pain” (low progress / many failed tasks / support tickets) and auto-queue for outreach / mentor help.
+
+Simulation usage analytics: top-used tools, average session duration, drop-off points, heatmap of actions.
+
+Export: CSV/Excel export of users/payments/events.
+
+Content & media manager: upload reels, hero video, manage carousel order.
+
+Settings: site content editing, pricing update, language content editing, referral reward rules.
+
+Security & logs: admin audit logs, suspicious activity alerts, session revocation.
+
+8) User Dashboard feature set (must include)
+
+Landing / overview: greeting, account status, progress summary, next recommended task.
+
+Tools list: display all generic tools (manifest-driven) categorized (Finance / HR / Sales / Product / Ops / Marketing / Treasury & Banking). Each tool card: "Open Simulation" button which launches the tool 
+
+Progress: per-simulation progress, overall completion %, badges, achievements.
+
+Task history / activity logs: view previous submissions, errors, mentor feedback (if any).
+
+Referrals: show referral code & link (generated only after payment), referral stats & rewards.
+
+Settings: language toggle, profile, connected devices (list with option to deauthorize), password & session management.
+
+Guardrails: show concurrent device usage and warnings if approaching limit.
+
+9) Anti-sharing & device tracking (implementation)
+
+Use device fingerprinting IP + user agent + geo. Store in devices table.
+
+On login, create sessions entry and enforce concurrent session limits. If limit exceeded, present option: logout other devices or deny new session.
+
+Detect impossible travel (same user logging from different countries within short time) — auto-flag and force 2FA or block.
+
+Optionally require periodic re-authentication for high-use features.
+
+Track streaming counts per user to prevent continuous simultaneous streaming across devices.
+
+10) bKash Payment Integration specifics
+
+Implement payment page that triggers bKash flow via secure token generated server-side.
+
+Implement server-side webhook/callback in Supabase Edge Function to verify transaction details with bKash API and mark payments.status = success.
+
+Only after successful verification: create/invoke Supabase auth signUp for that user (if not present) and set users.paid = true.
+
+If webhook fails, retry logic (idempotent). Log full payload in payments.webhook_payload.
+
+Admin interface: ability to re-verify transactions manually.
+
+11) Integrations & infra
+
+Cloud CDN (Vercel built-in) for assets. Use Supabase Storage for large media / reels.
+
+Email provider: Postmark / Sendgrid for transactional emails.
+
+Analytics: GA4 + server-side events to Supabase analytics_events table. Provide initial event taxonomy for funnel (page_view, start_checkout, payment_initiated, payment_success, simulation_start, simulation_complete).
+
+Search: Elastic/Typesense for admin search.
+
+12) Internationalization & SEO
+
+i18n pages for EN + BN. Server-rendered SEO pages for landing pages (Next.js SSG).
+
+Provide JSON-LD structured data for Organization, Product, FAQ.
+
+Meta tags, open graph, twitter card for each section.
+
+robots.txt.
