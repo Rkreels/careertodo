@@ -1,10 +1,17 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
   content: [
-    "./client/index.html",
-    "./client/src/**/*.{js,ts,jsx,tsx}",
+    "./index.html",
+    "./*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./contexts/**/*.{js,ts,jsx,tsx}",
+    "./hooks/**/*.{js,ts,jsx,tsx}",
+    "./lib/**/*.{js,ts,jsx,tsx}",
+    "./types/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: "",
   theme: {
@@ -79,5 +86,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

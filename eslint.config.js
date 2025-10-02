@@ -13,7 +13,11 @@ export default [
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        process: 'readonly',
+      },
       parser: tsparser,
       parserOptions: {
         ecmaVersion: 'latest',
@@ -38,6 +42,7 @@ export default [
       ],
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
+      'no-undef': 'off',
     },
   },
 ]
