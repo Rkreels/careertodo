@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 
@@ -28,6 +28,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md p-0">
+        <DialogTitle className="sr-only">
+          {mode === 'login' ? 'Sign In' : 'Create Account'}
+        </DialogTitle>
+        <DialogDescription className="sr-only">
+          {mode === 'login' ? 'Sign in to your CareerToDo account' : 'Create a new CareerToDo account'}
+        </DialogDescription>
         <div className="p-6">
           {mode === 'login' ? (
             <LoginForm onToggleMode={handleToggleMode} />

@@ -1,4 +1,4 @@
-import { Moon, Sun, Globe, Menu, X, User, LogOut, LayoutDashboard } from "lucide-react";
+import { Moon, Sun, Globe, Menu, X, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/ThemeProvider";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -10,7 +10,7 @@ import { Link } from "wouter";
 export function Navigation() {
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -34,8 +34,11 @@ export function Navigation() {
     setAuthModalOpen(true);
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    const { error } = await signOut();
+    if (error) {
+      console.error('Logout error:', error);
+    }
     setMobileMenuOpen(false);
   };
 

@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { X } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface MediaItem {
   id: string;
@@ -72,6 +71,9 @@ export function MediaCollage() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{selectedMedia?.name}</DialogTitle>
+              <DialogDescription>
+                Featured article from {selectedMedia?.name}
+              </DialogDescription>
             </DialogHeader>
             <p className="text-muted-foreground">{selectedMedia?.article}</p>
           </DialogContent>

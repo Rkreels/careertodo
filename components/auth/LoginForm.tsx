@@ -18,7 +18,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
-  const { login } = useAuth();
+  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +31,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setError(null);
-      await login(data.email, data.password);
+      const { error } = await signIn(data.email, data.password);
+      if (error) {
+        setError(error.message || 'Login failed');
+      }
     } catch (err: any) {
       setError(err.message || 'Login failed');
     }

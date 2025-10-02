@@ -22,7 +22,7 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
-  const { register: registerUser } = useAuth();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +44,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
         return;
       }
       const { confirmPassword, ...registerData } = data;
-      await registerUser(registerData);
+      const { error } = await signUp(registerData.email, registerData.password, {
+        name: registerData.name,
+        phone: registerData.phone,
+        referral_code: registerData.referralCode,
+      });
+      if (error) {
+        setError(error.message || 'Registration failed');
+      }
     } catch (err: any) {
       setError(err.message || 'Registration failed');
     }
