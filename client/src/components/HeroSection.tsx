@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/components/LanguageProvider";
 import { motion } from "framer-motion";
-import dashboardImage from "@assets/generated_images/Dashboard_mockup_for_hero_b3204792.png";
+import dashboardImage from "/assets/generated_images/Dashboard_mockup_for_hero_b3204792.png";
 
 export function HeroSection() {
   const { t } = useLanguage();

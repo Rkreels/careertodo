@@ -1,0 +1,97 @@
+# Supabase configuration for CareerToDo platform
+
+[api]
+# Port to use for the API URL.
+port = 54321
+# Schemas to expose in your API. Tables, views and stored procedures in this schema will get API
+# endpoints. public and storage are always part of the schema, so you don't need to add them.
+schemas = ["public", "graphql_public"]
+# Extra schemas to add to the search_path of every request. public is always included.
+extra_search_path = ["public", "extensions"]
+# The maximum number of rows returns from a view, table, or stored procedure. Defaults to 1000.
+max_rows = 1000
+
+[db]
+# Port to use for the local database URL.
+port = 54322
+# Port used by db diff command to initialize the shadow database.
+shadow_port = 54320
+# The database major version to use. Must be 14 or 15.
+major_version = 15
+
+[studio]
+# Port to use for Supabase Studio.
+port = 54323
+
+# Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
+# are monitored, and you can view the emails that would have been sent from the web interface.
+[inbucket]
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+
+[storage]
+# The maximum file size allowed (e.g. "5MB", "500KB").
+file_size_limit = "50MiB"
+
+[auth]
+# How long tokens are valid, before being required to be refreshed.
+jwt_expiry = "3600s"
+# How long refresh tokens are valid, before being required to be refreshed.
+refresh_token_rotation_enabled = true
+# Allow/disallow new user signups to your project.
+enable_signup = true
+
+[auth.email]
+# Allow/disallow new user signups via email to your project.
+enable_signup = true
+# If enabled, a user will be able to request a magic link or an OTP.
+# If you want to raise a gate, you can use the `hook.send` hook to control the behaviour.
+enable_confirmations = false
+# If enabled, a user will be able to request an OTP login link.
+enable_password_login = true
+
+# Uncomment to customize email template
+# [auth.email.template.invite]
+# subject = "You have been invited"
+# content_path = "./supabase/templates/invite.html"
+
+[auth.sms]
+# Allow/disallow new user signups via SMS to your project.
+enable_signup = false
+# If enabled, a user will be able to request a OTP via SMS.
+enable_confirmations = false
+# Template for sending OTP to users
+template = "Your code is {{ .Code }} ."
+
+# Use an external OAuth provider. The full list of providers is: ["apple", "azure", "bitbucket",
+# "discord", "facebook", "github", "gitlab", "google", "keycloak", "linkedin", "notion", "twitch",
+# "twitter", "slack", "spotify", "workos", "zoom"]
+[auth.external.apple]
+enabled = false
+client_id = ""
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+
+# Use an external OAuth provider. The full list of providers is: ["apple", "azure", "bitbucket",
+# "discord", "facebook", "github", "gitlab", "google", "keycloak", "linkedin", "notion", "twitch",
+# "twitter", "slack", "spotify", "workos", "zoom"]
+[auth.external.google]
+enabled = false
+client_id = ""
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+
+# You can add multiple [auth.external.*] configurations
+# [auth.external.github]
+# enabled = true
+# client_id = "your-github-client-id"
+# secret = "your-github-client-secret"

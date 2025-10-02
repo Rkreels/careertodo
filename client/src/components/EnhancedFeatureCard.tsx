@@ -7,6 +7,8 @@ interface EnhancedFeatureCardProps {
   description: string;
   delay?: number;
   gradient?: string;
+  iconColor?: string;
+  borderColor?: string;
 }
 
 export function EnhancedFeatureCard({ 
@@ -14,7 +16,9 @@ export function EnhancedFeatureCard({
   title, 
   description, 
   delay = 0,
-  gradient = "from-chart-3/10 to-chart-4/10"
+  gradient = "from-sky-100/80 to-blue-100/80",
+  iconColor = "text-sky-600",
+  borderColor = "border-sky-200"
 }: EnhancedFeatureCardProps) {
   return (
     <motion.div
@@ -27,22 +31,25 @@ export function EnhancedFeatureCard({
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
       
-      <div className="relative bg-card/60 backdrop-blur-xl border border-card-border rounded-3xl p-8 hover-elevate active-elevate-2 transition-all">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-chart-3 to-chart-4 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-          <Icon className="w-7 h-7 text-white" />
+      <div className={`relative bg-white/80 backdrop-blur-xl border ${borderColor} rounded-3xl p-8 hover:shadow-2xl hover:shadow-sky-200/50 transition-all duration-300`}>
+        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border ${borderColor}`}>
+          <Icon className={`w-8 h-8 ${iconColor}`} />
         </div>
         
-        <h3 className="text-xl font-bold mb-3 group-hover:text-chart-3 transition-colors">
+        <h3 className={`text-xl font-bold mb-3 group-hover:${iconColor} transition-colors duration-300`}>
           {title}
         </h3>
         
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-slate-600 leading-relaxed">
           {description}
         </p>
 
-        <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-chart-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="absolute inset-0 rounded-full bg-chart-3 animate-ping" />
+        <div className={`absolute top-4 right-4 w-2 h-2 rounded-full bg-gradient-to-r from-sky-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
+          <div className="absolute inset-0 rounded-full bg-sky-400 animate-ping" />
         </div>
+
+        {/* Hover effect border */}
+        <div className={`absolute inset-0 rounded-3xl border ${borderColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
       </div>
     </motion.div>
   );

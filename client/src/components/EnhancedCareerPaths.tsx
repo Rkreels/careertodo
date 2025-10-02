@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp } from "lucide-react";
-import financeImage from "@assets/generated_images/Finance_career_path_illustration_bd4a80b3.png";
-import hrImage from "@assets/generated_images/HR_career_path_illustration_acbb8bdc.png";
-import salesImage from "@assets/generated_images/Sales_career_path_illustration_1e56eccb.png";
+import financeImage from "/assets/generated_images/Finance_career_path_illustration_bd4a80b3.png";
+import hrImage from "/assets/generated_images/HR_career_path_illustration_acbb8bdc.png";
+import salesImage from "/assets/generated_images/Sales_career_path_illustration_1e56eccb.png";
 
 const paths = [
   {

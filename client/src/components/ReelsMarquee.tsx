@@ -1,38 +1,111 @@
 import { motion } from "framer-motion";
 import { Volume2, VolumeX, Play } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 interface VideoTestimonial {
   id: string;
-  thumbnail: string;
+  youtubeId: string;
   name: string;
   role: string;
   company: string;
+  quote: string;
 }
 
 const testimonials: VideoTestimonial[] = [
-  { id: "1", thumbnail: "https://placehold.co/360x640/0ea5e9/ffffff?text=Fatima+Rahman", name: "Fatima Rahman", role: "Finance Manager", company: "BRAC Bank" },
-  { id: "2", thumbnail: "https://placehold.co/360x640/f97316/ffffff?text=Kabir+Ahmed", name: "Kabir Ahmed", role: "HR Director", company: "Grameenphone" },
-  { id: "3", thumbnail: "https://placehold.co/360x640/8b5cf6/ffffff?text=Nadia+Khan", name: "Nadia Khan", role: "Sales Lead", company: "Pathao" },
-  { id: "4", thumbnail: "https://placehold.co/360x640/06b6d4/ffffff?text=Hassan+Ali", name: "Hassan Ali", role: "Marketing Head", company: "Chaldal" },
-  { id: "5", thumbnail: "https://placehold.co/360x640/ec4899/ffffff?text=Ayesha+Begum", name: "Ayesha Begum", role: "Product Manager", company: "bKash" },
-  { id: "6", thumbnail: "https://placehold.co/360x640/10b981/ffffff?text=Imran+Hossain", name: "Imran Hossain", role: "Operations Lead", company: "Daraz" },
-  { id: "7", thumbnail: "https://placehold.co/360x640/f59e0b/ffffff?text=Rima+Das", name: "Rima Das", role: "Treasury Analyst", company: "City Bank" },
-  { id: "8", thumbnail: "https://placehold.co/360x640/3b82f6/ffffff?text=Shakib+Alam", name: "Shakib Alam", role: "Data Analyst", company: "Robi" },
-  { id: "9", thumbnail: "https://placehold.co/360x640/a855f7/ffffff?text=Lamia+Islam", name: "Lamia Islam", role: "Accountant", company: "Square Pharma" },
-  { id: "10", thumbnail: "https://placehold.co/360x640/14b8a6/ffffff?text=Rafiq+Uddin", name: "Rafiq Uddin", role: "Sales Manager", company: "ACI" },
+  { 
+    id: "1", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Fatima Rahman", 
+    role: "Finance Manager", 
+    company: "BRAC Bank",
+    quote: "CareerToDo helped me master payroll systems in just 3 months!"
+  },
+  { 
+    id: "2", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Kabir Ahmed", 
+    role: "HR Director", 
+    company: "Grameenphone",
+    quote: "The HR simulations were exactly like real-world scenarios."
+  },
+  { 
+    id: "3", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Nadia Khan", 
+    role: "Sales Lead", 
+    company: "Pathao",
+    quote: "CRM practice on CareerToDo landed me my dream job!"
+  },
+  { 
+    id: "4", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Hassan Ali", 
+    role: "Marketing Head", 
+    company: "Chaldal",
+    quote: "Finally, a platform that teaches actual workplace skills."
+  },
+  { 
+    id: "5", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Ayesha Begum", 
+    role: "Product Manager", 
+    company: "bKash",
+    quote: "The product management simulations were incredibly realistic."
+  },
+  { 
+    id: "6", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Imran Hossain", 
+    role: "Operations Lead", 
+    company: "Daraz",
+    quote: "From theory to practice - CareerToDo bridges the gap perfectly."
+  },
+  { 
+    id: "7", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Rima Das", 
+    role: "Treasury Analyst", 
+    company: "City Bank",
+    quote: "The finance tools training gave me the confidence I needed."
+  },
+  { 
+    id: "8", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Shakib Alam", 
+    role: "Data Analyst", 
+    company: "Robi",
+    quote: "Real-world data analysis practice made all the difference."
+  },
+  { 
+    id: "9", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Lamia Islam", 
+    role: "Accountant", 
+    company: "Square Pharma",
+    quote: "Accounting software simulations prepared me for day one."
+  },
+  { 
+    id: "10", 
+    youtubeId: "dQw4w9WgXcQ", 
+    name: "Rafiq Uddin", 
+    role: "Sales Manager", 
+    company: "ACI",
+    quote: "The sales CRM practice was exactly what employers wanted."
+  },
 ];
 
 interface MarqueeRowProps {
   items: VideoTestimonial[];
   direction: 'left' | 'right';
   speed?: number;
-  mutedVideos: Set<string>;
-  onToggleMute: (id: string) => void;
-  onPlay: (id: string) => void;
+  onPlay: (video: VideoTestimonial) => void;
+  videoStates: {[key: string]: {playing: boolean, muted: boolean, currentTime: number, duration: number}};
+  onToggleMute: (videoId: string) => void;
+  onSeek: (videoId: string, time: number) => void;
 }
 
-function MarqueeRow({ items, direction, speed = 30, mutedVideos, onToggleMute, onPlay }: MarqueeRowProps) {
+function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggleMute, onSeek }: MarqueeRowProps) {
   const [isPaused, setIsPaused] = useState(false);
   
   const duplicatedItems = [...items, ...items, ...items];
@@ -63,54 +136,147 @@ function MarqueeRow({ items, direction, speed = 30, mutedVideos, onToggleMute, o
         {duplicatedItems.map((item, index) => (
           <div
             key={`${item.id}-${index}`}
-            className="relative flex-shrink-0 w-48 aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer"
+            className="relative flex-shrink-0 w-48 aspect-[9/16] rounded-2xl overflow-hidden group cursor-pointer bg-white shadow-lg hover:shadow-xl transition-all duration-300"
             data-testid={`video-testimonial-${item.id}-${index}`}
+            onClick={() => onPlay(item)}
           >
-            <img 
-              src={item.thumbnail} 
-              alt={`${item.name} video testimonial`}
-              className="w-full h-full object-cover"
-            />
-            
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-            
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onPlay(item.id);
-              }}
-              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30"
-              aria-label={`Play ${item.name} testimonial`}
-            >
-              <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform">
-                <Play className="w-8 h-8 text-primary ml-1" />
-              </div>
-            </button>
-            
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleMute(item.id);
-              }}
-              onFocus={() => setIsPaused(true)}
-              onBlur={() => setIsPaused(false)}
-              className="absolute top-3 right-3 p-2 rounded-full bg-black/60 backdrop-blur-sm text-white opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity z-10 hover-elevate active-elevate-2"
-              aria-label={mutedVideos.has(item.id) ? `Unmute ${item.name}` : `Mute ${item.name}`}
-              aria-pressed={!mutedVideos.has(item.id)}
-              data-testid={`button-toggle-mute-${item.id}`}
-            >
-              {mutedVideos.has(item.id) ? (
-                <VolumeX className="w-4 h-4" />
-              ) : (
-                <Volume2 className="w-4 h-4" />
-              )}
-            </button>
-            
-            <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-              <p className="font-bold text-sm mb-1">{item.name}</p>
-              <p className="text-xs text-white/90">{item.role}</p>
-              <p className="text-xs text-white/70">{item.company}</p>
-            </div>
+            {!videoStates[item.id]?.playing ? (
+              <>
+                {/* YouTube Thumbnail */}
+                <img 
+                  src={`https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`}
+                  alt={`${item.name} video testimonial`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+                    <Play className="w-6 h-6 text-white ml-0.5" />
+                  </div>
+                </div>
+                
+                {/* Duration Badge */}
+                <div className="absolute top-3 left-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                  0:45
+                </div>
+                
+                {/* Person Info */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
+                      <span className="text-xs font-bold text-white">
+                        {item.name.split(' ').map(n => n[0]).join('')}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm truncate">{item.name}</p>
+                      <p className="text-xs text-sky-200 truncate">{item.role}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-white/80 line-clamp-2">{item.quote}</p>
+                  <p className="text-xs text-sky-300 mt-1">{item.company}</p>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Video Player */}
+                <video
+                  id={`reel-video-${item.id}`}
+                  className="w-full h-full object-cover"
+                  onEnded={() => onPlay(item)}
+                  autoPlay
+                  muted={videoStates[item.id]?.muted}
+                >
+                  <source src={`https://www.youtube.com/watch?v=${item.youtubeId}`} type="video/mp4" />
+                </video>
+                
+                {/* Video controls overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30">
+                  {/* Top controls */}
+                  <div className="absolute top-2 right-2 flex items-center gap-1">
+                    <Button
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleMute(item.id);
+                      }}
+                      className="p-1 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-all duration-300"
+                    >
+                      {videoStates[item.id]?.muted ? (
+                        <VolumeX className="w-3 h-3" />
+                      ) : (
+                        <Volume2 className="w-3 h-3" />
+                      )}
+                    </Button>
+                  </div>
+
+                  {/* Center play/pause indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <Play className="w-6 h-6 text-white ml-0.5" />
+                    </div>
+                  </div>
+
+                  {/* Person info */}
+                  <div className="absolute bottom-16 left-0 right-0 p-3 text-white">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
+                        <span className="text-xs font-bold text-white">
+                          {item.name.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-xs truncate">{item.name}</p>
+                        <p className="text-xs text-sky-200 truncate">{item.role}</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-white/80 line-clamp-1">{item.quote}</p>
+                    <p className="text-xs text-sky-300 mt-1">{item.company}</p>
+                  </div>
+
+                  {/* Bottom controls */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3">
+                    <div className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onPlay(item);
+                        }}
+                        className="p-1 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-all duration-300"
+                      >
+                        <Play className="w-3 h-3 ml-0.5" />
+                      </Button>
+                      
+                      <div className="flex-1 flex items-center gap-1">
+                        <span className="text-white text-xs">
+                          {Math.floor((videoStates[item.id]?.currentTime || 0) / 60)}:
+                          {String(Math.floor((videoStates[item.id]?.currentTime || 0) % 60)).padStart(2, '0')}
+                        </span>
+                        <input
+                          type="range"
+                          min="0"
+                          max={videoStates[item.id]?.duration || 0}
+                          value={videoStates[item.id]?.currentTime || 0}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            onSeek(item.id, parseFloat(e.target.value));
+                          }}
+                          className="flex-1 h-1 bg-white/30 rounded-full appearance-none cursor-pointer"
+                        />
+                        <span className="text-white text-xs">
+                          {Math.floor((videoStates[item.id]?.duration || 0) / 60)}:
+                          {String(Math.floor((videoStates[item.id]?.duration || 0) % 60)).padStart(2, '0')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         ))}
       </motion.div>
@@ -119,31 +285,111 @@ function MarqueeRow({ items, direction, speed = 30, mutedVideos, onToggleMute, o
 }
 
 export function ReelsMarquee() {
-  const [mutedVideos, setMutedVideos] = useState<Set<string>>(new Set(testimonials.map(t => t.id)));
-  const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+  const [videoStates, setVideoStates] = useState<{[key: string]: {playing: boolean, muted: boolean, currentTime: number, duration: number}}>({});
 
-  const toggleMute = (id: string) => {
-    setMutedVideos(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
+  const handlePlay = (video: VideoTestimonial) => {
+    setVideoStates(prev => {
+      const newStates = {
+        ...prev,
+        [video.id]: {
+          playing: !prev[video.id]?.playing || false,
+          muted: prev[video.id]?.muted || true,
+          currentTime: prev[video.id]?.currentTime || 0,
+          duration: prev[video.id]?.duration || 0
+        }
+      };
+      
+      // Pause all other videos
+      Object.keys(newStates).forEach(key => {
+        if (key !== video.id) {
+          newStates[key] = { ...newStates[key], playing: false };
+        }
+      });
+      
+      return newStates;
+    });
+    
+    const videoElement = document.getElementById(`reel-video-${video.id}`) as HTMLVideoElement;
+    if (videoElement) {
+      if (!videoStates[video.id]?.playing) {
+        videoElement.play();
+        // Setup listeners for this video
+        const updateTime = () => {
+          setVideoStates(prev => ({
+            ...prev,
+            [video.id]: {
+              ...prev[video.id],
+              currentTime: videoElement.currentTime
+            }
+          }));
+        };
+        const updateDuration = () => {
+          setVideoStates(prev => ({
+            ...prev,
+            [video.id]: {
+              ...prev[video.id],
+              duration: videoElement.duration
+            }
+          }));
+        };
+        
+        videoElement.addEventListener('timeupdate', updateTime);
+        videoElement.addEventListener('loadedmetadata', updateDuration);
+        
+        // Store cleanup function
+        (videoElement as any).cleanup = () => {
+          videoElement.removeEventListener('timeupdate', updateTime);
+          videoElement.removeEventListener('loadedmetadata', updateDuration);
+        };
       } else {
-        newSet.add(id);
+        videoElement.pause();
       }
-      return newSet;
+    }
+    
+    // Pause all other videos
+    Object.keys(videoStates).forEach(id => {
+      if (id !== video.id && videoStates[id]?.playing) {
+        const otherVideoElement = document.getElementById(`reel-video-${id}`) as HTMLVideoElement;
+        if (otherVideoElement) {
+          otherVideoElement.pause();
+        }
+      }
     });
   };
 
-  const handlePlay = (id: string) => {
-    setPlayingVideo(id);
-    console.log('Playing video:', id);
+  const handleToggleMute = (videoId: string) => {
+    const videoElement = document.getElementById(`reel-video-${videoId}`) as HTMLVideoElement;
+    if (videoElement) {
+      videoElement.muted = !videoStates[videoId]?.muted;
+      setVideoStates(prev => ({
+        ...prev,
+        [videoId]: {
+          ...prev[videoId],
+          muted: !prev[videoId]?.muted
+        }
+      }));
+    }
+  };
+
+  const handleSeek = (videoId: string, time: number) => {
+    const videoElement = document.getElementById(`reel-video-${videoId}`) as HTMLVideoElement;
+    if (videoElement) {
+      videoElement.currentTime = time;
+      setVideoStates(prev => ({
+        ...prev,
+        [videoId]: {
+          ...prev[videoId],
+          currentTime: time
+        }
+      }));
+    }
   };
 
   const row1 = testimonials.slice(0, 5);
   const row2 = testimonials.slice(5, 10);
 
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-br from-card via-background to-card overflow-hidden">
+    <section className="py-20 md:py-32 bg-gradient-to-br from-sky-50/50 via-white to-blue-50/50 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -151,12 +397,18 @@ export function ReelsMarquee() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 bg-gradient-to-r from-ring via-chart-3 to-chart-4 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 bg-gradient-to-r from-sky-600 via-blue-600 to-sky-700 bg-clip-text text-transparent">
             Real Success Stories
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto">
             Hear directly from professionals who transformed their careers with CareerToDo
           </p>
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="w-6 h-6 rounded-full bg-red-600 flex items-center justify-center">
+              <Play className="w-3 h-3 text-white ml-0.5" />
+            </div>
+            <span className="text-sm text-slate-500">Click any video to watch testimonials in-platform</span>
+          </div>
         </motion.div>
 
         <div className="space-y-6">
@@ -164,28 +416,42 @@ export function ReelsMarquee() {
             items={row1} 
             direction="left" 
             speed={40}
-            mutedVideos={mutedVideos}
-            onToggleMute={toggleMute}
             onPlay={handlePlay}
+            videoStates={videoStates}
+            onToggleMute={handleToggleMute}
+            onSeek={handleSeek}
           />
           <MarqueeRow 
             items={row2} 
             direction="right" 
             speed={35}
-            mutedVideos={mutedVideos}
-            onToggleMute={toggleMute}
             onPlay={handlePlay}
+            videoStates={videoStates}
+            onToggleMute={handleToggleMute}
+            onSeek={handleSeek}
           />
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-8 text-sm text-muted-foreground"
+          className="text-center mt-12"
         >
-          Hover to pause • Click to play • Tap speaker to unmute
-        </motion.p>
+          <div className="inline-flex items-center gap-4 px-6 py-3 bg-gradient-to-r from-sky-100 to-blue-100 rounded-full border border-sky-200">
+            <div className="flex items-center gap-2 text-sm text-slate-600">
+              <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
+              <span>Hover to pause</span>
+            </div>
+            <div className="w-px h-4 bg-sky-300"></div>
+            <div className="flex items-center gap-2 text-sm text-slate-600">
+              <div className="w-4 h-4 rounded-full bg-red-600 flex items-center justify-center">
+                <Play className="w-2 h-2 text-white ml-0.5" />
+              </div>
+              <span>Click to play</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

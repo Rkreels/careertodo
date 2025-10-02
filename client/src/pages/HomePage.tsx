@@ -1,9 +1,11 @@
 import { Navigation } from "@/components/Navigation";
-import { ProgressRibbon } from "@/components/ProgressRibbon";
 import { AchievementToast } from "@/components/AchievementToast";
 import { EnhancedHero } from "@/components/EnhancedHero";
-import { StatsSection } from "@/components/StatsSection";
+import { TheRealityCheck } from "@/components/TheRealityCheck";
 import { VideoSection } from "@/components/VideoSection";
+import { WatchingVsDoing } from "@/components/WatchingVsDoing";
+import { TheGap } from "@/components/TheGap";
+import { MediaCoverage } from "@/components/MediaCoverage";
 import { EnhancedFeaturesSection } from "@/components/EnhancedFeaturesSection";
 import { EnhancedToolGrid } from "@/components/EnhancedToolGrid";
 import { SimulationGIFs } from "@/components/SimulationGIFs";
@@ -11,6 +13,7 @@ import { ReelsMarquee } from "@/components/ReelsMarquee";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { MediaCollage } from "@/components/MediaCollage";
 import { ProblemSolution } from "@/components/ProblemSolution";
+import { ComparisonSection } from "@/components/ComparisonSection";
 import { EnhancedCareerPaths } from "@/components/EnhancedCareerPaths";
 import { EnhancedPricing } from "@/components/EnhancedPricing";
 import { PartnersMarquee } from "@/components/PartnersMarquee";
@@ -23,11 +26,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <ProgressRibbon />
       <AchievementToast />
       <EnhancedHero />
-      <StatsSection />
+      <TheRealityCheck />
       <VideoSection />
+      <WatchingVsDoing />
+      <TheGap />
+      <MediaCoverage />
       <EnhancedFeaturesSection />
       <EnhancedToolGrid />
       <SimulationGIFs />
@@ -35,6 +40,7 @@ export default function HomePage() {
       <TestimonialsSection />
       <MediaCollage />
       <ProblemSolution />
+      <ComparisonSection />
       <EnhancedCareerPaths />
       <EnhancedPricing />
       <PartnersMarquee />

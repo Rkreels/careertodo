@@ -1,56 +1,86 @@
 import * as React from "react"
-import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 
-const Accordion = AccordionPrimitive.Root
+const Accordion = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & {
+    type?: "single" | "multiple"
+    collapsible?: boolean
+  }
+>(({ className, children, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("space-y-2", className)}
+    {...props}
+  >
+    {children}
+  </div>
+))
+Accordion.displayName = "Accordion"
 
 const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { value?: string }
+>(({ className, children, ...props }, ref) => (
+  <div
     ref={ref}
-    className={cn("border-b", className)}
+    className={cn("border rounded-lg", className)}
     {...props}
-  />
+  >
+    {children}
+  </div>
 ))
 AccordionItem.displayName = "AccordionItem"
 
 const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, children, ...props }, ref) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  return (
+    <button
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        "flex w-full items-center justify-between p-4 text-left font-medium transition-all hover:bg-muted",
         className
       )}
+      onClick={() => setIsOpen(!isOpen)}
       {...props}
     >
       {children}
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-))
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
+      <ChevronDown
+        className={cn(
+          "h-4 w-4 shrink-0 transition-transform duration-200",
+          isOpen && "rotate-180"
+        )}
+      />
+    </button>
+  )
+})
+AccordionTrigger.displayName = "AccordionTrigger"
 
 const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
+  <div
     ref={ref}
-    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    className={cn(
+      "overflow-hidden text-sm transition-all",
+      className
+    )}
     {...props}
   >
-    <div className={cn("pb-4 pt-0", className)}>{children}</div>
-  </AccordionPrimitive.Content>
+    <div className="p-4 pt-0">{children}</div>
+  </div>
 ))
+AccordionContent.displayName = "AccordionContent"
 
-AccordionContent.displayName = AccordionPrimitive.Content.displayName
-
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+}

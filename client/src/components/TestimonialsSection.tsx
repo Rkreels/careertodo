@@ -1,7 +1,7 @@
 import { TestimonialCard } from "./TestimonialCard";
 import { motion } from "framer-motion";
-import avatar1 from "@assets/generated_images/Testimonial_user_avatar_female_33779c1f.png";
-import avatar2 from "@assets/generated_images/Testimonial_user_avatar_male_2d83e1b8.png";
+import avatar1 from "/assets/generated_images/Testimonial_user_avatar_female_33779c1f.png";
+import avatar2 from "/assets/generated_images/Testimonial_user_avatar_male_2d83e1b8.png";
 
 export function TestimonialsSection() {
   return (

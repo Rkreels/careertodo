@@ -58,7 +58,7 @@ export function AchievementToast() {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 400, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed bottom-8 right-8 z-50 max-w-sm"
+          className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 max-w-xs sm:max-w-sm"
           role="status"
           aria-live="polite"
           aria-atomic="true"

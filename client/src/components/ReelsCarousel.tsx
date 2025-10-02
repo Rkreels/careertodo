@@ -52,7 +52,7 @@ export function ReelsCarousel() {
         </motion.div>
 
         <div className="space-y-6">
-          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+          <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
             {reels.map((reel, index) => (
               <motion.div
                 key={reel.id}
@@ -60,7 +60,7 @@ export function ReelsCarousel() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="relative flex-shrink-0 w-48 aspect-[9/16] rounded-2xl overflow-hidden snap-start group"
+                className="relative flex-shrink-0 w-36 sm:w-40 md:w-44 lg:w-48 aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden snap-start group"
                 data-testid={`reel-${reel.id}`}
               >
                 <img 
@@ -72,19 +72,19 @@ export function ReelsCarousel() {
                 
                 <button
                   onClick={() => toggleMute(reel.id)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-black/50 backdrop-blur-sm text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 sm:top-4 right-2 sm:right-4 p-1.5 sm:p-2 rounded-full bg-black/50 backdrop-blur-sm text-white opacity-0 group-hover:opacity-100 transition-opacity"
                   data-testid={`button-reel-mute-${reel.id}`}
                 >
                   {mutedReels.has(reel.id) ? (
-                    <VolumeX className="w-4 h-4" />
+                    <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" />
                   ) : (
-                    <Volume2 className="w-4 h-4" />
+                    <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
                   )}
                 </button>
                 
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <p className="font-semibold">{reel.name}</p>
-                  <p className="text-sm text-white/80">{reel.role}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 text-white">
+                  <p className="font-semibold text-xs sm:text-sm">{reel.name}</p>
+                  <p className="text-xs sm:text-sm text-white/80">{reel.role}</p>
                 </div>
               </motion.div>
             ))}

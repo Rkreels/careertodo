@@ -50,7 +50,7 @@ export function EnhancedToolGrid() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
           {tools.map((tool, index) => (
             <motion.div
               key={tool.name}
@@ -62,14 +62,14 @@ export function EnhancedToolGrid() {
               className="group relative"
               data-testid={`tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${tool.color} rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${tool.color} rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
               
-              <div className="relative bg-background/60 backdrop-blur-xl border border-card-border rounded-2xl p-6 hover-elevate active-elevate-2 transition-all">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform`}>
-                  <tool.icon className="w-6 h-6 text-white" />
+              <div className="relative bg-background/60 backdrop-blur-xl border border-card-border rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 hover-elevate active-elevate-2 transition-all">
+                <div className={`w-8 h-8 sm:w-10 sm:h-12 md:w-12 md:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center mb-2 sm:mb-4 group-hover:rotate-6 transition-transform`}>
+                  <tool.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 
-                <h3 className="font-bold text-sm mb-1 line-clamp-2">{tool.name}</h3>
+                <h3 className="font-bold text-xs sm:text-sm mb-1 line-clamp-2">{tool.name}</h3>
                 <p className="text-xs text-muted-foreground">{tool.category}</p>
               </div>
             </motion.div>

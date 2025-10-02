@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { AnimatedCounter } from "./AnimatedCounter";
-import { Users, Award, Briefcase, TrendingUp } from "lucide-react";
+import { Users, Award, Briefcase, TrendingUp, Globe, DollarSign } from "lucide-react";
 
 const stats = [
-  { icon: Users, label: "Active Learners", value: 50000, suffix: "+", color: "text-chart-3" },
-  { icon: Award, label: "Career Paths", value: 20, suffix: "+", color: "text-chart-4" },
-  { icon: Briefcase, label: "Job Placements", value: 12000, suffix: "+", color: "text-chart-2" },
-  { icon: TrendingUp, label: "Success Rate", value: 95, suffix: "%", color: "text-chart-3" },
+  { icon: Users, label: "Bangladeshis Working Abroad (2024)", value: 1.01, suffix: "M+", color: "text-chart-3" },
+  { icon: DollarSign, label: "Record Remittances (2024)", value: 26.89, suffix: "B+", color: "text-chart-4" },
+  { icon: Briefcase, label: "Tech Jobs by 2030", value: 2, suffix: "M+", color: "text-chart-2" },
+  { icon: Globe, label: "World Bank Support", value: 850, suffix: "M", color: "text-chart-3" },
 ];
 
 export function StatsSection() {
