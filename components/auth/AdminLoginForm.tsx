@@ -19,7 +19,7 @@ interface AdminLoginFormProps {
 }
 
 export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onBackToUserLogin }) => {
-  const { signIn } = useAuth();
+  const { signIn, isAdmin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,12 +29,22 @@ export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onBackToUserLogi
     formState: { errors, isSubmitting },
   } = useForm<AdminLoginFormData>();
 
+  // Redirect to admin dashboard if user is already admin
+  React.useEffect(() => {
+    if (isAdmin) {
+      window.location.href = '/admin';
+    }
+  }, [isAdmin]);
+
   const onSubmit = async (data: AdminLoginFormData) => {
     try {
       setError(null);
       const { error } = await signIn(data.email, data.password);
       if (error) {
         setError(error.message || 'Admin login failed');
+      } else {
+        // Login successful, redirect will happen via useEffect
+        console.log('Admin login successful, redirecting...');
       }
     } catch (err: any) {
       setError(err.message || 'Admin login failed');
@@ -72,6 +82,11 @@ export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onBackToUserLogi
               <div className="text-xs text-blue-800">
                 <p className="font-medium mb-1">Admin Access Required</p>
                 <p>You need admin privileges to access this portal.</p>
+                <div className="mt-2 p-2 bg-blue-100 rounded border border-blue-300">
+                  <p className="font-semibold text-blue-900">Default Credentials:</p>
+                  <p className="text-blue-800">Email: admin@careertodo.com</p>
+                  <p className="text-blue-800">Password: Admin123!@#</p>
+                </div>
               </div>
             </div>
           </div>
@@ -84,7 +99,8 @@ export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onBackToUserLogi
             <Input
               id="email"
               type="email"
-              placeholder="admin@example.com"
+              placeholder="admin@careertodo.com"
+              defaultValue="admin@careertodo.com"
               {...register('email', { 
                 required: 'Admin email is required',
                 pattern: {
@@ -166,6 +182,17 @@ export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onBackToUserLogi
               </Button>
             </div>
           )}
+          
+          <div className="text-center text-xs sm:text-sm">
+            <Button
+              type="button"
+              variant="ghost"
+              className="p-0 h-auto font-normal text-xs sm:text-sm hover:bg-transparent hover:text-primary"
+              onClick={() => window.location.href = '/'}
+            >
+              ← Back to Home
+            </Button>
+          </div>
         </CardFooter>
       </form>
     </Card>
