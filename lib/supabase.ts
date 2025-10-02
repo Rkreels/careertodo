@@ -32,7 +32,8 @@ export const authHelpers = {
       email,
       password,
       options: {
-        data: metadata
+        data: metadata,
+        emailRedirectTo: undefined, // Disable email confirmation
       }
     });
     return { data, error };
@@ -160,6 +161,101 @@ export const dbHelpers = {
     }
     const { error } = await supabase.from(table).delete().eq('id', id);
     return { error };
+  }
+};
+
+// Admin helper functions
+export const adminHelpers = {
+  // Check if user is admin
+  async checkAdminRole(userId: string) {
+    if (!supabase) {
+      return { isAdmin: false, error: new Error('Supabase not configured') };
+    }
+    
+    const { data, error } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', userId)
+      .single();
+    
+    if (error) {
+      return { isAdmin: false, error };
+    }
+    
+    return { isAdmin: data.role === 'admin', error: null };
+  },
+
+  // Get user with role information
+  async getUserWithRole(email: string) {
+    if (!supabase) {
+      return { user: null, error: new Error('Supabase not configured') };
+    }
+    
+    // First get auth user
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password: '' // This will fail, but we need to check if user exists
+    });
+    
+    if (authError && authError.message !== 'Invalid login credentials') {
+      return { user: null, error: authError };
+    }
+    
+    // Get user profile with role
+    const { data: profileData, error: profileError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+    
+    if (profileError) {
+      return { user: null, error: profileError };
+    }
+    
+    return { user: profileData, error: null };
+  },
+
+  // Create admin user (for initial setup)
+  async createAdminUser(email: string, password: string, name: string, phone: string) {
+    if (!supabase) {
+      return { user: null, error: new Error('Supabase not configured') };
+    }
+    
+    // Create auth user
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { name, phone },
+        emailRedirectTo: undefined,
+      }
+    });
+    
+    if (authError) {
+      return { user: null, error: authError };
+    }
+    
+    // Create user profile with admin role
+    const { data: profileData, error: profileError } = await supabase
+      .from('users')
+      .insert({
+        id: authData.user?.id,
+        email,
+        name,
+        phone,
+        password, // Note: In production, you should hash this
+        role: 'admin',
+        is_paid: true,
+        payment_status: 'completed'
+      })
+      .select()
+      .single();
+    
+    if (profileError) {
+      return { user: null, error: profileError };
+    }
+    
+    return { user: profileData, error: null };
   }
 };
 

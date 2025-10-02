@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { 
   BookOpen, 
   Users, 
@@ -73,7 +74,8 @@ export const UserDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <ProtectedRoute requirePayment={false}>
+      <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm p-6">
@@ -91,7 +93,7 @@ export const UserDashboard: React.FC = () => {
                 {user?.is_paid ? 'Premium' : 'Free'}
               </Badge>
               {!user?.is_paid && (
-                <Button size="sm">
+                <Button size="sm" onClick={() => window.location.href = '/payment'}>
                   <CreditCard className="mr-2 h-4 w-4" />
                   Upgrade Now
                 </Button>
@@ -226,7 +228,7 @@ export const UserDashboard: React.FC = () => {
                             Launch Tool
                           </Button>
                         ) : (
-                          <Button size="sm" variant="outline" disabled className="w-full">
+                          <Button size="sm" variant="outline" disabled className="w-full" onClick={() => window.location.href = '/payment'}>
                             <CreditCard className="mr-2 h-4 w-4" />
                             Upgrade to Unlock
                           </Button>
@@ -338,5 +340,6 @@ export const UserDashboard: React.FC = () => {
         </Tabs>
       </div>
     </div>
+    </ProtectedRoute>
   );
 };

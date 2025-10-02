@@ -42,22 +42,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
 
   return (
     <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
-        <CardDescription className="text-center">
+      <CardHeader className="space-y-1 px-4 sm:px-6">
+        <CardTitle className="text-xl sm:text-2xl font-bold text-center">Welcome Back</CardTitle>
+        <CardDescription className="text-center text-sm sm:text-base">
           Sign in to your CareerToDo account
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-4 sm:px-6">
           {error && (
             <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="text-sm">{error}</AlertDescription>
             </Alert>
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium">Email</Label>
             <Input
               id="email"
               type="email"
@@ -66,44 +66,44 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
               className={errors.email ? 'border-red-500' : ''}
             />
             {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter your password"
                 {...register('password', { required: 'Password is required' })}
-                className={errors.password ? 'border-red-500' : ''}
+                className={errors.password ? 'border-red-500' : 'pr-8 sm:pr-10'}
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                className="absolute right-0 top-0 h-full px-2 sm:px-3 py-2 hover:bg-transparent"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
+                  <EyeOff className="h-3 w-3 sm:h-4 sm:w-4" />
                 ) : (
-                  <Eye className="h-4 w-4" />
+                  <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 )}
               </Button>
             </div>
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
         </CardContent>
         
-        <CardFooter className="flex flex-col space-y-4">
+        <CardFooter className="flex flex-col space-y-3 sm:space-y-4 px-4 sm:px-6">
           <Button
             type="submit"
-            className="w-full"
+            className="w-full text-sm sm:text-base"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
@@ -116,12 +116,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
             )}
           </Button>
           
-          <div className="text-center text-sm">
+          <div className="text-center text-xs sm:text-sm">
             Don't have an account?{' '}
             <Button
               type="button"
               variant="ghost"
-              className="p-0 h-auto font-normal text-sm hover:bg-transparent hover:text-primary"
+              className="p-0 h-auto font-normal text-xs sm:text-sm hover:bg-transparent hover:text-primary"
               onClick={onToggleMode}
             >
               Sign up

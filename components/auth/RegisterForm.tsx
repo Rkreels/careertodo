@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { BkashPayment } from '@/components/payment/BkashPayment';
 
 interface RegisterFormData {
   name: string;
@@ -22,10 +23,13 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
-  const { signUp } = useAuth();
+  const { signUp, signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPayment, setShowPayment] = useState(false);
+  const [registeredUser, setRegisteredUser] = useState<RegisterFormData | null>(null);
+  const [registrationStep, setRegistrationStep] = useState<'form' | 'payment' | 'success'>('form');
 
   const {
     register,
@@ -44,37 +48,94 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
         return;
       }
       const { confirmPassword, ...registerData } = data;
-      const { error } = await signUp(registerData.email, registerData.password, {
+      
+      // First, register the user
+      const { error, data: signUpData } = await signUp(registerData.email, registerData.password, {
         name: registerData.name,
         phone: registerData.phone,
         referral_code: registerData.referralCode,
       });
+      
       if (error) {
-        setError(error.message || 'Registration failed');
+        // Check if it's just an email confirmation error (which we want to ignore)
+        if (error.message?.includes('confirmation') || error.message?.includes('email')) {
+          // Try to sign in immediately since we disabled email confirmation
+          const { error: signInError } = await signIn(registerData.email, registerData.password);
+          if (signInError) {
+            setError(signInError.message || 'Registration successful but login failed');
+          } else {
+            // Successful registration and login
+            setRegisteredUser(registerData);
+            setRegistrationStep('payment');
+            setShowPayment(true);
+          }
+        } else {
+          setError(error.message || 'Registration failed');
+        }
+      } else {
+        // Registration successful, try to sign in immediately
+        if (signUpData?.user) {
+          const { error: signInError } = await signIn(registerData.email, registerData.password);
+          if (signInError) {
+            setError('Registration successful but automatic login failed. Please try logging in manually.');
+          } else {
+            // Successful registration and login
+            setRegisteredUser(registerData);
+            setRegistrationStep('payment');
+            setShowPayment(true);
+          }
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Registration failed');
     }
   };
 
+  const handlePaymentSuccess = () => {
+    setRegistrationStep('success');
+    // Close modal after successful payment
+    setTimeout(() => {
+      onToggleMode(); // This will close the modal
+      // Redirect to dashboard
+      window.location.href = '/dashboard';
+    }, 2000);
+  };
+
+  const handlePaymentFailure = () => {
+    // Payment failed but user is registered
+    setShowPayment(false);
+    setError('Registration successful! You can login and complete payment later to access premium features.');
+    setTimeout(() => {
+      onToggleMode(); // Close modal and let user login normally
+    }, 3000);
+  };
+
+  const handleSkipPayment = () => {
+    setShowPayment(false);
+    setError('Registration successful! You can login and complete payment later to access premium features.');
+    setTimeout(() => {
+      onToggleMode(); // Close modal and let user login normally
+    }, 3000);
+  };
+
   return (
     <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
-        <CardDescription className="text-center">
+      <CardHeader className="space-y-1 px-4 sm:px-6">
+        <CardTitle className="text-xl sm:text-2xl font-bold text-center">Create Account</CardTitle>
+        <CardDescription className="text-center text-sm sm:text-base">
           Join CareerToDo and start your journey
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6">
           {error && (
             <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="text-sm">{error}</AlertDescription>
             </Alert>
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
             <Input
               id="name"
               type="text"
@@ -83,12 +144,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
               className={errors.name ? 'border-red-500' : ''}
             />
             {errors.name && (
-              <p className="text-sm text-red-500">{errors.name.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.name.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium">Email</Label>
             <Input
               id="email"
               type="email"
@@ -97,12 +158,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
               className={errors.email ? 'border-red-500' : ''}
             />
             {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number</Label>
+            <Label htmlFor="phone" className="text-sm font-medium">Phone Number</Label>
             <Input
               id="phone"
               type="tel"
@@ -111,41 +172,41 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
               className={errors.phone ? 'border-red-500' : ''}
             />
             {errors.phone && (
-              <p className="text-sm text-red-500">{errors.phone.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.phone.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Create a password"
                 {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } })}
-                className={errors.password ? 'border-red-500' : ''}
+                className={errors.password ? 'border-red-500' : 'pr-8 sm:pr-10'}
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                className="absolute right-0 top-0 h-full px-2 sm:px-3 py-2 hover:bg-transparent"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
+                  <EyeOff className="h-3 w-3 sm:h-4 sm:w-4" />
                 ) : (
-                  <Eye className="h-4 w-4" />
+                  <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 )}
               </Button>
             </div>
             {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</Label>
             <div className="relative">
               <Input
                 id="confirmPassword"
@@ -155,42 +216,43 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
             required: 'Please confirm your password',
             validate: value => value === password || "Passwords don't match"
           })}
-                className={errors.confirmPassword ? 'border-red-500' : ''}
+                className={errors.confirmPassword ? 'border-red-500' : 'pr-8 sm:pr-10'}
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                className="absolute right-0 top-0 h-full px-2 sm:px-3 py-2 hover:bg-transparent"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? (
-                  <EyeOff className="h-4 w-4" />
+                  <EyeOff className="h-3 w-3 sm:h-4 sm:w-4" />
                 ) : (
-                  <Eye className="h-4 w-4" />
+                  <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 )}
               </Button>
             </div>
             {errors.confirmPassword && (
-              <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.confirmPassword.message}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="referralCode">Referral Code (Optional)</Label>
+            <Label htmlFor="referralCode" className="text-sm font-medium">Referral Code (Optional)</Label>
             <Input
               id="referralCode"
               type="text"
               placeholder="Enter referral code"
               {...register('referralCode')}
+              className="text-sm"
             />
           </div>
         </CardContent>
         
-        <CardFooter className="flex flex-col space-y-4">
+        <CardFooter className="flex flex-col space-y-3 sm:space-y-4 px-4 sm:px-6">
           <Button
             type="submit"
-            className="w-full"
+            className="w-full text-sm sm:text-base"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
@@ -199,16 +261,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
                 Creating account...
               </>
             ) : (
-              'Create Account'
+              'Next →'
             )}
           </Button>
           
-          <div className="text-center text-sm">
+          <div className="text-center text-xs sm:text-sm">
             Already have an account?{' '}
             <Button
               type="button"
               variant="ghost"
-              className="p-0 h-auto font-normal text-sm hover:bg-transparent hover:text-primary"
+              className="p-0 h-auto font-normal text-xs sm:text-sm hover:bg-transparent hover:text-primary"
               onClick={onToggleMode}
             >
               Sign in
@@ -216,6 +278,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
           </div>
         </CardFooter>
       </form>
+      
+      {/* bKash Payment Modal */}
+      {registeredUser && (
+        <BkashPayment
+          isOpen={showPayment}
+          onClose={() => setShowPayment(false)}
+          onSuccess={handlePaymentSuccess}
+          onFailure={handlePaymentFailure}
+          amount={1500}
+          userInfo={{
+            name: registeredUser.name,
+            email: registeredUser.email,
+            phone: registeredUser.phone
+          }}
+        />
+      )}
     </Card>
   );
 };

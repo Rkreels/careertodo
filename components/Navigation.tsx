@@ -25,11 +25,13 @@ export function Navigation() {
   }, []);
 
   const handleLogin = () => {
+    console.log('Login button clicked - setting mode to login');
     setAuthMode('login');
     setAuthModalOpen(true);
   };
 
   const handleRegister = () => {
+    console.log('Register button clicked - setting mode to register');
     setAuthMode('register');
     setAuthModalOpen(true);
   };
