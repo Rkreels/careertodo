@@ -17,7 +17,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requireAdmin = false,
   redirectTo 
 }) => {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin, userProfile } = useAuth();
 
   useEffect(() => {
     if (loading) return;
@@ -34,12 +34,12 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       return;
     }
 
-    if (requirePayment && !user.is_paid) {
+    if (requirePayment && userProfile && !userProfile.is_paid) {
       // User hasn't paid, redirect to payment
       window.location.href = '/payment';
       return;
     }
-  }, [user, loading, isAdmin, requirePayment, requireAdmin]);
+  }, [user, loading, isAdmin, userProfile, requirePayment, requireAdmin]);
 
   if (loading) {
     return (
@@ -82,7 +82,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  if (requirePayment && !user.is_paid) {
+  if (requirePayment && userProfile && !userProfile.is_paid) {
     return null; // Will redirect to payment
   }
 

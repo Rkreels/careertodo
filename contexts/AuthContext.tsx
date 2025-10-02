@@ -7,6 +7,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
+  userProfile: any | null;
   signUp: (email: string, password: string, metadata?: any) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
@@ -21,20 +22,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userProfile, setUserProfile] = useState<any | null>(null);
   const [supabaseError, setSupabaseError] = useState(false);
+
+  const fetchUserProfile = async (userId: string) => {
+    if (!supabase || !userId) return null;
+    
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single();
+      
+      if (error) {
+        console.error('Error fetching user profile:', error);
+        return null;
+      }
+      
+      return data;
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      return null;
+    }
+  };
 
   const checkAdminStatus = async () => {
     if (!user) {
       setIsAdmin(false);
+      setUserProfile(null);
       return;
     }
 
     try {
+      // Fetch user profile first
+      const profile = await fetchUserProfile(user.id);
+      setUserProfile(profile);
+      
+      // Check admin role
       const { isAdmin: isUserAdmin } = await adminHelpers.checkAdminRole(user.id);
       setIsAdmin(isUserAdmin);
     } catch (error) {
       console.error('Error checking admin status:', error);
       setIsAdmin(false);
+      setUserProfile(null);
     }
   };
 
@@ -126,6 +157,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     session,
     loading,
     isAdmin,
+    userProfile,
     signUp,
     signIn,
     signOut,
@@ -149,14 +181,14 @@ export const useAuth = () => {
 };
 
 export const useAuthRedirect = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, userProfile } = useAuth();
 
   useEffect(() => {
     if (loading) return;
 
-    if (user) {
+    if (user && userProfile) {
       // User is logged in, check payment status
-      if (!user.is_paid) {
+      if (!userProfile.is_paid) {
         // User hasn't paid, redirect to payment
         window.location.href = '/payment';
       } else {
@@ -164,7 +196,7 @@ export const useAuthRedirect = () => {
         window.location.href = '/dashboard';
       }
     }
-  }, [user, loading]);
+  }, [user, loading, userProfile]);
 
-  return { user, loading };
+  return { user, loading, userProfile };
 };
