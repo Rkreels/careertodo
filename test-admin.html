@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Test - CareerToDo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #2563eb; }
+        .credentials {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔐 Admin Access Test</h1>
+        <p>This page tests the admin authentication system for CareerToDo.</p>
+        
+        <h2>📋 Default Admin Credentials</h2>
+        <div class="credentials">
+            Email: admin@careertodo.com<br>
+            Password: Admin123!@#
+        </div>
+        
+        <h2>🚀 Quick Actions</h2>
+        <button onclick="window.open('http://localhost:3000/admin-login', '_blank')">
+            Open Admin Login
+        </button>
+        <button onclick="window.open('http://localhost:3000', '_blank')">
+            Open Main Site
+        </button>
+        
+        <h2>🔍 Test Results</h2>
+        <div id="test-results">
+            <p class="info">Testing admin authentication...</p>
+        </div>
+        
+        <h2>📝 Instructions</h2>
+        <ol>
+            <li><strong>Create Admin User:</strong> Open browser console on main site and run <code>createAdminUser()</code></li>
+            <li><strong>Test Admin Login:</strong> Go to <code>/admin-login</code> and enter credentials</li>
+            <li><strong>Verify Dashboard:</strong> Should redirect to <code>/admin</code> after successful login</li>
+            <li><strong>Test Protection:</strong> Try accessing <code>/admin</code> without login - should deny access</li>
+        </ol>
+    </div>
+
+    <script>
+        // Test admin access
+        async function testAdminAccess() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<p class="info">Testing admin system...</p>';
+            
+            try {
+                // Test 1: Check if admin login page exists
+                const loginResponse = await fetch('http://localhost:3000/admin-login');
+                if (loginResponse.ok) {
+                    results.innerHTML += '<p class="success">✅ Admin login page accessible</p>';
+                } else {
+                    results.innerHTML += '<p class="error">❌ Admin login page not accessible</p>';
+                }
+                
+                // Test 2: Check if main site is running
+                const mainResponse = await fetch('http://localhost:3000');
+                if (mainResponse.ok) {
+                    results.innerHTML += '<p class="success">✅ Main site is running</p>';
+                } else {
+                    results.innerHTML += '<p class="error">❌ Main site not accessible</p>';
+                }
+                
+                results.innerHTML += '<p class="info">📝 Next: Open admin login and test authentication</p>';
+                
+            } catch (error) {
+                results.innerHTML += `<p class="error">❌ Error testing admin access: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        testAdminAccess();
+        
+        // Add admin creation function for convenience
+        window.createAdminUser = async function() {
+            alert('To create admin user, open the main site (http://localhost:3000) and run createAdminUser() in the browser console.');
+        };
+    </script>
+</body>
+</html>
