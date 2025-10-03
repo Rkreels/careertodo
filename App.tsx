@@ -12,6 +12,8 @@ import { PaymentPage } from "@/components/payment/PaymentPage";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AdminLoginForm } from "@/components/auth/AdminLoginForm";
 import NotFound from "@/pages/not-found";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 // Admin Login Page Component
 const AdminLoginPage = () => {
@@ -58,7 +60,12 @@ function Router() {
 }
 
 function App() {
-  return <Router />;
+  useScrollToTop();
+  return (
+    <ScrollToTop>
+      <Router />
+    </ScrollToTop>
+  );
 }
 
 export default App;

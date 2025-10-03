@@ -10,6 +10,21 @@ import { Toaster } from './components/ui/toaster';
 import App from "./App";
 import "./index.css";
 import { queryClient } from './lib/queryClient';
+import { handleBrowserNavigation } from './lib/scrollUtils';
+
+// Global scroll reset on page load
+if (typeof window !== 'undefined') {
+  // Handle browser navigation
+  handleBrowserNavigation();
+  
+  // Scroll to top immediately
+  window.scrollTo(0, 0);
+  
+  // Also scroll after DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
+  });
+}
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

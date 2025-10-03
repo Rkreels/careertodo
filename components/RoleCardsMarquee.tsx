@@ -109,32 +109,32 @@ export function RoleCardsMarquee() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50 rounded-2xl sm:rounded-3xl border border-sky-200">
+    <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50 rounded-2xl sm:rounded-3xl border border-sky-200 shadow-xl">
       {/* Background gradients */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(14,165,233,0.1),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(59,130,246,0.1),transparent_50%)]" />
       
-      {/* Title overlay */}
-      <div className="absolute top-4 sm:top-6 left-0 right-0 z-20 text-center">
-        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 mb-2">
+      {/* Title overlay - responsive sizing */}
+      <div className="absolute top-2 sm:top-4 left-0 right-0 z-20 text-center px-4">
+        <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-slate-800 mb-1">
           Explore Real Career Roles
         </h3>
-        <p className="text-sm sm:text-base text-slate-600">
+        <p className="text-xs sm:text-sm md:text-base text-slate-600">
           Practice actual tasks from different industries
         </p>
       </div>
 
-      {/* Rolling cards container */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative w-full h-full">
+      {/* Rolling cards container - constrained to available space */}
+      <div className="absolute inset-0 flex items-center justify-center pt-16 sm:pt-20">
+        <div className="relative w-full h-full max-w-6xl mx-auto">
           {/* Single column of cards rolling from bottom to top */}
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -50 * duplicatedRoles.length],
+              y: [0, -40 * duplicatedRoles.length],
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
-                duration: 30,
+                duration: 25,
                 repeat: Infinity,
                 ease: "linear",
               },
@@ -143,7 +143,7 @@ export function RoleCardsMarquee() {
           >
             {duplicatedRoles.map((role, index) => {
               const Icon = role.icon;
-              const position = index * 50 - 100; // Start from bottom
+              const position = index * 40 - 80; // Adjusted spacing for better fit
               
               return (
                 <motion.div
@@ -151,38 +151,43 @@ export function RoleCardsMarquee() {
                   className="absolute left-1/2 transform -translate-x-1/2"
                   style={{ 
                     top: `${position}px`,
-                    width: '280px',
-                    maxWidth: 'calc(100vw - 2rem)'
+                    width: '200px xs:240px sm:280px md:320px',
+                    maxWidth: 'calc(90vw - 2rem)'
                   }}
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
+                  whileHover={{ scale: 1.02 }}
                   animate={{
                     opacity: [0, 1, 1, 0],
                     scale: [0.8, 1, 1, 0.8],
                   }}
                   transition={{
-                    duration: 15,
+                    duration: 12,
                     repeat: Infinity,
-                    delay: index * 0.5,
+                    delay: index * 0.4,
                     ease: "easeInOut"
                   }}
                 >
-                  <div className="bg-white/90 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-sky-100 hover:shadow-xl transition-all duration-300">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center`}>
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <div className="bg-white/90 backdrop-blur-xl rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 shadow-lg border border-sky-100 hover:shadow-xl transition-all duration-300">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                      <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                       </div>
-                      <div>
-                        <h4 className="font-bold text-slate-800 text-sm sm:text-base">{role.title}</h4>
-                        <p className="text-xs sm:text-sm text-slate-600">{role.department}</p>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-bold text-slate-800 text-xs sm:text-sm md:text-base truncate">{role.title}</h4>
+                        <p className="text-xs sm:text-sm text-slate-600 truncate">{role.department}</p>
                       </div>
                     </div>
                     <div className="space-y-1">
-                      {role.tasks.map((task, taskIndex) => (
-                        <div key={taskIndex} className="flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                          <span className="text-xs text-slate-600">{task}</span>
+                      {role.tasks.slice(0, 2).map((task, taskIndex) => (
+                        <div key={taskIndex} className="flex items-center gap-1.5 sm:gap-2">
+                          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-sky-400 flex-shrink-0" />
+                          <span className="text-xs text-slate-600 truncate">{task}</span>
                         </div>
                       ))}
+                      {role.tasks.length > 2 && (
+                        <div className="text-xs text-slate-400 italic">
+                          +{role.tasks.length - 2} more
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -192,9 +197,9 @@ export function RoleCardsMarquee() {
         </div>
       </div>
 
-      {/* Fade overlays for smooth entrance/exit */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-sky-50 via-white/50 to-transparent z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-sky-50 via-white/50 to-transparent z-10" />
+      {/* Fade overlays for smooth entrance/exit - adjusted height */}
+      <div className="absolute top-0 left-0 right-0 h-12 sm:h-16 bg-gradient-to-b from-sky-50 via-white/70 to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-16 bg-gradient-to-t from-sky-50 via-white/70 to-transparent z-10" />
     </div>
   );
 }

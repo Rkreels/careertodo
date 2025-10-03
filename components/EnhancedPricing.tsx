@@ -12,6 +12,7 @@ const plans = [
     description: "Limited time offer - Get 6 months of full access at our special launch price!",
     icon: Sparkles,
     gradient: "from-chart-3 to-chart-4",
+    savings: 58,
     features: [
       "Access to all 20+ professional simulations",
       "ERP, CRM, HRMS, Accounting & more tools",
@@ -91,7 +92,7 @@ export function EnhancedPricing() {
                       <span className="text-lg text-muted-foreground">{plan.period}</span>
                     </div>
                     <div className="mt-3 inline-flex items-center px-4 py-1 rounded-full bg-green-100 text-green-800 text-sm font-medium">
-                      Save {Math.round(((parseInt(plan.originalPrice.replace(/[৳,]/g, '')) - parseInt(plan.price.replace(/[৳,]/g, ''))) / parseInt(plan.originalPrice.replace(/[৳,]/g, '')) * 100)}% 
+                      Save {plan.savings}%
                     </div>
                   </div>
                 </div>
