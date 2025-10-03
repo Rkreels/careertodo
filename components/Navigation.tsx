@@ -60,8 +60,8 @@ export function Navigation() {
                 CareerToDo
               </Link>
               <div className="hidden md:flex items-center gap-6">
-                <Link href="/demo" className="text-sm hover:text-ring transition-colors">
-                  Demo
+                <Link href="/signup" className="text-sm hover:text-ring transition-colors">
+                  Sign Up
                 </Link>
                 <a href="#home" className="text-sm hover:text-ring transition-colors" data-testid="link-home">
                   {t("nav.home")}
@@ -146,8 +146,8 @@ export function Navigation() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t bg-background/95 backdrop-blur-lg">
               <div className="px-4 py-3 space-y-3">
-                <Link href="/demo" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                  Demo
+                <Link href="/signup" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  Sign Up
                 </Link>
                 <a href="#home" className="block text-sm hover:text-ring transition-colors" data-testid="link-home-mobile">
                   {t("nav.home")}

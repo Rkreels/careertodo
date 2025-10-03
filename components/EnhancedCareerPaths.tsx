@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp } from "lucide-react";
+import { Link } from "wouter";
 import financeImage from "/assets/generated_images/Finance_career_path_illustration_bd4a80b3.png";
 import hrImage from "/assets/generated_images/HR_career_path_illustration_acbb8bdc.png";
 import salesImage from "/assets/generated_images/Sales_career_path_illustration_1e56eccb.png";
@@ -112,13 +113,15 @@ export function EnhancedCareerPaths() {
                     </div>
                   </div>
 
-                  <Button 
-                    className="w-full group/btn rounded-xl"
-                    data-testid={`button-explore-${path.title.toLowerCase().replace(/\s+/g, '-')}`}
-                  >
-                    Explore Path
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link href="/signup">
+                    <Button 
+                      className="w-full group/btn rounded-xl"
+                      data-testid={`button-explore-${path.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      Explore Path
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

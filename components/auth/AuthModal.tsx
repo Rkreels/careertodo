@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'wouter';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -15,6 +17,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   defaultMode = 'login',
 }) => {
   const [mode, setMode] = useState<'login' | 'register'>(defaultMode);
+  const { user, userProfile } = useAuth();
+  const [, setLocation] = useNavigate();
 
   // Update mode when defaultMode changes (when opening modal with different mode)
   useEffect(() => {
@@ -22,6 +26,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       setMode(defaultMode);
     }
   }, [defaultMode, isOpen]);
+
+  // Handle successful authentication and redirect
+  useEffect(() => {
+    if (user && userProfile) {
+      // User is authenticated, close modal and redirect
+      setTimeout(() => {
+        onClose();
+        
+        // Check if user needs to pay
+        if (!userProfile.is_paid) {
+          setLocation('/payment');
+        } else {
+          setLocation('/dashboard');
+        }
+      }, 1000);
+    }
+  }, [user, userProfile, onClose, setLocation]);
 
   const handleToggleMode = () => {
     console.log('Toggling mode from', mode, 'to', mode === 'login' ? 'register' : 'login');
@@ -32,6 +53,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     console.log('Closing modal, resetting mode to', defaultMode);
     setMode(defaultMode);
     onClose();
+  };
+
+  const handleAuthSuccess = () => {
+    // Authentication successful - the useEffect will handle the redirect
+    console.log('Authentication successful, waiting for user data...');
   };
 
   console.log('AuthModal render - mode:', mode, 'defaultMode:', defaultMode);
@@ -47,9 +73,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </DialogDescription>
         <div className="p-4 sm:p-6">
           {mode === 'login' ? (
-            <LoginForm onToggleMode={handleToggleMode} />
+            <LoginForm onToggleMode={handleToggleMode} onSuccess={handleAuthSuccess} />
           ) : (
-            <RegisterForm onToggleMode={handleToggleMode} />
+            <RegisterForm onToggleMode={handleToggleMode} onSuccess={handleAuthSuccess} />
           )}
         </div>
       </DialogContent>

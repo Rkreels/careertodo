@@ -8,8 +8,8 @@ interface AuthContextType {
   loading: boolean;
   isAdmin: boolean;
   userProfile: any | null;
-  signUp: (email: string, password: string, metadata?: any) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, metadata?: any) => Promise<{ error: any; data?: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<{ error: any }>;
   resetPassword: (email: string) => Promise<{ error: any }>;
   checkAdminStatus: () => Promise<void>;
@@ -117,23 +117,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       checkAdminStatus();
     } else {
       setIsAdmin(false);
+      setUserProfile(null);
     }
   }, [user, supabaseError]);
+
+  // Handle automatic redirects after authentication
+  useEffect(() => {
+    if (user && userProfile && !loading) {
+      // Only redirect if we're not already on a protected page
+      const currentPath = window.location.pathname;
+      const isProtectedPage = ['/dashboard', '/admin', '/payment'].includes(currentPath);
+      
+      if (!isProtectedPage) {
+        // Check if user needs to pay
+        if (!userProfile.is_paid) {
+          console.log('Redirecting to payment page...');
+          window.location.href = '/payment';
+        } else {
+          console.log('Redirecting to dashboard...');
+          window.location.href = '/dashboard';
+        }
+      }
+    }
+  }, [user, userProfile, loading]);
 
   const signUp = async (email: string, password: string, metadata?: any) => {
     if (supabaseError) {
       return { error: new Error('Demo mode - authentication not available') };
     }
-    const { error } = await authHelpers.signUp(email, password, metadata);
-    return { error };
+    const result = await authHelpers.signUp(email, password, metadata);
+    return { error: result.error, data: result.data };
   };
 
   const signIn = async (email: string, password: string) => {
     if (supabaseError) {
       return { error: new Error('Demo mode - authentication not available') };
     }
-    const { error } = await authHelpers.signIn(email, password);
-    return { error };
+    const result = await authHelpers.signIn(email, password);
+    return { error: result.error, data: result.data };
   };
 
   const signOut = async () => {

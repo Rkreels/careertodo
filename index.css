@@ -220,6 +220,178 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    /* Mobile optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Mobile viewport optimizations */
+  html {
+    scroll-behavior: smooth;
+    /* Prevent horizontal overflow on mobile */
+    overflow-x: hidden;
+  }
+
+  /* Touch-friendly tap targets */
+  @media (max-width: 768px) {
+    button, a, input, textarea, select {
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+  }
+
+  /* Safe area insets for mobile devices */
+  @supports (padding: max(0px)) {
+    .safe-area-padding {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+    
+    .safe-area-padding-top {
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
+    
+    .safe-area-padding-bottom {
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .bg-gradient-to-br {
+      background-image: none !important;
+    }
+    
+    .text-transparent {
+      color: currentColor !important;
+      background-image: none !important;
+      -webkit-text-fill-color: currentColor !important;
+    }
+  }
+
+  /* Enhanced smooth transitions */
+  * {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  /* Enhanced button transitions */
+  button, a, input, textarea, select {
+    transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Smooth hover effects */
+  button:hover, a:hover {
+    transform: translateY(-1px);
+    transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  button:active, a:active {
+    transform: translateY(0px);
+    transition: all 0.1s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Smooth focus states */
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Smooth card hover effects */
+  .card, .hover-card {
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  .card:hover, .hover-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Smooth modal transitions */
+  .modal-backdrop {
+    transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  .modal-content {
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  .modal-content.show {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Smooth loading states */
+  .loading-spinner {
+    transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Smooth page transitions */
+  .page-transition {
+    transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Enhanced mobile touch feedback */
+  @media (hover: none) and (pointer: coarse) {
+    button:active, a:active {
+      transform: scale(0.98);
+      transition: all 0.1s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 4px;
+    transition: background 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground));
+    transition: background 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  /* Mobile performance optimizations */
+  @media (max-width: 768px) {
+    /* Reduce animations on mobile for better performance */
+    .motion-reduce-mobile {
+      animation: none !important;
+      transition: none !important;
+    }
+    
+    /* Optimize images for mobile */
+    img {
+      content-visibility: auto;
+      contain-intrinsic-size: 400px 300px;
+    }
   }
 }
 
@@ -255,6 +427,116 @@
     content: attr(data-placeholder);
     color: hsl(var(--muted-foreground));
     pointer-events: none;
+  }
+
+  /* Mobile utility classes */
+  .mobile-scroll-snap-x {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .mobile-scroll-snap-child {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  /* Touch-friendly hover states */
+  @media (hover: none) and (pointer: coarse) {
+    .touch-hover:hover {
+      background-color: transparent !important;
+      transform: none !important;
+    }
+    
+    .touch-hover:active {
+      background-color: hsl(var(--accent)) !important;
+      transform: scale(0.98) !important;
+    }
+  }
+
+  /* Mobile-specific text sizing */
+  .mobile-text-sm {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-text-base {
+    @apply text-base sm:text-lg;
+  }
+  
+  .mobile-text-lg {
+    @apply text-lg sm:text-xl;
+  }
+  
+  .mobile-text-xl {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  .mobile-text-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  /* Mobile spacing utilities */
+  .mobile-p-4 {
+    @apply p-4 sm:p-6;
+  }
+  
+  .mobile-p-6 {
+    @apply p-6 sm:p-8;
+  }
+  
+  .mobile-gap-4 {
+    @apply gap-4 sm:gap-6;
+  }
+  
+  .mobile-gap-6 {
+    @apply gap-6 sm:gap-8;
+  }
+
+  /* Mobile grid utilities */
+  .mobile-grid-1 {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+  
+  .mobile-grid-2 {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+
+  /* Responsive aspect ratios for mobile */
+  .mobile-aspect-video {
+    aspect-ratio: 16/9;
+    @apply sm:aspect-video;
+  }
+  
+  .mobile-aspect-square {
+    aspect-ratio: 1/1;
+    @apply sm:aspect-square;
+  }
+
+  /* Mobile card utilities */
+  .mobile-card {
+    @apply rounded-lg sm:rounded-xl lg:rounded-2xl;
+  }
+  
+  .mobile-card-shadow {
+    @apply shadow-md sm:shadow-lg lg:shadow-xl;
+  }
+
+  /* Mobile button utilities */
+  .mobile-button-lg {
+    @apply px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg;
+  }
+  
+  .mobile-button-sm {
+    @apply px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base;
+  }
+
+  /* Hide elements on mobile but show on desktop */
+  .mobile-hidden {
+    @apply hidden sm:block;
+  }
+  
+  /* Show elements on mobile but hide on desktop */
+  .mobile-only {
+    @apply block sm:hidden;
   }
 
   /* .no-default-hover-elevate/no-default-active-elevate is an escape hatch so consumers of

@@ -55,7 +55,7 @@ const features = [
 
 export function EnhancedFeaturesSection() {
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-br from-sky-50/30 via-white to-blue-50/30 relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gradient-to-br from-sky-50/30 via-white to-blue-50/30 relative overflow-hidden">
       {/* Enhanced Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(14,165,233,0.12),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(59,130,246,0.12),transparent_50%)]" />
@@ -66,32 +66,32 @@ export function EnhancedFeaturesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-sky-100 to-blue-100 border border-sky-200 mb-6 shadow-lg shadow-sky-100/50"
+            className="inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-sky-100 to-blue-100 border border-sky-200 mb-4 sm:mb-6 shadow-lg shadow-sky-100/50"
           >
-            <span className="text-sm font-semibold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
               Why Choose CareerToDo
             </span>
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 sm:mb-6">
             Learn Skills That{" "}
             <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-sky-700 bg-clip-text text-transparent">
               Actually Matter
             </span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed px-4">
             Experience learning that bridges the gap between education and employment
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {features.map((feature, index) => (
             <EnhancedFeatureCard
               key={feature.title}

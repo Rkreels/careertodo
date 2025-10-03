@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
 import HomePage from "@/pages/HomePage";
-import DemoPage from "@/pages/DemoPage";
+import SignupPage from "@/pages/SignupPage";
+import LoginPage from "@/pages/LoginPage";
 import { UserDashboard } from "@/components/dashboard/UserDashboard";
 import { AdminDashboard } from "@/components/dashboard/AdminDashboard";
 import { PaymentPage } from "@/components/payment/PaymentPage";
@@ -29,7 +30,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
-      <Route path="/demo" component={DemoPage} />
+      <Route path="/signup" component={SignupPage} />
+      <Route path="/login" component={LoginPage} />
       <Route path="/admin-login" component={AdminLoginPage} />
       <Route path="/payment" component={PaymentPage} />
       <Route path="/dashboard">

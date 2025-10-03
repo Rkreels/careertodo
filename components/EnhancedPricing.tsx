@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Check, Sparkles, Zap, Crown } from "lucide-react";
+import { Link } from "wouter";
 
 const plans = [
   {
@@ -129,14 +130,16 @@ export function EnhancedPricing() {
                   ))}
                 </ul>
 
-                <Button 
-                  size="lg"
-                  className={`w-full rounded-xl ${plan.popular ? 'bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white' : ''}`}
-                  variant={plan.popular ? "default" : "outline"}
-                  data-testid={`button-select-${plan.name.toLowerCase()}`}
-                >
-                  {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
-                </Button>
+                <Link href={plan.name === "Enterprise" ? "/contact" : "/payment"}>
+                  <Button 
+                    size="lg"
+                    className={`w-full rounded-xl ${plan.popular ? 'bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white' : ''}`}
+                    variant={plan.popular ? "default" : "outline"}
+                    data-testid={`button-select-${plan.name.toLowerCase()}`}
+                  >
+                    {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
+                  </Button>
+                </Link>
               </div>
             </motion.div>
           ))}

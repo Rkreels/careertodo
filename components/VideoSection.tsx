@@ -10,7 +10,7 @@ export function VideoSection() {
   const [mainVideoDuration, setMainVideoDuration] = useState(0);
   const mainVideoRef = useRef<HTMLVideoElement>(null);
 
-  const mainVideoId = "dQw4w9WgXcQ"; // Main demo video ID
+  const mainVideoId = "dQw4w9WgXcQ"; // Main video ID
 
   useEffect(() => {
     const video = mainVideoRef.current;
@@ -95,7 +95,7 @@ export function VideoSection() {
                 <>
                   <img 
                     src={`https://img.youtube.com/vi/${mainVideoId}/maxresdefault.jpg`}
-                    alt="CareerToDo Demo Video"
+                    alt="CareerToDo Platform Video"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
@@ -125,7 +125,7 @@ export function VideoSection() {
                       </div>
                       <div className="flex items-center gap-3 text-white/80">
                         <div className="text-right">
-                          <div className="text-sm font-medium">Demo Video</div>
+                          <div className="text-sm font-medium">Platform Video</div>
                           <div className="text-xs">3:45</div>
                         </div>
                       </div>

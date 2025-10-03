@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Users, HelpCircle } from "lucide-react";
+import { Link } from "wouter";
 
 export function CommunitySection() {
   return (
@@ -32,9 +33,11 @@ export function CommunitySection() {
             <p className="text-muted-foreground">
               Join 5,000+ learners sharing tips, projects, and career advice
             </p>
-            <Button className="w-full rounded-xl" data-testid="button-join-discord">
-              Join Discord
-            </Button>
+            <Link href="https://discord.gg" target="_blank" rel="noopener noreferrer">
+              <Button className="w-full rounded-xl" data-testid="button-join-discord">
+                Join Discord
+              </Button>
+            </Link>
           </motion.div>
 
           <motion.div
@@ -51,9 +54,11 @@ export function CommunitySection() {
             <p className="text-muted-foreground">
               Collaborate with peers in focused learning groups
             </p>
-            <Button variant="outline" className="w-full rounded-xl" data-testid="button-find-group">
-              Find a Group
-            </Button>
+            <Link href="/signup">
+              <Button variant="outline" className="w-full rounded-xl" data-testid="button-find-group">
+                Find a Group
+              </Button>
+            </Link>
           </motion.div>
 
           <motion.div
@@ -70,9 +75,11 @@ export function CommunitySection() {
             <p className="text-muted-foreground">
               Get help anytime from our dedicated support team
             </p>
-            <Button variant="outline" className="w-full rounded-xl" data-testid="button-get-support">
-              Get Support
-            </Button>
+            <Link href="/contact">
+              <Button variant="outline" className="w-full rounded-xl" data-testid="button-get-support">
+                Get Support
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </div>

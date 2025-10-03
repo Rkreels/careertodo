@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export function CTASection() {
   return (
@@ -20,22 +21,26 @@ export function CTASection() {
             Join thousands of learners mastering professional skills through real-world simulations
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-chart-3 hover:bg-chart-3/90 text-white text-lg px-8 py-6 rounded-2xl"
-              data-testid="button-cta-get-started"
-            >
-              Get Started Now
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-white/30 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 text-lg px-8 py-6 rounded-2xl"
-              data-testid="button-cta-learn-more"
-            >
-              Learn More
-            </Button>
+            <Link href="/signup">
+              <Button 
+                size="lg" 
+                className="bg-chart-3 hover:bg-chart-3/90 text-white text-lg px-8 py-6 rounded-2xl w-full sm:w-auto"
+                data-testid="button-cta-get-started"
+              >
+                Get Started Now
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+            <Link href="/signup">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 border-white/30 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 text-lg px-8 py-6 rounded-2xl w-full sm:w-auto"
+                data-testid="button-cta-learn-more"
+              >
+                Learn More
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </div>

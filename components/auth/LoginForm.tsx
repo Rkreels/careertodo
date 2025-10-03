@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface LoginFormData {
@@ -15,12 +15,14 @@ interface LoginFormData {
 
 interface LoginFormProps {
   onToggleMode: () => void;
+  onSuccess?: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode, onSuccess }) => {
   const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const {
     register,
@@ -31,9 +33,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setError(null);
-      const { error } = await signIn(data.email, data.password);
+      setIsSuccess(false);
+      const { error, data: signInData } = await signIn(data.email, data.password);
       if (error) {
         setError(error.message || 'Login failed');
+      } else {
+        // Successful login - show success state
+        setIsSuccess(true);
+        setTimeout(() => {
+          if (onSuccess) {
+            onSuccess();
+          }
+        }, 1000);
       }
     } catch (err: any) {
       setError(err.message || 'Login failed');
@@ -51,8 +62,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4 px-4 sm:px-6">
           {error && (
-            <Alert variant="destructive">
+            <Alert variant="destructive" className="animate-in slide-in-from-top-2 duration-200">
               <AlertDescription className="text-sm">{error}</AlertDescription>
+            </Alert>
+          )}
+          
+          {isSuccess && (
+            <Alert className="bg-green-50 border-green-200 text-green-800 animate-in slide-in-from-top-2 duration-200">
+              <CheckCircle className="h-4 w-4" />
+              <AlertDescription className="text-sm">
+                Login successful! Redirecting...
+              </AlertDescription>
             </Alert>
           )}
           
@@ -104,12 +124,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onToggleMode }) => {
           <Button
             type="submit"
             className="w-full text-sm sm:text-base"
-            disabled={isSubmitting}
+            loading={isSubmitting}
+            disabled={isSubmitting || isSuccess}
           >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Signing in...
+              </>
+            ) : isSuccess ? (
+              <>
+                <CheckCircle className="mr-2 h-4 w-4" />
+                Success!
               </>
             ) : (
               'Sign In'

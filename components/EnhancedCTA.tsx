@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { Link } from "wouter";
 
 export function EnhancedCTA() {
   const prefersReducedMotion = useReducedMotion();
@@ -66,31 +67,35 @@ export function EnhancedCTA() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="group relative bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white text-lg px-10 py-7 rounded-2xl overflow-hidden"
-              data-testid="button-cta-start-free"
-            >
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.6 }}
-              />
-              <span className="relative flex items-center gap-2">
-                Start Free Trial
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </Button>
+            <Link href="/signup">
+              <Button 
+                size="lg" 
+                className="group relative bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white text-lg px-10 py-7 rounded-2xl overflow-hidden w-full sm:w-auto"
+                data-testid="button-cta-start-free"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-white/20"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
+                <span className="relative flex items-center gap-2">
+                  Start Free Trial
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Button>
+            </Link>
             
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-white/30 bg-white/5 backdrop-blur-md text-white hover:bg-white/10 text-lg px-10 py-7 rounded-2xl"
-              data-testid="button-cta-schedule-demo"
-            >
-              Schedule a Demo
-            </Button>
+            <Link href="/signup">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 border-white/30 bg-white/5 backdrop-blur-md text-white hover:bg-white/10 text-lg px-10 py-7 rounded-2xl w-full sm:w-auto"
+                data-testid="button-cta-schedule-demo"
+              >
+                Schedule a Demo
+              </Button>
+            </Link>
           </div>
 
           <p className="text-white/60 text-sm mt-8">

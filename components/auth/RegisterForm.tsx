@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { BkashPayment } from '@/components/payment/BkashPayment';
 
@@ -20,13 +20,15 @@ interface RegisterFormData {
 
 interface RegisterFormProps {
   onToggleMode: () => void;
+  onSuccess?: () => void;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode, onSuccess }) => {
   const { signUp, signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [registeredUser, setRegisteredUser] = useState<RegisterFormData | null>(null);
   const [registrationStep, setRegistrationStep] = useState<'form' | 'payment' | 'success'>('form');
@@ -43,6 +45,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
   const onSubmit = async (data: RegisterFormData) => {
     try {
       setError(null);
+      setIsSuccess(false);
       if (data.password !== data.confirmPassword) {
         setError("Passwords don't match");
         return;
@@ -65,9 +68,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
             setError(signInError.message || 'Registration successful but login failed');
           } else {
             // Successful registration and login
+            setIsSuccess(true);
             setRegisteredUser(registerData);
             setRegistrationStep('payment');
             setShowPayment(true);
+            // Call success callback
+            setTimeout(() => {
+              if (onSuccess) {
+                onSuccess();
+              }
+            }, 1000);
           }
         } else {
           setError(error.message || 'Registration failed');
@@ -80,9 +90,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
             setError('Registration successful but automatic login failed. Please try logging in manually.');
           } else {
             // Successful registration and login
+            setIsSuccess(true);
             setRegisteredUser(registerData);
             setRegistrationStep('payment');
             setShowPayment(true);
+            // Call success callback
+            setTimeout(() => {
+              if (onSuccess) {
+                onSuccess();
+              }
+            }, 1000);
           }
         }
       }
@@ -129,8 +146,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6">
           {error && (
-            <Alert variant="destructive">
+            <Alert variant="destructive" className="animate-in slide-in-from-top-2 duration-200">
               <AlertDescription className="text-sm">{error}</AlertDescription>
+            </Alert>
+          )}
+          
+          {isSuccess && (
+            <Alert className="bg-green-50 border-green-200 text-green-800 animate-in slide-in-from-top-2 duration-200">
+              <CheckCircle className="h-4 w-4" />
+              <AlertDescription className="text-sm">
+                Registration successful! Redirecting to payment...
+              </AlertDescription>
             </Alert>
           )}
           
@@ -253,12 +279,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onToggleMode }) => {
           <Button
             type="submit"
             className="w-full text-sm sm:text-base"
-            disabled={isSubmitting}
+            loading={isSubmitting}
+            disabled={isSubmitting || isSuccess}
           >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Creating account...
+              </>
+            ) : isSuccess ? (
+              <>
+                <CheckCircle className="mr-2 h-4 w-4" />
+                Success!
               </>
             ) : (
               'Next →'
