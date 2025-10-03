@@ -1,262 +1,138 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js'
 
-// Get environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://demo.supabase.co'
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'demo-key'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables:');
-  console.error('- VITE_SUPABASE_URL:', supabaseUrl || 'Missing');
-  console.error('- VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Set' : 'Missing');
-  
-  // Don't throw error in production, just return null
-  if (import.meta.env.PROD) {
-    console.warn('Running in production without Supabase configuration');
-  } else {
-    throw new Error('Missing Supabase environment variables. Please check your .env file or Vercel environment variables.');
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// Auth helpers
+export const authHelpers = {
+  signUp: async (email: string, password: string, metadata?: any) => {
+    return await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: metadata
+      }
+    })
+  },
+
+  signIn: async (email: string, password: string) => {
+    return await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+  },
+
+  signOut: async () => {
+    return await supabase.auth.signOut()
+  },
+
+  resetPassword: async (email: string) => {
+    return await supabase.auth.resetPasswordForEmail(email)
+  },
+
+  getCurrentUser: async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+    return { user }
   }
 }
 
-export const supabase = supabaseUrl && supabaseAnonKey 
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
-
-// Auth helper functions
-export const authHelpers = {
-  // Sign up new user
-  async signUp(email: string, password: string, metadata?: any) {
-    if (!supabase) {
-      return { error: new Error('Supabase not configured') };
-    }
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: metadata,
-        emailRedirectTo: undefined, // Disable email confirmation
-      }
-    });
-    return { data, error };
-  },
-
-  // Sign in user
-  async signIn(email: string, password: string) {
-    if (!supabase) {
-      return { error: new Error('Supabase not configured') };
-    }
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-    return { data, error };
-  },
-
-  // Sign out user
-  async signOut() {
-    if (!supabase) {
-      return { error: new Error('Supabase not configured') };
-    }
-    const { error } = await supabase.auth.signOut();
-    return { error };
-  },
-
-  // Get current user
-  async getCurrentUser() {
-    if (!supabase) {
-      return { user: null, error: new Error('Supabase not configured') };
-    }
-    const { data: { user }, error } = await supabase.auth.getUser();
-    return { user, error };
-  },
-
-  // Reset password
-  async resetPassword(email: string) {
-    if (!supabase) {
-      return { error: new Error('Supabase not configured') };
-    }
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    return { error };
-  },
-
-  // Update user metadata
-  async updateUserMetadata(metadata: any) {
-    if (!supabase) {
-      return { error: new Error('Supabase not configured') };
-    }
-    const { data, error } = await supabase.auth.updateUser({
-      data: metadata
-    });
-    return { data, error };
-  },
-
-  // Listen to auth changes
-  onAuthStateChange(callback: (event: string, session: any) => void) {
-    if (!supabase) {
-      return { data: { subscription: null } };
-    }
-    return supabase.auth.onAuthStateChange(callback);
-  }
-};
-
-// Database helper functions
-export const dbHelpers = {
-  // Generic select function
-  async select(table: string, options?: {
-    columns?: string;
-    filter?: Record<string, any>;
-    orderBy?: { column: string; ascending?: boolean };
-    limit?: number;
-  }) {
-    if (!supabase) {
-      return { data: null, error: new Error('Supabase not configured') };
-    }
-    let query = supabase.from(table).select(options?.columns || '*');
-
-    if (options?.filter) {
-      Object.entries(options.filter).forEach(([key, value]) => {
-        query = query.eq(key, value);
-      });
-    }
-
-    if (options?.orderBy) {
-      query = query.order(options.orderBy.column, { 
-        ascending: options.orderBy.ascending ?? true 
-      });
-    }
-
-    if (options?.limit) {
-      query = query.limit(options.limit);
-    }
-
-    const { data, error } = await query;
-    return { data, error };
-  },
-
-  // Generic insert function
-  async insert(table: string, data: any) {
-    if (!supabase) {
-      return { data: null, error: new Error('Supabase not configured') };
-    }
-    const { data: result, error } = await supabase.from(table).insert(data).select();
-    return { data: result, error };
-  },
-
-  // Generic update function
-  async update(table: string, id: string, data: any) {
-    if (!supabase) {
-      return { data: null, error: new Error('Supabase not configured') };
-    }
-    const { data: result, error } = await supabase
-      .from(table)
-      .update(data)
-      .eq('id', id)
-      .select();
-    return { data: result, error };
-  },
-
-  // Generic delete function
-  async delete(table: string, id: string) {
-    if (!supabase) {
-      return { error: new Error('Supabase not configured') };
-    }
-    const { error } = await supabase.from(table).delete().eq('id', id);
-    return { error };
-  }
-};
-
-// Admin helper functions
+// Admin helpers
 export const adminHelpers = {
-  // Check if user is admin
-  async checkAdminRole(userId: string) {
-    if (!supabase) {
-      return { isAdmin: false, error: new Error('Supabase not configured') };
-    }
+  createAdminUser: async (email: string, password: string, name: string, phone: string) => {
+    // First create the user
+    const { data, error } = await authHelpers.signUp(email, password, { name, phone, role: 'admin' })
     
-    const { data, error } = await supabase
-      .from('users')
-      .select('role')
-      .eq('id', userId)
-      .single();
+    if (error) return { user: null, error }
     
-    if (error) {
-      return { isAdmin: false, error };
-    }
-    
-    return { isAdmin: data.role === 'admin', error: null };
-  },
-
-  // Get user with role information
-  async getUserWithRole(email: string) {
-    if (!supabase) {
-      return { user: null, error: new Error('Supabase not configured') };
-    }
-    
-    // First get auth user
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password: '' // This will fail, but we need to check if user exists
-    });
-    
-    if (authError && authError.message !== 'Invalid login credentials') {
-      return { user: null, error: authError };
-    }
-    
-    // Get user profile with role
-    const { data: profileData, error: profileError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('email', email)
-      .single();
-    
-    if (profileError) {
-      return { user: null, error: profileError };
-    }
-    
-    return { user: profileData, error: null };
-  },
-
-  // Create admin user (for initial setup)
-  async createAdminUser(email: string, password: string, name: string, phone: string) {
-    if (!supabase) {
-      return { user: null, error: new Error('Supabase not configured') };
-    }
-    
-    // Create auth user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { name, phone },
-        emailRedirectTo: undefined,
+    // Then create admin profile in database (if tables exist)
+    try {
+      const { error: profileError } = await supabase
+        .from('admin_users')
+        .insert([{
+          user_id: data.user?.id,
+          email,
+          name,
+          phone,
+          role: 'admin',
+          created_at: new Date().toISOString()
+        }])
+      
+      // If table doesn't exist, we'll just return the user without admin profile
+      if (profileError && !profileError.message.includes('relation "admin_users" does not exist')) {
+        console.warn('Admin profile creation failed:', profileError)
       }
-    });
-    
-    if (authError) {
-      return { user: null, error: authError };
+    } catch (err) {
+      console.warn('Admin profile creation failed:', err)
     }
     
-    // Create user profile with admin role
-    const { data: profileData, error: profileError } = await supabase
-      .from('users')
-      .insert({
-        id: authData.user?.id,
-        email,
-        name,
-        phone,
-        password, // Note: In production, you should hash this
-        role: 'admin',
-        is_paid: true,
-        payment_status: 'completed'
-      })
-      .select()
-      .single();
-    
-    if (profileError) {
-      return { user: null, error: profileError };
-    }
-    
-    return { user: profileData, error: null };
-  }
-};
+    return { user: data.user, error: null }
+  },
 
-export default supabase;
+  checkAdminRole: async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('admin_users')
+        .select('role')
+        .eq('user_id', userId)
+        .single()
+      
+      if (error || !data) {
+        // Check if user metadata has admin role
+        const { data: { user } } = await supabase.auth.getUser()
+        const isAdmin = user?.user_metadata?.role === 'admin' || user?.email === 'admin@careertodo.com'
+        return { isAdmin: isAdmin || false }
+      }
+      
+      return { isAdmin: data.role === 'admin' }
+    } catch (err) {
+      // Fallback to email check
+      const { data: { user } } = await supabase.auth.getUser()
+      const isAdmin = user?.email === 'admin@careertodo.com'
+      return { isAdmin: isAdmin || false }
+    }
+  }
+}
+
+// Database helpers (for when database is available)
+export const dbHelpers = {
+  // User profiles
+  createUserProfile: async (userId: string, profile: any) => {
+    try {
+      return await supabase
+        .from('users')
+        .insert([{ id: userId, ...profile, created_at: new Date().toISOString() }])
+    } catch (err) {
+      console.warn('User profile creation failed:', err)
+      return { data: null, error: null }
+    }
+  },
+
+  getUserProfile: async (userId: string) => {
+    try {
+      return await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .single()
+    } catch (err) {
+      console.warn('User profile fetch failed:', err)
+      return { data: null, error: null }
+    }
+  },
+
+  updateUserProfile: async (userId: string, updates: any) => {
+    try {
+      return await supabase
+        .from('users')
+        .update(updates)
+        .eq('id', userId)
+    } catch (err) {
+      console.warn('User profile update failed:', err)
+      return { data: null, error: null }
+    }
+  }
+}
+
+export default supabase

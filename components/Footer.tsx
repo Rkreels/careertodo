@@ -1,3 +1,5 @@
+import { Link } from 'wouter';
+
 export function Footer() {
   return (
     <footer className="bg-card border-t">
@@ -7,21 +9,18 @@ export function Footer() {
             © 2024 CareerToDo. All rights reserved.
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <a href="#privacy" className="text-muted-foreground hover:text-ring transition-colors" data-testid="link-privacy">
+            <Link href="/privacy" className="text-muted-foreground hover:text-ring transition-colors">
               Privacy Policy
-            </a>
-            <a href="#terms" className="text-muted-foreground hover:text-ring transition-colors" data-testid="link-terms">
+            </Link>
+            <Link href="/terms" className="text-muted-foreground hover:text-ring transition-colors">
               Terms of Service
-            </a>
-            <a href="#contact" className="text-muted-foreground hover:text-ring transition-colors" data-testid="link-footer-contact">
+            </Link>
+            <Link href="/contact" className="text-muted-foreground hover:text-ring transition-colors">
               Contact
-            </a>
-            <a href="#careers" className="text-muted-foreground hover:text-ring transition-colors" data-testid="link-careers">
-              Careers
-            </a>
-            <a href="#press" className="text-muted-foreground hover:text-ring transition-colors" data-testid="link-press">
-              Press
-            </a>
+            </Link>
+            <Link href="/about" className="text-muted-foreground hover:text-ring transition-colors">
+              About
+            </Link>
           </div>
         </div>
       </div>

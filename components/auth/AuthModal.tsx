@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'wouter';
+import { useLocation } from 'wouter';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 }) => {
   const [mode, setMode] = useState<'login' | 'register'>(defaultMode);
   const { user, userProfile } = useAuth();
-  const [, setLocation] = useNavigate();
+  const [, setLocation] = useLocation();
 
   // Update mode when defaultMode changes (when opening modal with different mode)
   useEffect(() => {

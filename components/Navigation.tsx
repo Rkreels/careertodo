@@ -1,4 +1,4 @@
-import { Moon, Sun, Globe, Menu, X, LogOut, LayoutDashboard } from "lucide-react";
+import { Moon, Sun, Menu, X, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/ThemeProvider";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -9,7 +9,7 @@ import { Link } from "wouter";
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
+  const { t } = useLanguage();
   const { user, signOut } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -60,33 +60,27 @@ export function Navigation() {
                 CareerToDo
               </Link>
               <div className="hidden md:flex items-center gap-6">
-                <Link href="/signup" className="text-sm hover:text-ring transition-colors">
-                  Sign Up
+                <Link href="/" className="text-sm hover:text-ring transition-colors">
+                  Home
                 </Link>
-                <a href="#home" className="text-sm hover:text-ring transition-colors" data-testid="link-home">
-                  {t("nav.home")}
-                </a>
-                <a href="#about" className="text-sm hover:text-ring transition-colors" data-testid="link-about">
-                  {t("nav.about")}
-                </a>
-                <a href="#contact" className="text-sm hover:text-ring transition-colors" data-testid="link-contact">
-                  {t("nav.contact")}
-                </a>
+                <Link href="/about" className="text-sm hover:text-ring transition-colors">
+                  About
+                </Link>
+                <Link href="/contact" className="text-sm hover:text-ring transition-colors">
+                  Contact
+                </Link>
+                <div className="h-4 w-px bg-gray-300"></div>
+                <Link href="/privacy" className="text-sm hover:text-ring transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className="text-sm hover:text-ring transition-colors">
+                  Terms of Service
+                </Link>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center gap-3">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setLanguage(language === "en" ? "bn" : "en")}
-                  data-testid="button-language-toggle"
-                >
-                  <Globe className="w-4 h-4" />
-                  <span className="sr-only">Toggle language</span>
-                </Button>
-
                 <Button
                   variant="ghost"
                   size="icon"
@@ -146,27 +140,24 @@ export function Navigation() {
           {mobileMenuOpen && (
             <div className="md:hidden border-t bg-background/95 backdrop-blur-lg">
               <div className="px-4 py-3 space-y-3">
-                <Link href="/signup" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                  Sign Up
+                <Link href="/" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  Home
                 </Link>
-                <a href="#home" className="block text-sm hover:text-ring transition-colors" data-testid="link-home-mobile">
-                  {t("nav.home")}
-                </a>
-                <a href="#about" className="block text-sm hover:text-ring transition-colors" data-testid="link-about-mobile">
-                  {t("nav.about")}
-                </a>
-                <a href="#contact" className="block text-sm hover:text-ring transition-colors" data-testid="link-contact-mobile">
-                  {t("nav.contact")}
-                </a>
+                <Link href="/about" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  About
+                </Link>
+                <Link href="/contact" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                  Contact
+                </Link>
+                <div className="border-t pt-3">
+                  <Link href="/privacy" className="block text-sm hover:text-ring transition-colors mb-2" onClick={() => setMobileMenuOpen(false)}>
+                    Privacy Policy
+                  </Link>
+                  <Link href="/terms" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    Terms of Service
+                  </Link>
+                </div>
                 <div className="flex items-center gap-3 pt-3 border-t">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setLanguage(language === "en" ? "bn" : "en")}
-                    data-testid="button-language-toggle-mobile"
-                  >
-                    <Globe className="w-4 h-4" />
-                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"

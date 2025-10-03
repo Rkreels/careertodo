@@ -1,10 +1,8 @@
-import { createContext, useContext, useState, useEffect } from "react";
-
-type Language = "en" | "bn";
+import { createContext, useContext } from "react";
 
 type LanguageContextType = {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+  language: "en";
+  setLanguage: (lang: "en") => void;
   t: (key: string) => string;
 };
 
@@ -20,46 +18,17 @@ const translations = {
     "nav.login": "Login",
     "nav.register": "Register",
   },
-  bn: {
-    "hero.title": "বাস্তব-বিশ্বের সিমুলেশনের মাধ্যমে আপনার ক্যারিয়ার আয়ত্ত করুন",
-    "hero.subtitle": "২০+ পেশাদার টুলস দিয়ে অনুশীলন করুন। হাতে-কলমে অভিজ্ঞতার মাধ্যমে ফিন্যান্স, এইচআর, সেলস, মার্কেটিং এবং আরও অনেক কিছু শিখুন।",
-    "hero.cta.primary": "শুরু করুন",
-    "hero.cta.secondary": "বিশ্ববিদ্যালয় অ্যাক্সেস অনুরোধ করুন",
-    "nav.home": "হোম",
-    "nav.about": "সম্পর্কে",
-    "nav.contact": "যোগাযোগ",
-    "nav.login": "লগইন",
-    "nav.register": "নিবন্ধন",
-  },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("language") as Language | null;
-    const browserLang = navigator.language.toLowerCase();
-    
-    if (stored) {
-      setLanguage(stored);
-    } else if (browserLang.startsWith("bn")) {
-      setLanguage("bn");
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("language", language);
-    document.documentElement.lang = language;
-  }, [language]);
-
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations.en] || key;
+    return translations.en[key as keyof typeof translations.en] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language: "en", setLanguage: () => {}, t }}>
       {children}
     </LanguageContext.Provider>
   );
