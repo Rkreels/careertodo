@@ -118,7 +118,7 @@ export function MediaCoverage() {
   const { previous, next } = getAdjacentItems();
 
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.05),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.05),transparent_50%)]" />
@@ -128,144 +128,191 @@ export function MediaCoverage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             As Featured In
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto px-4">
             Discover how leading media outlets are covering CareerToDo's revolution in professional development
           </p>
         </motion.div>
 
-        {/* Main Media Coverage Carousel */}
-        <div className="relative max-w-6xl mx-auto h-[600px] flex items-center justify-center" ref={constraintsRef}>
+        {/* Desktop: 3D Carousel - Mobile: Simple Grid */}
+        <div className="block lg:hidden">
+          {/* Mobile Grid Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
+            {mediaItems.slice(0, 6).map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="relative group cursor-pointer"
+                onClick={() => setCurrentIndex(index)}
+              >
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <img 
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-white font-semibold text-sm sm:text-base">{item.name}</h3>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
           
-          {/* Left card - behind featured */}
-          <motion.div
-            className="absolute w-80 h-[500px] rounded-2xl overflow-hidden shadow-2xl z-10"
-            style={{
-              left: '10%',
-              transform: 'translateX(-50%) translateZ(-100px) rotateY(25deg) scale(0.85)',
-            }}
-            animate={{
-              x: -50,
-              scale: 0.85,
-              rotateY: 25,
-              opacity: 0.7,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-          >
-            <img 
-              src={previous.image}
-              alt={previous.name}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+          {/* Mobile dots navigation */}
+          <div className="flex justify-center gap-2 mt-6 sm:mt-8">
+            {mediaItems.slice(0, 6).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'w-6 bg-indigo-600' 
+                    : 'w-2 bg-slate-300 hover:bg-slate-400'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
 
-          {/* Featured card - center */}
-          <motion.div
-            className="relative z-30 w-96 h-[600px] rounded-3xl overflow-hidden shadow-2xl"
-            drag="x"
-            dragConstraints={constraintsRef}
-            dragElastic={0.2}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={handleDragEnd}
-            onDragTransitionEnd={() => setIsDragging(false)}
-            style={{ x: dragX }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-          >
-            <img 
-              src={featuredItem.image}
-              alt={featuredItem.name}
-              className="w-full h-full object-cover"
-            />
+        {/* Desktop 3D Carousel */}
+        <div className="hidden lg:block">
+          <div className="relative max-w-6xl mx-auto h-[400px] xl:h-[600px] flex items-center justify-center" ref={constraintsRef}>
             
-            {/* Subtle overlay for better text readability if needed */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-          </motion.div>
+            {/* Left card - behind featured */}
+            <motion.div
+              className="absolute w-60 xl:w-80 h-[350px] xl:h-[500px] rounded-2xl overflow-hidden shadow-2xl z-10"
+              style={{
+                left: '10%',
+                transform: 'translateX(-50%) translateZ(-100px) rotateY(25deg) scale(0.85)',
+              }}
+              animate={{
+                x: -50,
+                scale: 0.85,
+                rotateY: 25,
+                opacity: 0.7,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+            >
+              <img 
+                src={previous.image}
+                alt={previous.name}
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
 
-          {/* Right card - behind featured */}
-          <motion.div
-            className="absolute w-80 h-[500px] rounded-2xl overflow-hidden shadow-2xl z-10"
-            style={{
-              right: '10%',
-              transform: 'translateX(50%) translateZ(-100px) rotateY(-25deg) scale(0.85)',
-            }}
-            animate={{
-              x: 50,
-              scale: 0.85,
-              rotateY: -25,
-              opacity: 0.7,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-          >
-            <img 
-              src={next.image}
-              alt={next.name}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+            {/* Featured card - center */}
+            <motion.div
+              className="relative z-30 w-72 xl:w-96 h-[450px] xl:h-[600px] rounded-3xl overflow-hidden shadow-2xl"
+              drag="x"
+              dragConstraints={constraintsRef}
+              dragElastic={0.2}
+              onDragStart={() => setIsDragging(true)}
+              onDragEnd={handleDragEnd}
+              onDragTransitionEnd={() => setIsDragging(false)}
+              style={{ x: dragX }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+            >
+              <img 
+                src={featuredItem.image}
+                alt={featuredItem.name}
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Subtle overlay for better text readability if needed */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            </motion.div>
 
-          {/* Navigation buttons */}
-          <Button
-            size="lg"
-            onClick={handlePrevious}
-            className="absolute left-8 z-40 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </Button>
+            {/* Right card - behind featured */}
+            <motion.div
+              className="absolute w-60 xl:w-80 h-[350px] xl:h-[500px] rounded-2xl overflow-hidden shadow-2xl z-10"
+              style={{
+                right: '10%',
+                transform: 'translateX(50%) translateZ(-100px) rotateY(-25deg) scale(0.85)',
+              }}
+              animate={{
+                x: 50,
+                scale: 0.85,
+                rotateY: -25,
+                opacity: 0.7,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+            >
+              <img 
+                src={next.image}
+                alt={next.name}
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
 
-          <Button
-            size="lg"
-            onClick={handleNext}
-            className="absolute right-8 z-40 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </Button>
+            {/* Navigation buttons */}
+            <Button
+              size="lg"
+              onClick={handlePrevious}
+              className="absolute left-4 xl:left-8 z-40 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+            >
+              <ChevronLeft className="w-5 h-5 xl:w-6 xl:h-6" />
+            </Button>
+
+            <Button
+              size="lg"
+              onClick={handleNext}
+              className="absolute right-4 xl:right-8 z-40 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+            >
+              <ChevronRight className="w-5 h-5 xl:w-6 xl:h-6" />
+            </Button>
+          </div>
+
+          {/* Desktop navigation dots */}
+          <div className="flex justify-center gap-2 mt-8 lg:mt-12">
+            {mediaItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleDotClick(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'w-8 bg-indigo-600' 
+                    : 'w-2 bg-slate-300 hover:bg-slate-400'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Navigation dots */}
-        <div className="flex justify-center gap-2 mt-12">
-          {mediaItems.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleDotClick(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'w-8 bg-indigo-600' 
-                  : 'w-2 bg-slate-300 hover:bg-slate-400'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Swipe hint */}
+        {/* Swipe hint - only show on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="text-center mt-8"
+          className="text-center mt-6 lg:hidden"
         >
           <p className="text-sm text-slate-500 flex items-center justify-center gap-2">
             <ChevronLeft className="w-4 h-4" />
-            Swipe or drag to explore more coverage
+            Tap to explore more coverage
             <ChevronRight className="w-4 h-4" />
           </p>
         </motion.div>

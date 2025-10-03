@@ -1,35 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { ArrowRight, Sparkles, Play } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { useState } from "react";
 import { Link } from "wouter";
-import dashboardImage from "/assets/generated_images/Dashboard_mockup_for_hero_b3204792.png";
+import { RoleCardsMarquee } from "@/components/RoleCardsMarquee";
 
 export function EnhancedHero() {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-  
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const rotateX = useTransform(mouseY, [-300, 300], prefersReducedMotion ? [0, 0] : [10, -10]);
-  const rotateY = useTransform(mouseX, [-300, 300], prefersReducedMotion ? [0, 0] : [-10, 10]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!cardRef.current) return;
-      const rect = cardRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      mouseX.set(e.clientX - centerX);
-      mouseY.set(e.clientY - centerY);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50">
@@ -121,7 +98,7 @@ export function EnhancedHero() {
               <Link href="/signup">
                 <Button 
                   size="lg" 
-                  className="group relative bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg shadow-sky-200/50 hover:shadow-xl hover:shadow-sky-300/50 transition-all duration-300 w-full sm:w-auto"
+                  className="group relative bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg shadow-sky-200/50 hover:shadow-xl hover:shadow-sky-300/50 transition-all duration-300 w-full sm:w-auto min-h-[44px]"
                   data-testid="button-get-started"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
@@ -132,72 +109,23 @@ export function EnhancedHero() {
                     animate={{ x: isHovered ? "100%" : "-100%" }}
                     transition={{ duration: 0.6 }}
                   />
-                  <span className="relative flex items-center gap-2 text-sm sm:text-base">
-                    Start Simulating Now
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="relative flex items-center gap-2 text-xs sm:text-sm font-medium">
+                    <span className="hidden xs:inline">Start Simulating</span>
+                    <span className="xs:hidden">Start Now</span>
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                   </span>
-                </Button>
-              </Link>
-              
-              <Link href="/signup">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-2 border-sky-300 bg-white/80 backdrop-blur-sm text-sky-700 hover:bg-sky-50 hover:border-sky-400 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-xl sm:rounded-2xl group transition-all duration-300 w-full sm:w-auto"
-                  data-testid="button-watch-demo"
-                >
-                  <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  <span className="text-sm sm:text-base">Watch Demo</span>
                 </Button>
               </Link>
             </div>
           </motion.div>
 
           <motion.div
-            ref={cardRef}
-            initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            style={{
-              rotateX: window.innerWidth < 768 ? 0 : rotateX,
-              rotateY: window.innerWidth < 768 ? 0 : rotateY,
-              transformStyle: "preserve-3d",
-            }}
-            className="relative perspective-1000 order-first lg:order-last mb-8 lg:mb-0"
+            className="order-first lg:order-last mb-8 lg:mb-0"
           >
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl border border-sky-200">
-              {/* Enhanced Glow effect - reduced on mobile */}
-              <div className={`absolute -inset-0.5 sm:-inset-1 bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600 rounded-2xl sm:rounded-3xl blur-xl sm:blur-2xl opacity-30 sm:opacity-50`} />
-              
-              <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl overflow-hidden border border-sky-100">
-                <img 
-                  src={dashboardImage} 
-                  alt="CareerToDo Dashboard" 
-                  className="w-full h-auto relative z-10"
-                  style={{ transform: "translateZ(20px)" }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-sky-600/20 via-transparent to-transparent" />
-              </div>
-            </div>
-
-            {/* Enhanced Floating badges - repositioned for mobile */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="absolute -top-2 sm:-top-4 -right-2 sm:-right-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl border border-sky-200"
-            >
-              <div className="text-xs sm:text-sm font-semibold">🔥 Trending</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.5 }}
-              className="absolute -bottom-2 sm:-bottom-4 -left-2 sm:-left-4 bg-white/90 backdrop-blur-xl text-sky-700 px-2 sm:px-4 py-1 sm:py-2 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl border border-sky-200"
-            >
-              <div className="text-xs sm:text-sm font-semibold">⭐ 4.9/5 Rating</div>
-            </motion.div>
+            <RoleCardsMarquee />
           </motion.div>
         </div>
       </div>

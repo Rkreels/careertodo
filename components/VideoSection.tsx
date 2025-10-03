@@ -105,27 +105,27 @@ export function VideoSection() {
                     <Button
                       size="lg"
                       onClick={handleMainVideoPlay}
-                      className="w-24 h-24 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-2xl hover:scale-110 transition-all duration-300 group"
+                      className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-2xl hover:scale-110 transition-all duration-300 group"
                       data-testid="button-video-play"
                     >
-                      <Play className="w-10 h-10 ml-1 group-hover:scale-110 transition-transform" />
+                      <Play className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 ml-1 group-hover:scale-110 transition-transform" />
                     </Button>
                   </div>
 
-                  {/* Video info overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                  {/* Video info overlay - simplified for mobile */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                     <div className="flex items-center justify-between">
                       <div className="text-left">
-                        <h3 className="text-3xl font-bold text-white mb-2">
-                          CareerToDo: Learn by Doing, Not by Watching
+                        <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white mb-1 sm:mb-2">
+                          CareerToDo Platform
                         </h3>
-                        <p className="text-lg text-white/90 max-w-2xl">
-                          Experience real-world job simulations in HR, Finance, Sales & more. Transform your career with practical skills.
+                        <p className="text-sm sm:text-base lg:text-lg text-white/90 max-w-xs sm:max-w-md lg:max-w-2xl line-clamp-2">
+                          Transform your career with practical skills
                         </p>
                       </div>
-                      <div className="flex items-center gap-3 text-white/80">
+                      <div className="hidden sm:flex items-center gap-3 text-white/80">
                         <div className="text-right">
-                          <div className="text-sm font-medium">Platform Video</div>
+                          <div className="text-xs sm:text-sm font-medium">Platform Video</div>
                           <div className="text-xs">3:45</div>
                         </div>
                       </div>

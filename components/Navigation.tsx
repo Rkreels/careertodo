@@ -69,13 +69,6 @@ export function Navigation() {
                 <Link href="/contact" className="text-sm hover:text-ring transition-colors">
                   Contact
                 </Link>
-                <div className="h-4 w-px bg-gray-300"></div>
-                <Link href="/privacy" className="text-sm hover:text-ring transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="/terms" className="text-sm hover:text-ring transition-colors">
-                  Terms of Service
-                </Link>
               </div>
             </div>
 
@@ -149,14 +142,6 @@ export function Navigation() {
                 <Link href="/contact" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
                   Contact
                 </Link>
-                <div className="border-t pt-3">
-                  <Link href="/privacy" className="block text-sm hover:text-ring transition-colors mb-2" onClick={() => setMobileMenuOpen(false)}>
-                    Privacy Policy
-                  </Link>
-                  <Link href="/terms" className="block text-sm hover:text-ring transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                    Terms of Service
-                  </Link>
-                </div>
                 <div className="flex items-center gap-3 pt-3 border-t">
                   <Button
                     variant="ghost"

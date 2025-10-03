@@ -70,7 +70,7 @@ export function EnhancedCTA() {
             <Link href="/signup">
               <Button 
                 size="lg" 
-                className="group relative bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white text-lg px-10 py-7 rounded-2xl overflow-hidden w-full sm:w-auto"
+                className="group relative bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white text-base sm:text-lg px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 rounded-xl sm:rounded-2xl overflow-hidden w-full sm:w-auto min-h-[44px] sm:min-h-[52px]"
                 data-testid="button-cta-start-free"
               >
                 <motion.div
@@ -79,9 +79,10 @@ export function EnhancedCTA() {
                   whileHover={{ x: "100%" }}
                   transition={{ duration: 0.6 }}
                 />
-                <span className="relative flex items-center gap-2">
-                  Start Free Trial
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span className="relative flex items-center gap-2 text-sm sm:text-base font-medium">
+                  <span className="hidden xs:inline">Start Free Trial</span>
+                  <span className="xs:hidden">Start Free</span>
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                 </span>
               </Button>
             </Link>
@@ -90,10 +91,13 @@ export function EnhancedCTA() {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white/30 bg-white/5 backdrop-blur-md text-white hover:bg-white/10 text-lg px-10 py-7 rounded-2xl w-full sm:w-auto"
+                className="border-2 border-white/30 bg-white/5 backdrop-blur-md text-white hover:bg-white/10 text-base sm:text-lg px-6 sm:px-8 lg:px-10 py-4 sm:py-5 lg:py-6 rounded-xl sm:rounded-2xl w-full sm:w-auto min-h-[44px] sm:min-h-[52px]"
                 data-testid="button-cta-schedule-demo"
               >
-                Schedule a Demo
+                <span className="text-sm sm:text-base font-medium">
+                  <span className="hidden xs:inline">Schedule Demo</span>
+                  <span className="xs:hidden">Demo</span>
+                </span>
               </Button>
             </Link>
           </div>

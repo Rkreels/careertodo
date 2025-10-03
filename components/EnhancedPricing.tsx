@@ -5,56 +5,25 @@ import { Link } from "wouter";
 
 const plans = [
   {
-    name: "Explorer",
-    price: "৳499",
-    period: "/month",
-    description: "Perfect for beginners starting their journey",
+    name: "Early Access Special",
+    price: "৳4,999",
+    originalPrice: "৳12,000",
+    period: "6 months",
+    description: "Limited time offer - Get 6 months of full access at our special launch price!",
     icon: Sparkles,
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-chart-3 to-chart-4",
     features: [
-      "Access to 5 basic simulations",
+      "Access to all 20+ professional simulations",
+      "ERP, CRM, HRMS, Accounting & more tools",
       "Progress tracking dashboard",
       "Community forum access",
-      "Email support",
-      "Certificate of completion"
-    ],
-    popular: false
-  },
-  {
-    name: "Professional",
-    price: "৳1,499",
-    period: "/month",
-    description: "For serious learners ready to excel",
-    icon: Zap,
-    gradient: "from-orange-500 to-red-500",
-    features: [
-      "All Explorer features",
-      "Access to all 20+ simulations",
-      "Priority support (24/7)",
-      "1-on-1 mentorship sessions",
-      "Industry-recognized certificate",
+      "Priority email support",
+      "Certificate of completion",
       "Job placement assistance",
-      "Lifetime access to materials"
+      "Mobile app access"
     ],
-    popular: true
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    description: "For universities and organizations",
-    icon: Crown,
-    gradient: "from-purple-500 to-pink-500",
-    features: [
-      "All Professional features",
-      "Custom simulations",
-      "Dedicated account manager",
-      "LMS integration",
-      "Analytics dashboard",
-      "White-label option",
-      "Volume discounts"
-    ],
-    popular: false
+    popular: true,
+    earlyAccess: true
   }
 ];
 
@@ -81,7 +50,7 @@ export function EnhancedPricing() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="max-w-4xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -89,55 +58,62 @@ export function EnhancedPricing() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5, scale: plan.popular ? 1.02 : 1 }}
-              className={`group relative ${plan.popular ? 'lg:-mt-4 lg:mb-4' : ''}`}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="group relative"
             >
-              {plan.popular && (
+              {plan.earlyAccess && (
                 <div className="absolute -top-5 left-0 right-0 flex justify-center z-10">
-                  <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-chart-3 to-chart-4 text-white text-sm font-bold">
-                    Most Popular
+                  <div className="px-6 py-2 rounded-full bg-gradient-to-r from-chart-3 to-chart-4 text-white text-sm font-bold animate-pulse">
+                    🎉 Limited Time Early Access Offer
                   </div>
                 </div>
               )}
 
               <div className={`absolute -inset-1 bg-gradient-to-br ${plan.gradient} rounded-3xl blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-700`} />
               
-              <div className={`relative bg-card/80 backdrop-blur-xl border-2 ${plan.popular ? 'border-chart-3' : 'border-card-border'} rounded-3xl p-8 h-full flex flex-col`}>
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${plan.gradient} flex items-center justify-center mb-6`}>
-                  <plan.icon className="w-7 h-7 text-white" />
-                </div>
+              <div className={`relative bg-card/80 backdrop-blur-xl border-2 ${plan.popular ? 'border-chart-3' : 'border-card-border'} rounded-3xl p-8 md:p-12`}>
+                <div className="text-center mb-8">
+                  <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${plan.gradient} flex items-center justify-center mb-6 mx-auto`}>
+                    <plan.icon className="w-10 h-10 text-white" />
+                  </div>
 
-                <h3 className="text-2xl font-black mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground text-sm mb-6">{plan.description}</p>
+                  <h3 className="text-3xl md:text-4xl font-black mb-4">{plan.name}</h3>
+                  <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">{plan.description}</p>
 
-                <div className="mb-8">
-                  <div className="flex items-baseline">
-                    <span className="text-5xl font-black bg-gradient-to-r from-chart-3 to-chart-4 bg-clip-text text-transparent">
-                      {plan.price}
-                    </span>
-                    <span className="text-muted-foreground ml-2">{plan.period}</span>
+                  <div className="mb-8">
+                    <div className="flex items-center justify-center gap-4 mb-2">
+                      <span className="text-6xl md:text-7xl font-black bg-gradient-to-r from-chart-3 to-chart-4 bg-clip-text text-transparent">
+                        {plan.price}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-center gap-3">
+                      <span className="text-xl text-muted-foreground line-through">{plan.originalPrice}</span>
+                      <span className="text-lg text-muted-foreground">{plan.period}</span>
+                    </div>
+                    <div className="mt-3 inline-flex items-center px-4 py-1 rounded-full bg-green-100 text-green-800 text-sm font-medium">
+                      Save {Math.round(((parseInt(plan.originalPrice.replace(/[৳,]/g, '')) - parseInt(plan.price.replace(/[৳,]/g, ''))) / parseInt(plan.originalPrice.replace(/[৳,]/g, '')) * 100)}% 
+                    </div>
                   </div>
                 </div>
 
-                <ul className="space-y-4 mb-8 flex-1">
+                <div className="grid md:grid-cols-2 gap-4 mb-8">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
+                    <div key={feature} className="flex items-start gap-3">
                       <div className={`w-5 h-5 rounded-full bg-gradient-to-br ${plan.gradient} flex items-center justify-center flex-shrink-0 mt-0.5`}>
                         <Check className="w-3 h-3 text-white" />
                       </div>
                       <span className="text-sm leading-relaxed">{feature}</span>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
 
-                <Link href={plan.name === "Enterprise" ? "/contact" : "/payment"}>
+                <Link href="/payment">
                   <Button 
                     size="lg"
-                    className={`w-full rounded-xl ${plan.popular ? 'bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white' : ''}`}
-                    variant={plan.popular ? "default" : "outline"}
+                    className={`w-full rounded-xl bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white text-lg py-6`}
                     data-testid={`button-select-${plan.name.toLowerCase()}`}
                   >
-                    {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
+                    Get Started Now
                   </Button>
                 </Link>
               </div>
@@ -151,7 +127,7 @@ export function EnhancedPricing() {
           viewport={{ once: true }}
           className="text-center mt-12 text-muted-foreground"
         >
-          All plans include bKash payment support • 14-day money-back guarantee
+          bKash payment supported • 7-day money-back guarantee • Limited time offer
         </motion.p>
       </div>
     </section>
