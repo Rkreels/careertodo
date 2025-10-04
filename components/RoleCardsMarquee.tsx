@@ -129,12 +129,15 @@ export function RoleCardsMarquee() {
         {/* First column - Bottom to Top */}
         <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden">
           {/* Fade masks for top and bottom - gradual vanishing effect */}
-          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
+          {/* Desktop: No shadow, Mobile: Proper shadow placement */}
+          <div className="hidden lg:block absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/40 to-transparent z-10 pointer-events-none" />
+          <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/40 to-transparent z-10 pointer-events-none" />
+          <div className="lg:hidden absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
+          <div className="lg:hidden absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 120], // Increased spacing between cards
+              y: [0, -roles.length * 140], // Increased spacing for gaps between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -148,9 +151,9 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col1-${role.title}-${index}`}
-                className="absolute left-0 right-0"
+                className="absolute left-0 right-0 px-2" // Added horizontal padding for gaps
                 style={{ 
-                  top: `${(index % roles.length) * 120}px`, // Increased spacing
+                  top: `${(index % roles.length) * 140}px`, // Increased spacing for gaps
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
@@ -162,12 +165,15 @@ export function RoleCardsMarquee() {
         {/* Second column - Top to Bottom */}
         <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden hidden lg:block">
           {/* Fade masks for top and bottom - gradual vanishing effect */}
-          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
+          {/* Desktop: No shadow, Mobile: Proper shadow placement */}
+          <div className="hidden lg:block absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/40 to-transparent z-10 pointer-events-none" />
+          <div className="hidden lg:block absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/40 to-transparent z-10 pointer-events-none" />
+          <div className="lg:hidden absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white/60 to-transparent z-10 pointer-events-none" />
+          <div className="lg:hidden absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white/60 to-transparent z-10 pointer-events-none" />
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 120, 0], // Increased spacing between cards
+              y: [-roles.length * 140, 0], // Increased spacing for gaps between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -181,9 +187,9 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col2-${role.title}-${index}`}
-                className="absolute left-0 right-0"
+                className="absolute left-0 right-0 px-2" // Added horizontal padding for gaps
                 style={{ 
-                  top: `${(index % roles.length) * 120}px`, // Increased spacing
+                  top: `${(index % roles.length) * 140}px`, // Increased spacing for gaps
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />

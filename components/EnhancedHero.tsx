@@ -133,7 +133,7 @@ export function EnhancedHero() {
         {/* Rolling cards for mobile/tablet - positioned below CTA button */}
         <div className="lg:hidden mt-6 sm:mt-8">
           <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px]">
-            {/* Fade masks for mobile - gradual vanishing effect */}
+            {/* Fade masks for mobile - gradual vanishing effect with proper shadow */}
             <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
             <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
             <RoleCardsMarquee />
