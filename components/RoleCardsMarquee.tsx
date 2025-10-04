@@ -124,13 +124,13 @@ export function RoleCardsMarquee() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Two rolling columns */}
-      <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-6 sm:gap-10 justify-center">
+      <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-4 sm:gap-8 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 sm:w-80 h-80 sm:h-96">
-          {/* Fade masks for top and bottom */}
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden">
+          {/* Fade masks for top and bottom - gradual vanishing effect */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
           
           <motion.div
             animate={!prefersReducedMotion ? {
@@ -160,10 +160,10 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 sm:w-80 h-80 sm:h-96 hidden lg:block">
-          {/* Fade masks for top and bottom */}
-          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden hidden lg:block">
+          {/* Fade masks for top and bottom - gradual vanishing effect */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
           
           <motion.div
             animate={!prefersReducedMotion ? {

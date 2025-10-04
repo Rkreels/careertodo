@@ -122,8 +122,8 @@ export function EnhancedHero() {
             </div>
           </motion.div>
 
-          {/* Rolling cards - positioned below CTA on mobile, moved more right on desktop */}
-          <div className="lg:absolute lg:right-[-10%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[500px] lg:h-[500px] hidden lg:block">
+          {/* Rolling cards - positioned below CTA on mobile, properly positioned on desktop */}
+          <div className="lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:w-96 lg:h-96 hidden lg:block">
             <div className="relative w-full h-full">
               <RoleCardsMarquee />
             </div>
@@ -133,9 +133,9 @@ export function EnhancedHero() {
         {/* Rolling cards for mobile/tablet - positioned below CTA button */}
         <div className="lg:hidden mt-6 sm:mt-8">
           <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px]">
-            {/* Fade masks for mobile */}
-            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+            {/* Fade masks for mobile - gradual vanishing effect */}
+            <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-white via-white/60 to-transparent z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white/60 to-transparent z-10 pointer-events-none" />
             <RoleCardsMarquee />
           </div>
         </div>
