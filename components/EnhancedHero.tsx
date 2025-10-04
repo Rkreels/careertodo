@@ -45,7 +45,7 @@ export function EnhancedHero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(125,211,252,0.08),transparent_70%)]" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20 mt-12 sm:mt-14 md:mt-16">
-        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -122,11 +122,18 @@ export function EnhancedHero() {
             </div>
           </motion.div>
 
-          {/* Rolling cards - positioned below CTA on mobile, side on desktop */}
-          <div className="order-first lg:order-last mb-6 sm:mb-8 lg:mb-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-96 lg:h-96">
-            <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-full">
+          {/* Rolling cards - positioned below CTA on mobile, moved more left on desktop */}
+          <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-96 lg:h-96 lg:-mr-8 hidden lg:block">
+            <div className="relative w-full h-full">
               <RoleCardsMarquee />
             </div>
+          </div>
+        </div>
+
+        {/* Rolling cards for mobile/tablet - positioned below CTA button */}
+        <div className="lg:hidden mt-8 sm:mt-12">
+          <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px]">
+            <RoleCardsMarquee />
           </div>
         </div>
       </div>

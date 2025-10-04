@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { AlertTriangle, TrendingUp, Users, DollarSign, GraduationCap, Briefcase, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
 
 interface StatItem {
   value: string;
@@ -247,13 +248,15 @@ export function TheRealityCheck() {
                 }
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-indigo-600 hover:bg-slate-100 px-6 sm:px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-                >
-                  Start Your Transformation
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-                </Button>
+                <Link href="/signup">
+                  <Button 
+                    size="lg" 
+                    className="bg-white text-indigo-600 hover:bg-slate-100 px-6 sm:px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                  >
+                    Start Your Transformation
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+                  </Button>
+                </Link>
                 <div className="flex items-center gap-2 text-white/80">
                   <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span className="text-xs sm:text-sm">6 months to job-ready</span>

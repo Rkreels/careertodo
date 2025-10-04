@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Play, Eye, Hand, FileText, Monitor, Users, TrendingUp, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
 
 interface TaskExample {
   icon: React.ReactNode;
@@ -267,12 +268,14 @@ export function WatchingVsDoing() {
                 Join thousands who've made the leap to practical learning
               </p>
             </div>
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              Try a Free Simulation
-            </Button>
+            <Link href="/signup">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                Try a Free Simulation
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </div>

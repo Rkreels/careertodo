@@ -1,8 +1,9 @@
-import { motion, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, TrendingUp, Users, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
 
 interface SkillLevel {
   title: string;
@@ -112,21 +113,13 @@ const skillLevels: SkillLevel[] = [
 
 export function TheGap() {
   const [sliderPosition, setSliderPosition] = useState(50);
-  const [isAnimating, setIsAnimating] = useState(false);
-  
-  const springConfig = { damping: 25, stiffness: 200 };
-  const sliderX = useSpring(sliderPosition, springConfig);
-  
-  const backgroundPosition = useTransform(sliderX, [0, 100], ["0%", "100%"]);
 
   const handleSliderChange = (value: number) => {
     setSliderPosition(value);
   };
 
   const animateToPosition = (position: number) => {
-    setIsAnimating(true);
     setSliderPosition(position);
-    setTimeout(() => setIsAnimating(false), 500);
   };
 
   const getStatusIcon = (status: string) => {
@@ -370,12 +363,14 @@ export function TheGap() {
                 Start building skills that employers actually value
               </p>
             </div>
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              Bridge the Gap Now
-            </Button>
+            <Link href="/signup">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                Bridge the Gap Now
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </div>

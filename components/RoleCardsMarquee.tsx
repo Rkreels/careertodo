@@ -123,18 +123,8 @@ export function RoleCardsMarquee() {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {/* Title overlay */}
-      <div className="absolute top-0 left-0 right-0 z-20 text-center px-2">
-        <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-1">
-          Explore Real Career Roles
-        </h3>
-        <p className="text-sm text-slate-600">
-          Practice actual tasks from different industries
-        </p>
-      </div>
-
       {/* Two rolling columns */}
-      <div className="relative w-full h-full max-w-6xl mx-auto pt-16 flex gap-8 justify-center">
+      <div className="relative w-full h-full max-w-6xl mx-auto flex gap-8 justify-center">
         
         {/* First column - Bottom to Top */}
         <div className="relative w-80 h-96 overflow-hidden">
@@ -194,10 +184,6 @@ export function RoleCardsMarquee() {
           </motion.div>
         </div>
       </div>
-
-      {/* Fade overlays for smooth entrance/exit */}
-      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-sky-50 via-white/70 to-transparent z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-sky-50 via-white/70 to-transparent z-10" />
     </div>
   );
 }
