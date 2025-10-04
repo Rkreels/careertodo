@@ -123,16 +123,16 @@ export function RoleCardsMarquee() {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {/* Two rolling columns */}
+      {/* Two rolling columns - Desktop: side by side with gap, Mobile: single column */}
       <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-4 sm:gap-8 justify-center">
         
         {/* First column - Bottom to Top */}
         <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden">
-          {/* Fade masks for top and bottom - removed */}
+          {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 100], // Proper spacing between cards
+              y: [0, -roles.length * 120], // Increased spacing for gaps between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -148,7 +148,7 @@ export function RoleCardsMarquee() {
                 key={`col1-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 100}px`, // Proper spacing
+                  top: `${(index % roles.length) * 120}px`, // 20px gap between cards
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
@@ -159,11 +159,11 @@ export function RoleCardsMarquee() {
 
         {/* Second column - Top to Bottom */}
         <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden hidden lg:block">
-          {/* Fade masks for top and bottom - removed */}
+          {/* Desktop: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 100, 0], // Proper spacing between cards
+              y: [-roles.length * 120, 0], // Increased spacing for gaps between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -179,7 +179,7 @@ export function RoleCardsMarquee() {
                 key={`col2-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 100}px`, // Proper spacing
+                  top: `${(index % roles.length) * 120}px`, // 20px gap between cards
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
