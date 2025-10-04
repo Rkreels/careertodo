@@ -113,7 +113,7 @@ function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggl
   
   return (
     <div 
-      className="relative overflow-hidden"
+      className="relative overflow-hidden max-w-full"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -398,7 +398,7 @@ export function ReelsMarquee() {
 
   return (
     <section className="py-20 md:py-32 bg-gradient-to-br from-sky-50/50 via-white to-blue-50/50 overflow-hidden">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

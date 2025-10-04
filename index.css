@@ -224,6 +224,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    min-width: 0;
+  }
+
+  #root {
+    overflow-x: hidden;
+    min-width: 0;
+    width: 100%;
   }
 
   /* Mobile viewport optimizations */
@@ -231,6 +239,29 @@
     scroll-behavior: smooth;
     /* Prevent horizontal overflow on mobile */
     overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-width: 0;
+  }
+
+  /* Prevent horizontal overflow on all elements */
+  * {
+    min-width: 0;
+  }
+
+  /* Specific overflow prevention for common problem elements */
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Prevent text overflow */
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   /* Touch-friendly tap targets */

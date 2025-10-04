@@ -23,7 +23,7 @@ export function PartnersMarquee() {
       </div>
       
       {/* First row - scrolling left to right */}
-      <div className="relative mb-4">
+      <div className="relative mb-4 overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-card to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-card to-transparent z-10" />
         
@@ -53,7 +53,7 @@ export function PartnersMarquee() {
       </div>
 
       {/* Second row - scrolling right to left */}
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-card to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-card to-transparent z-10" />
         

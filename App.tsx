@@ -61,7 +61,7 @@ function Router() {
 }
 
 function App() {
-  return <Router />;
+  return <div className="min-h-screen overflow-x-hidden"><Router /></div>;
 }
 
 export default App;
