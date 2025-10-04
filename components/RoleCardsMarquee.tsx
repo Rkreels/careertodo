@@ -127,12 +127,12 @@ export function RoleCardsMarquee() {
       <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-4 sm:gap-8 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-80 sm:h-96 lg:w-110 lg:h-64 overflow-hidden">
+        <div className="relative w-64 h-80 sm:h-96 lg:w-[380px] lg:h-[420px] overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 140], // More vertical spacing between cards
+              y: [0, -roles.length * 180], // Increased spacing for desktop taller cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -148,7 +148,7 @@ export function RoleCardsMarquee() {
                 key={`col1-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 140}px`, // 40px gap between cards
+                  top: `${(index % roles.length) * 180}px`, // 40px gap between cards for desktop
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
@@ -158,12 +158,12 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-80 sm:h-96 lg:w-110 lg:h-64 overflow-hidden hidden lg:block">
+        <div className="relative w-64 h-80 sm:h-96 lg:w-[380px] lg:h-[420px] overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 140, 0], // More vertical spacing between cards
+              y: [-roles.length * 180, 0], // Increased spacing for desktop taller cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -179,7 +179,7 @@ export function RoleCardsMarquee() {
                 key={`col2-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 140}px`, // 40px gap between cards
+                  top: `${(index % roles.length) * 180}px`, // 40px gap between cards for desktop
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
