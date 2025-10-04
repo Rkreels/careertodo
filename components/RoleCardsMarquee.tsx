@@ -127,12 +127,12 @@ export function RoleCardsMarquee() {
       <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-4 sm:gap-8 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[420px] overflow-hidden">
+        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[140px] overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 220], // Much more spacing between roles
+              y: [0, -roles.length * 180], // Adjusted spacing for shorter cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -148,7 +148,7 @@ export function RoleCardsMarquee() {
                 key={`col1-${role.title}-${index}`}
                 className="absolute px-2"
                 style={{ 
-                  top: `${(index % roles.length) * 220}px`, // 80px gap between roles
+                  top: `${(index % roles.length) * 180}px`, // 40px gap between shorter cards
                   left: '0',
                   right: '0'
                 }}
@@ -160,12 +160,12 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[420px] overflow-hidden hidden lg:block">
+        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[140px] overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 220, 0], // Much more spacing between roles
+              y: [-roles.length * 180, 0], // Adjusted spacing for shorter cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -181,7 +181,7 @@ export function RoleCardsMarquee() {
                 key={`col2-${role.title}-${index}`}
                 className="absolute px-2"
                 style={{ 
-                  top: `${(index % roles.length) * 220}px`, // 80px gap between roles
+                  top: `${(index % roles.length) * 180}px`, // 40px gap between shorter cards
                   left: '0',
                   right: '0'
                 }}
