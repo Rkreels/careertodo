@@ -3,10 +3,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
-import { RoleCardsMarquee } from "@/components/RoleCardsMarquee";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function EnhancedHero() {
   const [isHovered, setIsHovered] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50">
@@ -125,7 +126,12 @@ export function EnhancedHero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="order-first lg:order-last mb-8 lg:mb-0"
           >
-            <RoleCardsMarquee />
+            <div className="relative w-full h-[400px] bg-gradient-to-br from-sky-50 via-white to-blue-50 rounded-2xl sm:rounded-3xl border border-sky-200 shadow-xl flex items-center justify-center">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-slate-800 mb-2">Career Simulations</h3>
+                <p className="text-slate-600">Practice real-world tasks</p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

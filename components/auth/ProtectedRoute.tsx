@@ -19,6 +19,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const { user, loading, isAdmin, userProfile } = useAuth();
 
+  // DISABLED FOR NOW - Automatic redirects were causing issues
+  /*
   useEffect(() => {
     if (loading) return;
 
@@ -40,6 +42,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       return;
     }
   }, [user, loading, isAdmin, userProfile, requirePayment, requireAdmin]);
+  */
 
   if (loading) {
     return (
@@ -53,7 +56,20 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   if (!user) {
-    return null; // Will redirect
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Shield className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+          <h2 className="text-xl font-semibold mb-2">Authentication Required</h2>
+          <p className="text-gray-600 mb-6">
+            Please sign in to access this page.
+          </p>
+          <Button onClick={() => window.location.href = '/'}>
+            Return to Home
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   if (requireAdmin && !isAdmin) {
@@ -83,7 +99,20 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   if (requirePayment && userProfile && !userProfile.is_paid) {
-    return null; // Will redirect to payment
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <AlertTriangle className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
+          <h2 className="text-xl font-semibold mb-2">Payment Required</h2>
+          <p className="text-gray-600 mb-6">
+            Please complete your payment to access this feature.
+          </p>
+          <Button onClick={() => window.location.href = '/payment'}>
+            Go to Payment
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   return <>{children}</>;

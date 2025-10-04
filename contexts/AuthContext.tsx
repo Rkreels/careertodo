@@ -121,7 +121,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [user, supabaseError]);
 
-  // Handle automatic redirects after authentication
+  // Handle automatic redirects after authentication - DISABLED FOR NOW
+  /*
   useEffect(() => {
     if (user && userProfile && !loading) {
       // Only redirect if we're not already on a protected page
@@ -140,6 +141,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
   }, [user, userProfile, loading]);
+  */
 
   const signUp = async (email: string, password: string, metadata?: any) => {
     if (supabaseError) {
@@ -204,6 +206,8 @@ export const useAuth = () => {
 export const useAuthRedirect = () => {
   const { user, loading, userProfile } = useAuth();
 
+  // DISABLED FOR NOW - Automatic redirects were causing blank screen issues
+  /*
   useEffect(() => {
     if (loading) return;
 
@@ -218,6 +222,7 @@ export const useAuthRedirect = () => {
       }
     }
   }, [user, loading, userProfile]);
+  */
 
   return { user, loading, userProfile };
 };

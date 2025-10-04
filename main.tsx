@@ -10,18 +10,16 @@ import { Toaster } from './components/ui/toaster';
 import App from "./App";
 import "./index.css";
 import { queryClient } from './lib/queryClient';
-import { handleBrowserNavigation } from './lib/scrollUtils';
 
-// Global scroll reset on page load
+// Simple scroll to top on navigation
 if (typeof window !== 'undefined') {
-  // Handle browser navigation
-  handleBrowserNavigation();
+  // Disable browser scroll restoration
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
   
-  // Scroll to top immediately
-  window.scrollTo(0, 0);
-  
-  // Also scroll after DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
+  // Scroll to top on initial load
+  window.addEventListener('load', () => {
     window.scrollTo(0, 0);
   });
 }
