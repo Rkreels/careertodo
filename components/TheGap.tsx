@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, GraduationCap, Briefcase, TrendingUp, Users, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { GraduationCap, Briefcase, TrendingUp, Users, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
@@ -116,10 +116,6 @@ export function TheGap() {
 
   const handleSliderChange = (value: number) => {
     setSliderPosition(value);
-  };
-
-  const animateToPosition = (position: number) => {
-    setSliderPosition(position);
   };
 
   const getStatusIcon = (status: string) => {
@@ -263,32 +259,7 @@ export function TheGap() {
             />
           </div>
 
-          {/* Quick Navigation Buttons */}
-          <div className="flex justify-center gap-4 mt-8">
-            <Button
-              variant="outline"
-              onClick={() => animateToPosition(0)}
-              className="rounded-full border-red-300 text-red-600 hover:bg-red-50"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Traditional
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => animateToPosition(50)}
-              className="rounded-full border-indigo-300 text-indigo-600 hover:bg-indigo-50"
-            >
-              Compare
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => animateToPosition(100)}
-              className="rounded-full border-green-300 text-green-600 hover:bg-green-50"
-            >
-              CareerToDo
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
+  
         </motion.div>
 
         {/* Skill Comparison Grid */}
@@ -354,8 +325,8 @@ export function TheGap() {
           transition={{ delay: 0.6 }}
           className="text-center mt-16"
         >
-          <div className="inline-flex items-center gap-4 p-6 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl border border-purple-200">
-            <div className="text-left">
+          <div className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl border border-purple-200 p-6 lg:p-8">
+            <div className="text-left lg:text-center mb-6 lg:mb-0">
               <p className="text-lg font-bold text-slate-900 mb-1">
                 Close the gap between theory and practice
               </p>
@@ -363,14 +334,16 @@ export function TheGap() {
                 Start building skills that employers actually value
               </p>
             </div>
-            <Link href="/signup">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              >
-                Bridge the Gap Now
-              </Button>
-            </Link>
+            <div className="lg:text-center">
+              <Link href="/signup">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full lg:w-auto"
+                >
+                  Bridge the Gap Now
+                </Button>
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>

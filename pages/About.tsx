@@ -77,14 +77,14 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.15),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.15),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.15),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.15),transparent_50%)]" />
       
       <div className="relative z-10">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20 sm:py-24 px-4">
+        <div className="bg-gradient-to-r from-sky-600 to-blue-600 text-white py-20 sm:py-24 px-4">
           <div className="container mx-auto">
             <Link href="/">
               <button className="flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-8 group">
@@ -111,7 +111,7 @@ const About = () => {
           {/* Mission Section */}
           <section className="mb-20">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-full mb-6">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
@@ -158,7 +158,7 @@ const About = () => {
 
           {/* Stats Section */}
           <section className="mb-20">
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 sm:p-12 text-white">
+            <div className="bg-gradient-to-r from-sky-600 to-blue-600 rounded-2xl p-8 sm:p-12 text-white">
               <div className="text-center mb-12">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Impact</h2>
                 <p className="text-xl text-white/90">
@@ -184,7 +184,7 @@ const About = () => {
           <section className="mb-20">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full mb-6">
+                <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-700 px-4 py-2 rounded-full mb-6">
                   <Star className="w-4 h-4" />
                   <span className="font-semibold">Our Story</span>
                 </div>
@@ -208,10 +208,10 @@ const About = () => {
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl border border-indigo-200">
+              <div className="bg-gradient-to-br from-sky-50 to-blue-50 p-8 rounded-2xl border border-sky-200">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                    <div className="text-2xl font-bold text-indigo-600 mb-1">2023</div>
+                    <div className="text-2xl font-bold text-sky-600 mb-1">2023</div>
                     <div className="text-sm text-gray-600">Founded</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg shadow-sm">
@@ -234,7 +234,7 @@ const About = () => {
           {/* Values Section */}
           <section className="mb-20">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-full mb-6">
                 <Heart className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
@@ -261,7 +261,7 @@ const About = () => {
           {/* Team Section */}
           <section className="mb-20">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-full mb-6">
                 <Users className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
@@ -287,7 +287,7 @@ const About = () => {
           </section>
 
           {/* CTA Section */}
-          <section className="text-center bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-12 sm:p-16 text-white">
+          <section className="text-center bg-gradient-to-r from-sky-600 to-blue-600 rounded-2xl p-12 sm:p-16 text-white">
             <div className="max-w-3xl mx-auto">
               <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-8">
                 <MessageCircle className="w-10 h-10 text-white" />
@@ -300,12 +300,12 @@ const About = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/signup">
-                  <button className="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg shadow-lg hover:shadow-xl">
+                  <button className="bg-white text-sky-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg shadow-lg hover:shadow-xl">
                     Get Started Free
                   </button>
                 </Link>
                 <Link href="/contact">
-                  <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition-colors text-lg">
+                  <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-sky-600 transition-colors text-lg">
                     Contact Us
                   </button>
                 </Link>

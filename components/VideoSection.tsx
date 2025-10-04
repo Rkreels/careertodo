@@ -10,7 +10,7 @@ export function VideoSection() {
   const [mainVideoDuration, setMainVideoDuration] = useState(0);
   const mainVideoRef = useRef<HTMLVideoElement>(null);
 
-  const mainVideoId = "dQw4w9WgXcQ"; // Main video ID
+  const mainVideoId = "careertodo-demo"; // Main video ID
 
   useEffect(() => {
     const video = mainVideoRef.current;
@@ -94,7 +94,7 @@ export function VideoSection() {
               {!mainVideoPlaying ? (
                 <>
                   <img 
-                    src={`https://img.youtube.com/vi/${mainVideoId}/maxresdefault.jpg`}
+                    src={`https://picsum.photos/seed/${mainVideoId}/1280/720.jpg`}
                     alt="CareerToDo Platform Video"
                     className="w-full h-full object-cover"
                   />
@@ -139,7 +139,7 @@ export function VideoSection() {
                     className="w-full h-full object-cover"
                     onEnded={() => setMainVideoPlaying(false)}
                   >
-                    <source src={`https://www.youtube.com/watch?v=${mainVideoId}`} type="video/mp4" />
+                    <source src={`https://www.w3schools.com/html/mov_bbb.mp4`} type="video/mp4" />
                   </video>
                   
                   {/* Video controls overlay */}

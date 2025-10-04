@@ -90,25 +90,25 @@ function RoleCard({ role }: RoleCardProps) {
   
   return (
     <motion.div
-      className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-sky-100 hover:shadow-xl hover:bg-white/90 transition-all duration-300"
+      className="flex items-center gap-2 sm:gap-3 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg border border-sky-100 hover:shadow-xl hover:bg-white/90 transition-all duration-300"
       whileHover={{ scale: 1.02, y: -2 }}
     >
-      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
-        <Icon className="w-6 h-6 text-white" />
+      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
+        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
       </div>
       <div className="min-w-0 flex-1">
-        <h4 className="font-bold text-slate-800 text-sm mb-1">{role.title}</h4>
-        <p className="text-xs text-slate-600 mb-2">{role.department}</p>
+        <h4 className="font-bold text-slate-800 text-sm sm:text-sm mb-1">{role.title}</h4>
+        <p className="text-sm text-slate-600 mb-1 sm:mb-2">{role.department}</p>
         <div className="flex flex-wrap gap-1">
           {role.tasks.slice(0, 2).map((task, taskIndex) => (
-            <span key={taskIndex} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-xs text-slate-600">
+            <span key={taskIndex} className="inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full bg-sky-50 text-sm text-slate-600">
               <div className="w-1 h-1 rounded-full bg-sky-400" />
               {task}
             </span>
           ))}
           {role.tasks.length > 2 && (
-            <span className="text-xs text-slate-400 italic">
-              +{role.tasks.length - 2} more
+            <span className="text-sm text-slate-400 italic">
+              +{role.tasks.length - 2}
             </span>
           )}
         </div>
@@ -124,13 +124,17 @@ export function RoleCardsMarquee() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Two rolling columns */}
-      <div className="relative w-full h-full max-w-6xl mx-auto flex gap-8 justify-center">
+      <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-6 sm:gap-10 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-80 h-96 overflow-hidden">
+        <div className="relative w-64 sm:w-80 h-80 sm:h-96">
+          {/* Fade masks for top and bottom */}
+          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 120], // Move up by the height of one role set
+              y: [0, -roles.length * 120], // Increased spacing between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -146,7 +150,7 @@ export function RoleCardsMarquee() {
                 key={`col1-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 120}px`,
+                  top: `${(index % roles.length) * 120}px`, // Increased spacing
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
@@ -156,10 +160,14 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-80 h-96 overflow-hidden hidden lg:block">
+        <div className="relative w-64 sm:w-80 h-80 sm:h-96 hidden lg:block">
+          {/* Fade masks for top and bottom */}
+          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 120, 0], // Move down by the height of one role set
+              y: [-roles.length * 120, 0], // Increased spacing between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -175,7 +183,7 @@ export function RoleCardsMarquee() {
                 key={`col2-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 120}px`,
+                  top: `${(index % roles.length) * 120}px`, // Increased spacing
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />

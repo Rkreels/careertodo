@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Volume2, VolumeX, Play } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 interface VideoTestimonial {
@@ -15,7 +15,7 @@ interface VideoTestimonial {
 const testimonials: VideoTestimonial[] = [
   { 
     id: "1", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample1", 
     name: "Fatima Rahman", 
     role: "Finance Manager", 
     company: "BRAC Bank",
@@ -23,7 +23,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "2", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample2", 
     name: "Kabir Ahmed", 
     role: "HR Director", 
     company: "Grameenphone",
@@ -31,7 +31,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "3", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample3", 
     name: "Nadia Khan", 
     role: "Sales Lead", 
     company: "Pathao",
@@ -39,7 +39,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "4", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample4", 
     name: "Hassan Ali", 
     role: "Marketing Head", 
     company: "Chaldal",
@@ -47,7 +47,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "5", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample5", 
     name: "Ayesha Begum", 
     role: "Product Manager", 
     company: "bKash",
@@ -55,7 +55,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "6", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample6", 
     name: "Imran Hossain", 
     role: "Operations Lead", 
     company: "Daraz",
@@ -63,7 +63,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "7", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample7", 
     name: "Rima Das", 
     role: "Treasury Analyst", 
     company: "City Bank",
@@ -71,7 +71,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "8", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample8", 
     name: "Shakib Alam", 
     role: "Data Analyst", 
     company: "Robi",
@@ -79,7 +79,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "9", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample9", 
     name: "Lamia Islam", 
     role: "Accountant", 
     company: "Square Pharma",
@@ -87,7 +87,7 @@ const testimonials: VideoTestimonial[] = [
   },
   { 
     id: "10", 
-    youtubeId: "dQw4w9WgXcQ", 
+    youtubeId: "sample10", 
     name: "Rafiq Uddin", 
     role: "Sales Manager", 
     company: "ACI",
@@ -103,9 +103,10 @@ interface MarqueeRowProps {
   videoStates: {[key: string]: {playing: boolean, muted: boolean, currentTime: number, duration: number}};
   onToggleMute: (videoId: string) => void;
   onSeek: (videoId: string, time: number) => void;
+  isAnyVideoPlaying: boolean;
 }
 
-function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggleMute, onSeek }: MarqueeRowProps) {
+function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggleMute, onSeek, isAnyVideoPlaying }: MarqueeRowProps) {
   const [isPaused, setIsPaused] = useState(false);
   
   const duplicatedItems = [...items, ...items, ...items];
@@ -130,7 +131,7 @@ function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggl
           },
         }}
         style={{
-          animationPlayState: isPaused ? 'paused' : 'running',
+          animationPlayState: (isPaused || isAnyVideoPlaying) ? 'paused' : 'running',
         }}
       >
         {duplicatedItems.map((item, index) => (
@@ -144,7 +145,7 @@ function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggl
               <>
                 {/* YouTube Thumbnail */}
                 <img 
-                  src={`https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`}
+                  src={`https://picsum.photos/seed/${item.youtubeId}/400/700.jpg`}
                   alt={`${item.name} video testimonial`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -189,8 +190,10 @@ function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggl
                   onEnded={() => onPlay(item)}
                   autoPlay
                   muted={videoStates[item.id]?.muted}
+                  playsInline
                 >
-                  <source src={`https://www.youtube.com/watch?v=${item.youtubeId}`} type="video/mp4" />
+                <source src={`https://www.w3schools.com/html/mov_bbb.mp4`} type="video/mp4" />
+                  Your browser does not support the video tag.
                 </video>
                 
                 {/* Video controls overlay */}
@@ -286,13 +289,17 @@ function MarqueeRow({ items, direction, speed = 30, onPlay, videoStates, onToggl
 
 export function ReelsMarquee() {
   const [videoStates, setVideoStates] = useState<{[key: string]: {playing: boolean, muted: boolean, currentTime: number, duration: number}}>({});
+  const [isAnyVideoPlaying, setIsAnyVideoPlaying] = useState(false);
 
   const handlePlay = (video: VideoTestimonial) => {
+    const newPlayingState = !videoStates[video.id]?.playing || false;
+    setIsAnyVideoPlaying(newPlayingState);
+    
     setVideoStates(prev => {
       const newStates = {
         ...prev,
         [video.id]: {
-          playing: !prev[video.id]?.playing || false,
+          playing: newPlayingState,
           muted: prev[video.id]?.muted || true,
           currentTime: prev[video.id]?.currentTime || 0,
           duration: prev[video.id]?.duration || 0
@@ -311,7 +318,7 @@ export function ReelsMarquee() {
     
     const videoElement = document.getElementById(`reel-video-${video.id}`) as HTMLVideoElement;
     if (videoElement) {
-      if (!videoStates[video.id]?.playing) {
+      if (newPlayingState) {
         videoElement.play();
         // Setup listeners for this video
         const updateTime = () => {
@@ -337,12 +344,13 @@ export function ReelsMarquee() {
         videoElement.addEventListener('loadedmetadata', updateDuration);
         
         // Store cleanup function
-        (videoElement as any).cleanup = () => {
+        (videoElement as unknown as { cleanup: () => void }).cleanup = () => {
           videoElement.removeEventListener('timeupdate', updateTime);
           videoElement.removeEventListener('loadedmetadata', updateDuration);
         };
       } else {
         videoElement.pause();
+        setIsAnyVideoPlaying(false);
       }
     }
     
@@ -420,6 +428,7 @@ export function ReelsMarquee() {
             videoStates={videoStates}
             onToggleMute={handleToggleMute}
             onSeek={handleSeek}
+            isAnyVideoPlaying={isAnyVideoPlaying}
           />
           <MarqueeRow 
             items={row2} 
@@ -429,6 +438,7 @@ export function ReelsMarquee() {
             videoStates={videoStates}
             onToggleMute={handleToggleMute}
             onSeek={handleSeek}
+            isAnyVideoPlaying={isAnyVideoPlaying}
           />
         </div>
 
