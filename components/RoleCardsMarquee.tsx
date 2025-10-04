@@ -90,7 +90,7 @@ function RoleCard({ role }: RoleCardProps) {
   
   return (
     <motion.div
-      className="flex items-center gap-2 sm:gap-3 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-lg border border-sky-100 hover:shadow-xl hover:bg-white/90 transition-all duration-300"
+      className="flex items-center gap-2 sm:gap-3 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-sky-100 hover:bg-white/90 transition-all duration-300"
       whileHover={{ scale: 1.02, y: -2 }}
     >
       <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
@@ -127,7 +127,7 @@ export function RoleCardsMarquee() {
       <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-4 sm:gap-8 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden">
+        <div className="relative w-64 sm:w-96 h-80 sm:h-96 overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
@@ -158,7 +158,7 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 sm:w-80 h-80 sm:h-96 overflow-hidden hidden lg:block">
+        <div className="relative w-64 sm:w-96 h-80 sm:h-96 overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
