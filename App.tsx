@@ -12,6 +12,7 @@ import { PaymentPage } from "@/components/payment/PaymentPage";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AdminLoginForm } from "@/components/auth/AdminLoginForm";
 import NotFound from "@/pages/not-found";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 // Admin Login Page Component
 const AdminLoginPage = () => {
@@ -31,6 +32,8 @@ const AdminLoginPage = () => {
 
 function Router() {
   console.log('Router component rendering, current path:', window.location.pathname);
+  useScrollToTop();
+
   return (
     <Switch>
       <Route path="/" component={HomePage} />
