@@ -132,7 +132,7 @@ export function RoleCardsMarquee() {
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 120], // Increased spacing for gaps between cards
+              y: [0, -roles.length * 140], // More vertical spacing between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -148,7 +148,7 @@ export function RoleCardsMarquee() {
                 key={`col1-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 120}px`, // 20px gap between cards
+                  top: `${(index % roles.length) * 140}px`, // 40px gap between cards
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
@@ -163,7 +163,7 @@ export function RoleCardsMarquee() {
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 120, 0], // Increased spacing for gaps between cards
+              y: [-roles.length * 140, 0], // More vertical spacing between cards
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -179,7 +179,7 @@ export function RoleCardsMarquee() {
                 key={`col2-${role.title}-${index}`}
                 className="absolute left-0 right-0"
                 style={{ 
-                  top: `${(index % roles.length) * 120}px`, // 20px gap between cards
+                  top: `${(index % roles.length) * 140}px`, // 40px gap between cards
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
