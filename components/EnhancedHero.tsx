@@ -122,17 +122,12 @@ export function EnhancedHero() {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="order-first lg:order-last mb-6 sm:mb-8 lg:mb-0"
-          >
-            <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] bg-gradient-to-br from-sky-50 via-white to-blue-50 rounded-2xl sm:rounded-3xl border border-sky-200 shadow-xl flex items-center justify-center overflow-hidden">
-              {/* Rolling cards animation */}
+          {/* Rolling cards - positioned below CTA on mobile, side on desktop */}
+          <div className="order-first lg:order-last mb-6 sm:mb-8 lg:mb-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-96 lg:h-96">
+            <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-full">
               <RoleCardsMarquee />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

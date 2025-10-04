@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, Zap, Crown } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 
 const plans = [
@@ -108,7 +108,7 @@ export function EnhancedPricing() {
                   ))}
                 </div>
 
-                <Link href="/payment">
+                <Link href="/signup">
                   <Button 
                     size="lg"
                     className={`w-full rounded-xl bg-gradient-to-r from-chart-3 to-chart-4 hover:from-chart-3/90 hover:to-chart-4/90 text-white text-lg py-6`}

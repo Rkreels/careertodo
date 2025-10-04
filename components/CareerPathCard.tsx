@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 interface CareerPathCardProps {
   title: string;
@@ -29,13 +30,15 @@ export function CareerPathCard({ title, description, image, delay = 0 }: CareerP
       <div className="p-6 space-y-4">
         <h3 className="text-2xl font-bold">{title}</h3>
         <p className="text-muted-foreground leading-relaxed">{description}</p>
-        <Button 
-          className="w-full justify-between bg-ring hover:bg-ring/90 text-white"
-          data-testid={`button-explore-${title.toLowerCase().replace(/\s+/g, '-')}`}
-        >
-          Explore Path
-          <ArrowRight className="w-4 h-4" />
-        </Button>
+        <Link href="/signup">
+          <Button 
+            className="w-full justify-between bg-ring hover:bg-ring/90 text-white"
+            data-testid={`button-explore-${title.toLowerCase().replace(/\s+/g, '-')}`}
+          >
+            Explore Path
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </Link>
       </div>
     </motion.div>
   );

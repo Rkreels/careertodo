@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Check, Shield } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 export function PricingSection() {
   return (
@@ -58,13 +59,15 @@ export function PricingSection() {
                 ))}
               </div>
 
-              <Button 
-                size="lg" 
-                className="w-full bg-chart-3 hover:bg-chart-3/90 text-white text-lg py-6 rounded-2xl"
-                data-testid="button-get-access"
-              >
-                Get Access Now
-              </Button>
+              <Link href="/signup">
+                <Button 
+                  size="lg" 
+                  className="w-full bg-chart-3 hover:bg-chart-3/90 text-white text-lg py-6 rounded-2xl"
+                  data-testid="button-get-access"
+                >
+                  Get Access Now
+                </Button>
+              </Link>
 
               <div className="flex items-center justify-center gap-2 mt-6 text-sm text-muted-foreground">
                 <Shield className="w-4 h-4" />

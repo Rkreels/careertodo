@@ -8,11 +8,7 @@ import {
   FileText, 
   HeadphonesIcon,
   ShoppingCart,
-  BarChart3,
-  Settings,
-  MessageSquare,
-  Palette,
-  Camera
+  BarChart3
 } from "lucide-react";
 
 const roles = [
@@ -57,101 +53,151 @@ const roles = [
     icon: HeadphonesIcon,
     color: "from-teal-500 to-cyan-500",
     tasks: ["Customer Queries", "Problem Solving", "Service Quality"]
+  },
+  {
+    title: "Marketing Manager",
+    department: "Marketing",
+    icon: ShoppingCart,
+    color: "from-pink-500 to-rose-500",
+    tasks: ["Campaign Strategy", "Market Research", "Brand Management"]
+  },
+  {
+    title: "Data Analyst",
+    department: "Analytics",
+    icon: BarChart3,
+    color: "from-violet-500 to-purple-500",
+    tasks: ["Data Visualization", "Statistical Analysis", "Reporting"]
   }
 ];
 
-// Duplicate roles for continuous scrolling
-const duplicatedRoles = [...roles, ...roles];
+// Create multiple copies for seamless infinite loop
+const createInfiniteRoles = (count = 4) => {
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(...roles);
+  }
+  return result;
+};
+
+interface RoleCardProps {
+  role: typeof roles[0];
+  index: number;
+  total: number;
+}
+
+function RoleCard({ role }: RoleCardProps) {
+  const Icon = role.icon;
+  
+  return (
+    <motion.div
+      className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-sky-100 hover:shadow-xl hover:bg-white/90 transition-all duration-300"
+      whileHover={{ scale: 1.02, y: -2 }}
+    >
+      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h4 className="font-bold text-slate-800 text-sm mb-1">{role.title}</h4>
+        <p className="text-xs text-slate-600 mb-2">{role.department}</p>
+        <div className="flex flex-wrap gap-1">
+          {role.tasks.slice(0, 2).map((task, taskIndex) => (
+            <span key={taskIndex} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-xs text-slate-600">
+              <div className="w-1 h-1 rounded-full bg-sky-400" />
+              {task}
+            </span>
+          ))}
+          {role.tasks.length > 2 && (
+            <span className="text-xs text-slate-400 italic">
+              +{role.tasks.length - 2} more
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export function RoleCardsMarquee() {
   const prefersReducedMotion = useReducedMotion();
+  const infiniteRoles = createInfiniteRoles(4); // Create 4 copies for seamless loop
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Title overlay */}
-      <div className="absolute top-2 left-0 right-0 z-20 text-center px-2">
-        <h3 className="text-sm sm:text-base font-bold text-slate-800 mb-1">
+      <div className="absolute top-0 left-0 right-0 z-20 text-center px-2">
+        <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-1">
           Explore Real Career Roles
         </h3>
-        <p className="text-xs text-slate-600">
+        <p className="text-sm text-slate-600">
           Practice actual tasks from different industries
         </p>
       </div>
 
-      {/* Rolling cards container */}
-      <div className="relative w-full h-full max-w-4xl mx-auto pt-12">
-        {/* Single column of cards rolling from bottom to top */}
-        <motion.div
-          animate={!prefersReducedMotion ? {
-            y: [0, -50 * duplicatedRoles.length],
-          } : {}}
-          transition={!prefersReducedMotion ? {
-            y: {
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          } : {}}
-          className="absolute inset-x-0"
-        >
-          {duplicatedRoles.map((role, index) => {
-            const Icon = role.icon;
-            const position = index * 50 - 100; // Adjusted spacing
-            
-            return (
-              <motion.div
-                key={`${role.title}-${index}`}
-                className="absolute left-1/2 transform -translate-x-1/2"
+      {/* Two rolling columns */}
+      <div className="relative w-full h-full max-w-6xl mx-auto pt-16 flex gap-8 justify-center">
+        
+        {/* First column - Bottom to Top */}
+        <div className="relative w-80 h-96 overflow-hidden">
+          <motion.div
+            animate={!prefersReducedMotion ? {
+              y: [0, -roles.length * 120], // Move up by the height of one role set
+            } : {}}
+            transition={!prefersReducedMotion ? {
+              y: {
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear",
+              },
+            } : {}}
+            className="absolute inset-x-0"
+          >
+            {infiniteRoles.map((role, index) => (
+              <div
+                key={`col1-${role.title}-${index}`}
+                className="absolute left-0 right-0"
                 style={{ 
-                  top: `${position}px`,
-                  width: '180px',
-                  maxWidth: 'calc(90vw - 2rem)'
-                }}
-                whileHover={{ scale: 1.02 }}
-                animate={{
-                  opacity: [0, 1, 1, 0],
-                  scale: [0.8, 1, 1, 0.8],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  delay: index * 0.3,
-                  ease: "easeInOut"
+                  top: `${(index % roles.length) * 120}px`,
                 }}
               >
-                <div className="bg-white/90 backdrop-blur-xl rounded-lg p-3 shadow-lg border border-sky-100 hover:shadow-xl transition-all duration-300">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
-                      <Icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-bold text-slate-800 text-xs truncate">{role.title}</h4>
-                      <p className="text-xs text-slate-600 truncate">{role.department}</p>
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    {role.tasks.slice(0, 2).map((task, taskIndex) => (
-                      <div key={taskIndex} className="flex items-center gap-1.5">
-                        <div className="w-1 h-1 rounded-full bg-sky-400 flex-shrink-0" />
-                        <span className="text-xs text-slate-600 truncate">{task}</span>
-                      </div>
-                    ))}
-                    {role.tasks.length > 2 && (
-                      <div className="text-xs text-slate-400 italic">
-                        +{role.tasks.length - 2} more
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                <RoleCard role={role} index={index} total={infiniteRoles.length} />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Second column - Top to Bottom */}
+        <div className="relative w-80 h-96 overflow-hidden hidden lg:block">
+          <motion.div
+            animate={!prefersReducedMotion ? {
+              y: [-roles.length * 120, 0], // Move down by the height of one role set
+            } : {}}
+            transition={!prefersReducedMotion ? {
+              y: {
+                duration: 25, // Slightly different speed for visual interest
+                repeat: Infinity,
+                ease: "linear",
+              },
+            } : {}}
+            className="absolute inset-x-0"
+          >
+            {infiniteRoles.map((role, index) => (
+              <div
+                key={`col2-${role.title}-${index}`}
+                className="absolute left-0 right-0"
+                style={{ 
+                  top: `${(index % roles.length) * 120}px`,
+                }}
+              >
+                <RoleCard role={role} index={index} total={infiniteRoles.length} />
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
       {/* Fade overlays for smooth entrance/exit */}
-      <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-sky-50 via-white/70 to-transparent z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-sky-50 via-white/70 to-transparent z-10" />
+      <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-sky-50 via-white/70 to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-sky-50 via-white/70 to-transparent z-10" />
     </div>
   );
 }

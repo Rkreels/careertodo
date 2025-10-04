@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/components/LanguageProvider";
 import { motion } from "framer-motion";
 import dashboardImage from "/assets/generated_images/Dashboard_mockup_for_hero_b3204792.png";
+import { Link } from "wouter";
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -24,21 +25,25 @@ export function HeroSection() {
               {t("hero.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-chart-3 hover:bg-chart-3/90 text-white text-lg px-8 py-6 rounded-2xl"
-                data-testid="button-get-started"
-              >
-                {t("hero.cta.primary")}
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-white/30 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 text-lg px-8 py-6 rounded-2xl"
-                data-testid="button-university-demo"
-              >
-                {t("hero.cta.secondary")}
-              </Button>
+              <Link href="/signup">
+                <Button 
+                  size="lg" 
+                  className="bg-chart-3 hover:bg-chart-3/90 text-white text-lg px-8 py-6 rounded-2xl"
+                  data-testid="button-get-started"
+                >
+                  {t("hero.cta.primary")}
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-2 border-white/30 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 text-lg px-8 py-6 rounded-2xl"
+                  data-testid="button-university-demo"
+                >
+                  {t("hero.cta.secondary")}
+                </Button>
+              </Link>
             </div>
           </motion.div>
 
