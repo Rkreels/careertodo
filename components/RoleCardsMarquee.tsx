@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { 
-  Briefcase, 
-  Users, 
-  Calculator, 
-  TrendingUp, 
-  FileText, 
+import {
+  Briefcase,
+  Users,
+  Calculator,
+  TrendingUp,
+  FileText,
   HeadphonesIcon,
   ShoppingCart,
-  BarChart3
+  BarChart3,
 } from "lucide-react";
 
 const roles = [
@@ -17,57 +17,57 @@ const roles = [
     department: "Human Resources",
     icon: Users,
     color: "from-blue-500 to-cyan-500",
-    tasks: ["Recruitment", "Performance Management", "Employee Relations"]
+    tasks: ["Recruitment", "Performance Management", "Employee Relations"],
   },
   {
     title: "Financial Analyst",
     department: "Finance & Accounting",
     icon: Calculator,
     color: "from-green-500 to-emerald-500",
-    tasks: ["Budget Planning", "Financial Analysis", "Risk Assessment"]
+    tasks: ["Budget Planning", "Financial Analysis", "Risk Assessment"],
   },
   {
     title: "Sales Executive",
     department: "Sales & Marketing",
     icon: TrendingUp,
     color: "from-purple-500 to-pink-500",
-    tasks: ["Lead Generation", "Client Meetings", "Sales Targets"]
+    tasks: ["Lead Generation", "Client Meetings", "Sales Targets"],
   },
   {
     title: "Project Manager",
     department: "Operations",
     icon: Briefcase,
     color: "from-orange-500 to-red-500",
-    tasks: ["Project Planning", "Team Coordination", "Deadline Management"]
+    tasks: ["Project Planning", "Team Coordination", "Deadline Management"],
   },
   {
     title: "Content Writer",
     department: "Marketing",
     icon: FileText,
     color: "from-indigo-500 to-purple-500",
-    tasks: ["Content Creation", "SEO Optimization", "Brand Voice"]
+    tasks: ["Content Creation", "SEO Optimization", "Brand Voice"],
   },
   {
     title: "Customer Support",
     department: "Customer Service",
     icon: HeadphonesIcon,
     color: "from-teal-500 to-cyan-500",
-    tasks: ["Customer Queries", "Problem Solving", "Service Quality"]
+    tasks: ["Customer Queries", "Problem Solving", "Service Quality"],
   },
   {
     title: "Marketing Manager",
     department: "Marketing",
     icon: ShoppingCart,
     color: "from-pink-500 to-rose-500",
-    tasks: ["Campaign Strategy", "Market Research", "Brand Management"]
+    tasks: ["Campaign Strategy", "Market Research", "Brand Management"],
   },
   {
     title: "Data Analyst",
     department: "Analytics",
     icon: BarChart3,
     color: "from-violet-500 to-purple-500",
-    tasks: ["Data Visualization", "Statistical Analysis", "Reporting"]
-  }
+    tasks: ["Data Visualization", "Statistical Analysis", "Reporting"],
+  },
 ];
 
 // Create multiple copies for seamless infinite loop
@@ -87,27 +87,37 @@ interface RoleCardProps {
 
 function RoleCard({ role }: RoleCardProps) {
   const Icon = role.icon;
-  
+
   return (
     <motion.div
-      className="flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-lg p-4 border border-sky-200 hover:border-sky-300 hover:bg-white hover:shadow-lg transition-all duration-300 w-full"
-      whileHover={{ scale: 1.02, y: -1 }}
+      className="flex flex-col items-start gap-3 bg-white rounded-2xl shadow-lg p-6 border border-slate-200 hover:shadow-xl hover:border-sky-300 transition-all duration-300 w-[340px] mx-auto"
+      whileHover={{ scale: 1.03, y: -3 }}
       whileTap={{ scale: 0.98 }}
     >
-      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0 shadow-sm`}>
-        <Icon className="w-5 h-5 text-white" />
-      </div>
-      <div className="flex-1">
-        <h4 className="font-bold text-slate-900 text-sm mb-1">{role.title}</h4>
-        <p className="text-sm text-slate-600 mb-2 font-medium">{role.department}</p>
-        <div className="flex flex-wrap gap-2">
-          {role.tasks.map((task, taskIndex) => (
-            <span key={taskIndex} className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-sky-100 text-xs text-slate-700 font-medium border border-sky-200">
-              <div className="w-1.5 h-1.5 rounded-full bg-sky-500" />
-              {task}
-            </span>
-          ))}
+      <div className="flex items-center gap-3 w-full">
+        <div
+          className={`w-12 h-12 rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center shadow-sm`}
+        >
+          <Icon className="w-6 h-6 text-white" />
         </div>
+        <div>
+          <h4 className="font-semibold text-slate-900 text-base">
+            {role.title}
+          </h4>
+          <p className="text-sm text-slate-600">{role.department}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mt-2">
+        {role.tasks.map((task, i) => (
+          <span
+            key={i}
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-50 text-xs text-sky-800 font-medium border border-sky-200"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+            {task}
+          </span>
+        ))}
       </div>
     </motion.div>
   );
@@ -118,35 +128,40 @@ export function RoleCardsMarquee() {
   const infiniteRoles = createInfiniteRoles(4); // Create 4 copies for seamless loop
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
-      {/* Two rolling columns - Desktop: side by side with gap, Mobile: single column */}
-      <div className="relative w-full h-full max-w-4xl sm:max-w-7xl mx-auto flex gap-5 sm:gap-5 lg:gap-4 justify-center">
-        
+    <div className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-white py-10">
+      {/* Container for the two marquee columns */}
+      <div className="relative w-full h-full max-w-7xl mx-auto flex gap-8 justify-center">
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[900px] lg:h-[450px] overflow-hidden">
-          {/* Desktop: No shadows, Mobile: No shadows */}
-          
+        <div className="relative w-[360px] h-[500px] overflow-hidden">
           <motion.div
-            animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 220], // Increased spacing for taller cards
-            } : {}}
-            transition={!prefersReducedMotion ? {
-              y: {
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear",
-              },
-            } : {}}
+            animate={
+              !prefersReducedMotion
+                ? {
+                    y: [0, -roles.length * 260], // Increased for spacing
+                  }
+                : {}
+            }
+            transition={
+              !prefersReducedMotion
+                ? {
+                    y: {
+                      duration: 28,
+                      repeat: Infinity,
+                      ease: "linear",
+                    },
+                  }
+                : {}
+            }
             className="absolute inset-x-0"
           >
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col1-${role.title}-${index}`}
-                className="absolute px-2 py-2"
-                style={{ 
-                  top: `${(index % roles.length) * 220}px`, // Increased spacing for taller cards
-                  left: '0',
-                  right: '0'
+                className="absolute px-4 py-4"
+                style={{
+                  top: `${(index % roles.length) * 260}px`,
+                  left: "0",
+                  right: "0",
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
@@ -156,30 +171,36 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[900px] lg:h-[450px] overflow-hidden hidden lg:block">
-          {/* Desktop: No shadows */}
-          
+        <div className="relative w-[360px] h-[500px] overflow-hidden hidden lg:block">
           <motion.div
-            animate={!prefersReducedMotion ? {
-              y: [-roles.length * 220, 0], // Increased spacing for taller cards
-            } : {}}
-            transition={!prefersReducedMotion ? {
-              y: {
-                duration: 25, // Slightly different speed for visual interest
-                repeat: Infinity,
-                ease: "linear",
-              },
-            } : {}}
+            animate={
+              !prefersReducedMotion
+                ? {
+                    y: [-roles.length * 260, 0],
+                  }
+                : {}
+            }
+            transition={
+              !prefersReducedMotion
+                ? {
+                    y: {
+                      duration: 30, // Slightly slower for variation
+                      repeat: Infinity,
+                      ease: "linear",
+                    },
+                  }
+                : {}
+            }
             className="absolute inset-x-0"
           >
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col2-${role.title}-${index}`}
-                className="absolute px-2 py-2"
-                style={{ 
-                  top: `${(index % roles.length) * 220}px`, // Increased spacing for taller cards
-                  left: '0',
-                  right: '0'
+                className="absolute px-4 py-4"
+                style={{
+                  top: `${(index % roles.length) * 260}px`,
+                  left: "0",
+                  right: "0",
                 }}
               >
                 <RoleCard role={role} index={index} total={infiniteRoles.length} />
