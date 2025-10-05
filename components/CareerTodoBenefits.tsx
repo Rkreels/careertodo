@@ -83,14 +83,14 @@ function BenefitCard({ benefit, index }: BenefitCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="group relative"
+      className="group relative h-full"
     >
-      <div className="relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
+      <div className="relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full min-h-[320px] w-full flex flex-col">
         {/* Gradient Border Effect */}
         <div className={`absolute inset-0 bg-gradient-to-r ${benefit.color} rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
         
         {/* Icon */}
-        <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${benefit.color} flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${benefit.color} flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
           <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
         </div>
         
