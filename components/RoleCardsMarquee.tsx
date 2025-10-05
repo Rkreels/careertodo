@@ -90,7 +90,7 @@ function RoleCard({ role }: RoleCardProps) {
 
   return (
     <motion.div
-      className="flex flex-col items-start gap-2 bg-white rounded-2xl shadow-lg p-4 border border-slate-200 hover:shadow-xl hover:border-sky-300 transition-all duration-300 w-[595px] mx-auto"
+      className="flex flex-col items-start gap-2 bg-white rounded-2xl shadow-lg p-4 border border-slate-200 hover:shadow-xl hover:border-sky-300 transition-all duration-300 w-[416px] mx-auto"
       whileHover={{ scale: 1.03, y: -3 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -133,7 +133,7 @@ export function RoleCardsMarquee() {
       <div className="relative w-full h-full max-w-4xl sm:max-w-none lg:max-w-screen-2xl mx-auto flex gap-5 sm:gap-5 lg:gap-6 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[630px] lg:h-[455px] overflow-hidden">
+        <div className="relative w-48 h-[420px] sm:h-[420px] lg:w-[440px] lg:h-[455px] overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
@@ -166,7 +166,7 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[630px] lg:h-[455px] overflow-hidden hidden lg:block">
+        <div className="relative w-48 h-[420px] sm:h-[420px] lg:w-[440px] lg:h-[455px] overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
