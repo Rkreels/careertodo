@@ -125,41 +125,43 @@ function RoleCard({ role }: RoleCardProps) {
 
 export function RoleCardsMarquee() {
   const prefersReducedMotion = useReducedMotion();
-  const infiniteRoles = createInfiniteRoles(4); // Create 4 copies for seamless loop
+  const infiniteRoles = createInfiniteRoles(4);
 
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-white py-10">
-      {/* Container for the two marquee columns */}
-      <div className="relative w-full h-full max-w-7xl mx-auto flex gap-8 justify-center">
+      {/* Optional soft fade at top and bottom */}
+      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-sky-50 to-transparent pointer-events-none z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-sky-50 to-transparent pointer-events-none z-10"></div>
+
+      <div className="relative w-full max-w-7xl mx-auto flex gap-8 justify-center">
+        
         {/* First column - Bottom to Top */}
-        <div className="relative w-[360px] h-[500px] overflow-hidden">
+        <div className="relative w-[360px] h-[650px] overflow-hidden rounded-2xl">
           <motion.div
             animate={
               !prefersReducedMotion
-                ? {
-                    y: [0, -roles.length * 260], // Increased for spacing
-                  }
+                ? { y: [0, -roles.length * 270] }
                 : {}
             }
             transition={
               !prefersReducedMotion
                 ? {
                     y: {
-                      duration: 28,
+                      duration: 30,
                       repeat: Infinity,
                       ease: "linear",
                     },
                   }
                 : {}
             }
-            className="absolute inset-x-0"
+            className="absolute inset-x-0 py-10"
           >
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col1-${role.title}-${index}`}
                 className="absolute px-4 py-4"
                 style={{
-                  top: `${(index % roles.length) * 260}px`,
+                  top: `${(index % roles.length) * 270}px`,
                   left: "0",
                   right: "0",
                 }}
@@ -171,34 +173,32 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-[360px] h-[500px] overflow-hidden hidden lg:block">
+        <div className="relative w-[360px] h-[650px] overflow-hidden rounded-2xl hidden lg:block">
           <motion.div
             animate={
               !prefersReducedMotion
-                ? {
-                    y: [-roles.length * 260, 0],
-                  }
+                ? { y: [-roles.length * 270, 0] }
                 : {}
             }
             transition={
               !prefersReducedMotion
                 ? {
                     y: {
-                      duration: 30, // Slightly slower for variation
+                      duration: 32,
                       repeat: Infinity,
                       ease: "linear",
                     },
                   }
                 : {}
             }
-            className="absolute inset-x-0"
+            className="absolute inset-x-0 py-10"
           >
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col2-${role.title}-${index}`}
                 className="absolute px-4 py-4"
                 style={{
-                  top: `${(index % roles.length) * 260}px`,
+                  top: `${(index % roles.length) * 270}px`,
                   left: "0",
                   right: "0",
                 }}
