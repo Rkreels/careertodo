@@ -90,31 +90,31 @@ function RoleCard({ role }: RoleCardProps) {
 
   return (
     <motion.div
-      className="flex flex-col items-start gap-3 bg-white rounded-2xl shadow-lg p-6 border border-slate-200 hover:shadow-xl hover:border-sky-300 transition-all duration-300 w-[850px] mx-auto"
+      className="flex flex-col items-start gap-2 bg-white rounded-2xl shadow-lg p-4 border border-slate-200 hover:shadow-xl hover:border-sky-300 transition-all duration-300 w-[595px] mx-auto"
       whileHover={{ scale: 1.03, y: -3 }}
       whileTap={{ scale: 0.98 }}
     >
-      <div className="flex items-center gap-3 w-full">
+      <div className="flex items-center gap-2 w-full">
         <div
-          className={`w-12 h-12 rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center shadow-sm`}
+          className={`w-8 h-8 rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center shadow-sm`}
         >
-          <Icon className="w-6 h-6 text-white" />
+          <Icon className="w-4 h-4 text-white" />
         </div>
         <div>
-          <h4 className="font-semibold text-slate-900 text-base">
+          <h4 className="font-semibold text-slate-900 text-sm">
             {role.title}
           </h4>
-          <p className="text-sm text-slate-600">{role.department}</p>
+          <p className="text-xs text-slate-600">{role.department}</p>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mt-2">
+      <div className="flex flex-wrap gap-1 mt-1">
         {role.tasks.map((task, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-50 text-xs text-sky-800 font-medium border border-sky-200"
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-xs text-sky-800 font-medium border border-sky-200"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+            <div className="w-1 h-1 rounded-full bg-sky-500" />
             {task}
           </span>
         ))}
@@ -133,12 +133,12 @@ export function RoleCardsMarquee() {
       <div className="relative w-full h-full max-w-4xl sm:max-w-none lg:max-w-screen-2xl mx-auto flex gap-5 sm:gap-5 lg:gap-6 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[900px] lg:h-[650px] overflow-hidden">
+        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[630px] lg:h-[455px] overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 270], // Increased spacing for taller cards
+              y: [0, -roles.length * 189], // Reduced spacing by 30% (270 * 0.7 = 189)
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -152,9 +152,9 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col1-${role.title}-${index}`}
-                className="absolute px-2 py-3"
+                className="absolute px-2 py-2"
                 style={{ 
-                  top: `${(index % roles.length) * 270}px`, // Increased spacing for taller cards
+                  top: `${(index % roles.length) * 189}px`, // Reduced spacing by 30%
                   left: '0',
                   right: '0'
                 }}
@@ -166,12 +166,12 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[900px] lg:h-[650px] overflow-hidden hidden lg:block">
+        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[630px] lg:h-[455px] overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 270, 0], // Increased spacing for taller cards
+              y: [-roles.length * 189, 0], // Reduced spacing by 30%
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -185,9 +185,9 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col2-${role.title}-${index}`}
-                className="absolute px-2 py-3"
+                className="absolute px-2 py-2"
                 style={{ 
-                  top: `${(index % roles.length) * 270}px`, // Increased spacing for taller cards
+                  top: `${(index % roles.length) * 189}px`, // Reduced spacing by 30%
                   left: '0',
                   right: '0'
                 }}
