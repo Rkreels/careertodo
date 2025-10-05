@@ -85,7 +85,7 @@ function BenefitCard({ benefit, index }: BenefitCardProps) {
       transition={{ delay: index * 0.1 }}
       className="group relative"
     >
-      <div className="relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+      <div className="relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
         {/* Gradient Border Effect */}
         <div className={`absolute inset-0 bg-gradient-to-r ${benefit.color} rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
         
@@ -101,7 +101,7 @@ function BenefitCard({ benefit, index }: BenefitCardProps) {
         <p className="text-base sm:text-lg font-semibold text-slate-600 mb-3">
           {benefit.subtitle}
         </p>
-        <p className="text-sm sm:text-base text-slate-500 leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-500 leading-relaxed flex-grow">
           {benefit.description}
         </p>
       </div>
@@ -135,7 +135,9 @@ export function CareerTodoBenefits() {
         {/* Benefits Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
           {benefits.map((benefit, index) => (
-            <BenefitCard key={benefit.title} benefit={benefit} index={index} />
+            <div key={benefit.title} className="h-full">
+              <BenefitCard benefit={benefit} index={index} />
+            </div>
           ))}
         </div>
 
