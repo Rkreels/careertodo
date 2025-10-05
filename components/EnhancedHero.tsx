@@ -51,7 +51,7 @@ export function EnhancedHero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center lg:text-left"
+            className="text-center lg:text-left mb-0"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -98,7 +98,7 @@ export function EnhancedHero() {
               </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start mb-0">
               <Link href="/signup">
                 <Button 
                   size="lg" 
@@ -132,7 +132,7 @@ export function EnhancedHero() {
         </div>
 
         {/* Rolling cards for mobile/tablet - positioned right after CTA button */}
-        <div className="lg:hidden -mt-6">
+        <div className="lg:hidden -mt-8">
           <div className="relative w-full h-[480px] sm:h-[480px]">
             {/* Mobile shadow only at top - starts right after CTA button */}
             <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white via-white/70 to-transparent z-10 pointer-events-none" />
