@@ -123,7 +123,7 @@ export function RoleCardsMarquee() {
       <div className="relative w-full h-full max-w-4xl sm:max-w-7xl mx-auto flex gap-5 sm:gap-5 lg:gap-4 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[650px] lg:h-[450px] overflow-hidden">
+        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[900px] lg:h-[450px] overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
@@ -156,7 +156,7 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[650px] lg:h-[450px] overflow-hidden hidden lg:block">
+        <div className="relative w-64 h-[420px] sm:h-[420px] lg:w-[900px] lg:h-[450px] overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
