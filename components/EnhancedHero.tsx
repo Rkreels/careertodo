@@ -132,7 +132,7 @@ export function EnhancedHero() {
         </div>
 
         {/* Rolling cards for mobile/tablet - positioned right after CTA button */}
-        <div className="lg:hidden -mt-8">
+        <div className="lg:hidden absolute bottom-0 left-0 right-0">
           <div className="relative w-full h-[480px] sm:h-[480px]">
             {/* Mobile shadow only at top - starts right after CTA button */}
             <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white via-white/70 to-transparent z-10 pointer-events-none" />
