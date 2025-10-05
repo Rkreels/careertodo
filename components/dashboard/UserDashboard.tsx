@@ -179,12 +179,12 @@ export const UserDashboard: React.FC = () => {
             </TabsList>
 
             <TabsContent value="departments" className="space-y-8">
-              {/* Department Cards - Optimized for Desktop */}
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+              {/* Department Cards - Custom Sizing */}
+              <div className="flex flex-wrap gap-4 justify-center">
                 {mockDepartments.map((department) => {
                   const Icon = department.icon;
                   return (
-                    <Card key={department.id} className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md">
+                    <Card key={department.id} className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md w-[550px] max-w-full">
                       <CardHeader className="pb-3">
                         <div className="flex items-center space-x-2">
                           <div className={`p-2 rounded-lg ${department.color} text-white`}>
