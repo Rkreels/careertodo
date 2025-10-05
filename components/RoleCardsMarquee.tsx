@@ -90,24 +90,25 @@ function RoleCard({ role }: RoleCardProps) {
   
   return (
     <motion.div
-      className="flex items-center gap-2 sm:gap-3 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-sky-100 hover:bg-white/90 transition-all duration-300 w-full max-w-none"
-      whileHover={{ scale: 1.02, y: -2 }}
+      className="flex items-center gap-3 sm:gap-4 bg-white/90 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-sky-200 hover:border-sky-300 hover:bg-white hover:shadow-2xl transition-all duration-300 w-full max-w-none"
+      whileHover={{ scale: 1.03, y: -4 }}
+      whileTap={{ scale: 0.98 }}
     >
-      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0`}>
-        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+      <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${role.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
       </div>
       <div className="min-w-0 flex-1">
-        <h4 className="font-bold text-slate-800 text-sm sm:text-sm mb-1">{role.title}</h4>
-        <p className="text-sm text-slate-600 mb-1 sm:mb-2">{role.department}</p>
-        <div className="flex flex-wrap gap-1">
+        <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-1">{role.title}</h4>
+        <p className="text-sm sm:text-base text-slate-700 mb-2 sm:mb-3 font-medium">{role.department}</p>
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {role.tasks.slice(0, 2).map((task, taskIndex) => (
-            <span key={taskIndex} className="inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full bg-sky-50 text-sm text-slate-600">
-              <div className="w-1 h-1 rounded-full bg-sky-400" />
+            <span key={taskIndex} className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full bg-sky-100 text-xs sm:text-sm text-slate-700 font-medium border border-sky-200">
+              <div className="w-1.5 h-1.5 rounded-full bg-sky-500" />
               {task}
             </span>
           ))}
           {role.tasks.length > 2 && (
-            <span className="text-sm text-slate-400 italic">
+            <span className="text-xs sm:text-sm text-slate-500 italic font-medium">
               +{role.tasks.length - 2}
             </span>
           )}
@@ -124,15 +125,15 @@ export function RoleCardsMarquee() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Two rolling columns - Desktop: side by side with gap, Mobile: single column */}
-      <div className="relative w-full h-full max-w-4xl sm:max-w-6xl mx-auto flex gap-4 sm:gap-8 justify-center">
+      <div className="relative w-full h-full max-w-4xl sm:max-w-7xl mx-auto flex gap-8 sm:gap-12 lg:gap-16 justify-center">
         
         {/* First column - Bottom to Top */}
-        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[140px] overflow-hidden">
+        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[520px] overflow-hidden">
           {/* Desktop: No shadows, Mobile: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [0, -roles.length * 180], // Adjusted spacing for shorter cards
+              y: [0, -roles.length * 560], // Proper spacing like mobile - card height + gap
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -146,9 +147,9 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col1-${role.title}-${index}`}
-                className="absolute px-2"
+                className="absolute px-4 py-2"
                 style={{ 
-                  top: `${(index % roles.length) * 180}px`, // 40px gap between shorter cards
+                  top: `${(index % roles.length) * 560}px`, // 520px card + 40px gap like mobile
                   left: '0',
                   right: '0'
                 }}
@@ -160,12 +161,12 @@ export function RoleCardsMarquee() {
         </div>
 
         {/* Second column - Top to Bottom */}
-        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[140px] overflow-hidden hidden lg:block">
+        <div className="relative w-64 h-80 sm:h-96 lg:w-[490px] lg:h-[520px] overflow-hidden hidden lg:block">
           {/* Desktop: No shadows */}
           
           <motion.div
             animate={!prefersReducedMotion ? {
-              y: [-roles.length * 180, 0], // Adjusted spacing for shorter cards
+              y: [-roles.length * 560, 0], // Proper spacing like mobile - card height + gap
             } : {}}
             transition={!prefersReducedMotion ? {
               y: {
@@ -179,9 +180,9 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col2-${role.title}-${index}`}
-                className="absolute px-2"
+                className="absolute px-4 py-2"
                 style={{ 
-                  top: `${(index % roles.length) * 180}px`, // 40px gap between shorter cards
+                  top: `${(index % roles.length) * 560}px`, // 520px card + 40px gap like mobile
                   left: '0',
                   right: '0'
                 }}

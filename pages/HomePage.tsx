@@ -2,8 +2,10 @@ import { Navigation } from "@/components/Navigation";
 import { AchievementToast } from "@/components/AchievementToast";
 import { EnhancedHero } from "@/components/EnhancedHero";
 import { TheRealityCheck } from "@/components/TheRealityCheck";
+import { CareerTodoBenefits } from "@/components/CareerTodoBenefits";
 import { VideoSection } from "@/components/VideoSection";
 import { WatchingVsDoing } from "@/components/WatchingVsDoing";
+import { CareerBenefits } from "@/components/CareerBenefits";
 import { TheGap } from "@/components/TheGap";
 import { MediaCoverage } from "@/components/MediaCoverage";
 import { EnhancedFeaturesSection } from "@/components/EnhancedFeaturesSection";
@@ -29,8 +31,10 @@ export default function HomePage() {
       <AchievementToast />
       <EnhancedHero />
       <TheRealityCheck />
+      <CareerTodoBenefits />
       <VideoSection />
       <WatchingVsDoing />
+      <CareerBenefits />
       <TheGap />
       <MediaCoverage />
       <EnhancedFeaturesSection />
