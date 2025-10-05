@@ -90,7 +90,7 @@ function RoleCard({ role }: RoleCardProps) {
   
   return (
     <motion.div
-      className="flex items-center gap-2 bg-white/95 backdrop-blur-sm rounded-lg p-3 border border-sky-200 hover:border-sky-300 hover:bg-white hover:shadow-lg transition-all duration-300 w-full max-w-none"
+      className="flex items-center gap-2 bg-white/95 backdrop-blur-sm rounded-lg p-3 border border-sky-200 hover:border-sky-300 hover:bg-white hover:shadow-lg transition-all duration-300 w-full max-w-none mx-7"
       whileHover={{ scale: 1.02, y: -1 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -147,7 +147,7 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col1-${role.title}-${index}`}
-                className="absolute px-2 py-1"
+                className="absolute px-1 py-1"
                 style={{ 
                   top: `${(index % roles.length) * 175}px`, // 160px card + 15px gap
                   left: '0',
@@ -180,7 +180,7 @@ export function RoleCardsMarquee() {
             {infiniteRoles.map((role, index) => (
               <div
                 key={`col2-${role.title}-${index}`}
-                className="absolute px-2 py-1"
+                className="absolute px-1 py-1"
                 style={{ 
                   top: `${(index % roles.length) * 175}px`, // 160px card + 15px gap
                   left: '0',
