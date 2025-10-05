@@ -44,7 +44,7 @@ export function EnhancedHero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.15),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(125,211,252,0.08),transparent_70%)]" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-12 mt-8 sm:mt-10 md:mt-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-12 mt-8 sm:mt-10 md:mt-12 lg:pb-12 pb-2">
         <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center min-h-[600px]">
           {/* Left side - 50% for heading content */}
           <motion.div
@@ -132,7 +132,7 @@ export function EnhancedHero() {
         </div>
 
         {/* Rolling cards for mobile/tablet - positioned right after CTA button */}
-        <div className="lg:hidden absolute bottom-0 left-0 right-0">
+        <div className="lg:hidden -mt-6">
           <div className="relative w-full h-[480px] sm:h-[480px]">
             {/* Mobile shadow only at top - starts right after CTA button */}
             <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white via-white/70 to-transparent z-10 pointer-events-none" />
