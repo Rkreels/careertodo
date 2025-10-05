@@ -179,37 +179,37 @@ export const UserDashboard: React.FC = () => {
             </TabsList>
 
             <TabsContent value="departments" className="space-y-8">
-              {/* Department Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Department Cards - Optimized for Desktop */}
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                 {mockDepartments.map((department) => {
                   const Icon = department.icon;
                   return (
                     <Card key={department.id} className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md">
-                      <CardHeader className="pb-4">
-                        <div className="flex items-center space-x-3">
-                          <div className={`p-3 rounded-lg ${department.color} text-white`}>
-                            <Icon className="h-6 w-6" />
+                      <CardHeader className="pb-3">
+                        <div className="flex items-center space-x-2">
+                          <div className={`p-2 rounded-lg ${department.color} text-white`}>
+                            <Icon className="h-5 w-5" />
                           </div>
-                          <div>
-                            <CardTitle className="text-lg">{department.name}</CardTitle>
+                          <div className="flex-1 min-w-0">
+                            <CardTitle className="text-sm leading-tight">{department.name}</CardTitle>
                           </div>
                         </div>
-                        <CardDescription className="text-sm mt-3">
+                        <CardDescription className="text-xs mt-2 line-clamp-2">
                           {department.description}
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="pt-0">
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           <div>
-                            <p className="text-sm font-medium text-gray-700 mb-2">Available Tools:</p>
-                            <div className="space-y-2">
+                            <p className="text-xs font-medium text-gray-700 mb-1">Available Tools:</p>
+                            <div className="space-y-1 max-h-32 overflow-y-auto">
                               {department.tools.map((tool, index) => (
-                                <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                                  <span className="text-sm text-gray-700">{tool}</span>
+                                <div key={index} className="flex items-center justify-between p-1.5 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                                  <span className="text-xs text-gray-700 truncate flex-1 mr-2">{tool}</span>
                                   <Button 
                                     size="sm" 
                                     variant="outline"
-                                    className="text-xs h-7 px-3"
+                                    className="text-xs h-6 px-2 flex-shrink-0"
                                     onClick={() => handleLaunchTool(tool, department.id)}
                                   >
                                     Visit
