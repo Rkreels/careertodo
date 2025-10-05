@@ -4,6 +4,7 @@ import { EnhancedHero } from "@/components/EnhancedHero";
 import { TheRealityCheck } from "@/components/TheRealityCheck";
 import { VideoSection } from "@/components/VideoSection";
 import { WatchingVsDoing } from "@/components/WatchingVsDoing";
+import { CareerTodoBenefits } from "@/components/CareerTodoBenefits";
 import { TheGap } from "@/components/TheGap";
 import { MediaCoverage } from "@/components/MediaCoverage";
 import { EnhancedFeaturesSection } from "@/components/EnhancedFeaturesSection";
@@ -31,6 +32,7 @@ export default function HomePage() {
       <TheRealityCheck />
       <VideoSection />
       <WatchingVsDoing />
+      <CareerTodoBenefits />
       <TheGap />
       <MediaCoverage />
       <EnhancedFeaturesSection />
