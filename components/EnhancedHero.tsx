@@ -45,12 +45,13 @@ export function EnhancedHero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(125,211,252,0.08),transparent_70%)]" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-12 mt-8 sm:mt-10 md:mt-12">
-        <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center">
+        <div className="grid lg:grid-cols-5 gap-4 md:gap-6 lg:gap-8 items-center min-h-[600px]">
+          {/* Left side - 60% for heading content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center lg:text-left"
+            className="text-center lg:text-left lg:col-span-3"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -122,8 +123,8 @@ export function EnhancedHero() {
             </div>
           </motion.div>
 
-          {/* Rolling cards - positioned below CTA on mobile, properly positioned on desktop */}
-          <div className="lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:w-96 lg:h-96 hidden lg:block">
+          {/* Right side - 40% for rolling cards */}
+          <div className="lg:col-span-2 relative lg:h-[600px] hidden lg:block">
             <div className="relative w-full h-full">
               <RoleCardsMarquee />
             </div>
